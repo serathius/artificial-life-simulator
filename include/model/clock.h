@@ -35,11 +35,11 @@ public:
     const TimeDifferece& operator-(const AbsoluteTime&) const;
 };
 
-class TimeDifferece
+class TimeDifference
 {
 friend AbsoluteTime;
 private:
-    TimeDifferece();
+    TimeDifference();
 
 public:
     const AbsoluteTime& operator+(const AbsoluteTime&) const;
