@@ -1,13 +1,40 @@
 #ifndef ORGANISM_H
 #define ORGANISM_H
 
+#include "world.h"
+
 class Organism
 {
     OrganismBody body;
+    OrganismCondition condition;
+    const OrganismGenotype genotype;
+    const OrganismLogic logic;
+
 };
 
-class OrganismBody
+class OrganismBody: public DynamicWorldObject
 {
+};
+
+class OrganismGenotype
+{
+};
+
+class OrganismLogic
+{
+public:
+    explicit Logic(const Genotype&);
+    Decision* const makeDecision(const OrganismCondition&, const tuple<OrganismUnderstoodWorldInformation>&);
+
+};
+
+class OrganismCondition
+{
+};
+
+class OrganismUnderstoodWorldInformation
+{
+
 };
 
 #endif

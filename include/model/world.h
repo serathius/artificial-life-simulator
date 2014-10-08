@@ -12,6 +12,7 @@ private:
 public:
     World();
     tuple<std::PhysicalObject*> get_objects() const;
+    SimpleWorldMockup* getOrganismWorldMockup(Organism* organism);
 };
 
 class ObjectsCollection
@@ -31,22 +32,22 @@ public:
     };
     ObjectsCollectionIterator& begin();
     ObjectsCollectionIterator& iterator end();
-    void add(Object*);
-    void remove(Object*);
+    void add(WorldObject*);
+    void remove(WorldObject*);
 };
 
-class Object
+class WorldObject
 {
 private:
     World* const world;
     Coordinates* coordiantes;
-    UnitVector* direction;
 };
 
-class PhysicalObject : private Object
+class DynamicWorldObject : private WorldObject
 {
 private:
     Velocity* velocity;
+    UnitVector* direction;
 };
 
 class Velocity : public Vector
