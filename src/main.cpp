@@ -1,4 +1,7 @@
 #include <iostream>
+#include "controller/controller.cpp"
+#include "controller/blocking_queue.cpp"
+#include "controller/events.cpp"
 
 using namespace std;
 
