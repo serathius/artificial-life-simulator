@@ -28,6 +28,7 @@ all: $(BUILDDIR) $(TARGET)
 tests: $(BUILDDIR) $(TEST_TARGET)
 
 $(BUILDDIR):
+	@mkdir -p bin
 	@mkdir -p $(BUILDDIR)
 
 $(TARGET): $(OBJECTS)
