@@ -1,4 +1,4 @@
-CFLAGS = -std=c++11
+CFLAGS = -pthread -std=c++11
 TARGET = bin/artificial-life-simulator.o
 TEST_TARGET = bin/test.o
 SRCDIR = src
@@ -32,7 +32,7 @@ $(BUILDDIR):
 	@mkdir -p $(BUILDDIR)
 
 $(TARGET): $(OBJECTS)
-	$(CXX) $^ -o $(TARGET)
+	$(CXX) $^ -o $(TARGET) $(CFLAGS)
 
 $(BUILDDIR)/%.o: $(SRCDIR)/%.$(SRCEXT)
 	$(CXX) $(CFLAGS) $(INC) -c -o $@ $<
