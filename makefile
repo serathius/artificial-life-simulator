@@ -1,6 +1,7 @@
 CFLAGS = -std=c++11
-TARGET = bin/artificial-life-simulator.o
-TEST_TARGET = bin/test.o
+BINDIR = bin
+TARGET = $(BINDIR)/artificial-life-simulator.o
+TEST_TARGET = $(BINDIR)/test.o
 SRCDIR = src
 TESTDIR = test
 LIBDIR = lib
@@ -8,9 +9,11 @@ SRCEXT = cpp
 BUILDDIR = build
 INC = -I include
 
-SOURCES = $(wildcard $(SRCDIR)/*.$(SRCEXT))
+SRCDIRS = $(shell find $(SRCDIR) -type d)
+BUILDDIRS = $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SRCDIRS))
+SOURCES = $(shell find $(SRCDIR) -type f -name '*.$(SRCEXT)')
 OBJECTS = $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCEXT)=.o))
-TESTS_SOURCES = $(wildcard $(TESTDIR)/*.$(SRCEXT))
+TESTS_SOURCES = $(shell find $(TESTDIR) -type f -name '*.$(SRCEXT)')
 TEST_SOURCES = $(filter-out $(SRCDIR)/main.$(SRCEXT),$(SOURCES))
 TEST_OBJECTS = $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(TEST_SOURCES:.$(SRCEXT)=.o))
 
@@ -23,13 +26,15 @@ GMOCK_DIR = $(LIBDIR)/gmock
 TEST_SYSTEM_FLAGS = -isystem $(GTEST_DIR)/include -isystem $(GMOCK_DIR)/include
 TEST_I_FLAGS = -I $(GTEST_DIR) -I $(GMOCK_DIR)
 
-all: $(BUILDDIR) $(TARGET)
+all: $(BUILDDIRS) $(BINDIR) $(TARGET)
 
-tests: $(BUILDDIR) $(TEST_TARGET)
+tests: $(BUILDDIRS) $(TEST_TARGET)
 
-$(BUILDDIR):
+$(BUILDDIRS):
+	@mkdir -p $(BUILDDIRS)
+
+$(BINDIR):
 	@mkdir -p bin
-	@mkdir -p $(BUILDDIR)
 
 $(TARGET): $(OBJECTS)
 	$(CXX) $^ -o $(TARGET)
@@ -38,7 +43,7 @@ $(BUILDDIR)/%.o: $(SRCDIR)/%.$(SRCEXT)
 	$(CXX) $(CFLAGS) $(INC) -c -o $@ $<
 
 $(TEST_TARGET): $(TEST_LIB) $(TEST_OBJECTS)
-	$(CXX) $(CFLAGS) $(TEST_SYSTEM_FLAGS) -pthread  $(TESTS_SOURCES) $(TEST_LIB) $(TEST_OBJECTS) -o $(TEST_TARGET)
+	$(CXX) $(CFLAGS) $(TEST_SYSTEM_FLAGS) -pthread  $(TESTS_SOURCES) $(TEST_LIB) $(TEST_OBJECTS) $(INC) -o $(TEST_TARGET)
 
 $(TEST_LIB): $(GMOCK_TARGET) $(GTEST_TARGET)
 	@ar -rv $(TEST_LIB) $(GTEST_TARGET) $(GMOCK_TARGET)
