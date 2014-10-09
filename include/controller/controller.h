@@ -1,26 +1,39 @@
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
 
+#include <unordered_map>
+#include <typeinfo>
+#include <typeindex>
+#include "blocking_queue.h"
+#include "events.h"
+
 class Controller
 {
-private:
-    Model* const model;
-    View* const view;
+
+public:
+    //Controller(Model* const, View* const, EventQueue* const);
     typedef BlockingQueue<Event*> EventQueue;
-    EventQueue* const event_queue;
+    Controller(EventQueue* const event_queue);
+    void handle_events();
 
     class ControllerStrategy
     {
-        void react(Event * const);
+    public:
+        virtual void react(Event* event);
+        ControllerStrategy();
     };
 
-    class PrintStrategy: public ControllerStrategy
+    class StringStrategy: public ControllerStrategy
     {
-        void react(Event * const);
+    public:
+        virtual void react(Event* event);
     };
-public:
-    Controller(Model* const, View* const, EventQueue* const);
-    void handle_events();
+private:
+    std::unordered_map<std::type_index, ControllerStrategy*> strategyMap;
+    //Model* const model;
+    //View* const view;
+    EventQueue* event_queue;
+
 };
 
 #endif
