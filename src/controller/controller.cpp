@@ -21,7 +21,7 @@ void Controller::handle_events()
         Event* event;
         event = event_queue->pop();
         ControllerStrategy* strategy =
-        strategyMap[(std::type_index(typeid(*event)))];
+            strategyMap[(std::type_index(typeid(*event)))];
         std::cout<<"reacting"<<endl;
         strategy->react(event);
 
