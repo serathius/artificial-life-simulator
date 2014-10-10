@@ -1,5 +1,4 @@
 #include "controller/controller.h"
-
 #include <typeindex>
 #include "controller/blocking_queue.h"
 #include <iostream>
@@ -30,8 +29,8 @@ void Controller::handle_events()
 
 void Controller::StringStrategy::react(Event* event)
 {
-    StringEvent* stringEvent
-            = dynamic_cast<StringEvent*>(event);
+    StringEvent* stringEven =
+        dynamic_cast<StringEvent*>(event);
     std::cout<<stringEvent->getMessage();
 }
 
