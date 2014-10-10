@@ -22,4 +22,3 @@ StringEvent::~StringEvent()
 {
 
 }
-
