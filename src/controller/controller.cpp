@@ -21,7 +21,6 @@ void Controller::handle_events()
         event = event_queue->pop();
         ControllerStrategy* strategy =
             strategyMap[(std::type_index(typeid(*event)))];
-        std::cout<<"reacting"<<endl;
         strategy->react(event);
 
     }
@@ -31,7 +30,6 @@ void Controller::StringStrategy::react(Event* event)
 {
     StringEvent* stringEven =
         dynamic_cast<StringEvent*>(event);
-    std::cout<<stringEvent->getMessage();
 }
 
 Controller::ControllerStrategy::ControllerStrategy()
