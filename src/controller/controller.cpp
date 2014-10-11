@@ -15,8 +15,7 @@ void Controller::handle_events()
 {
     while(true)
     {
-        Event* event;
-        event = event_queue->pop();
+        Event* event = event_queue->pop();
         ControllerStrategy* strategy =
             strategyMap[(std::type_index(typeid(*event)))];
         strategy->react(event);
