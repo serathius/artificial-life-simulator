@@ -15,6 +15,7 @@ public:
     SimpleWorldMockup* getOrganismWorldMockup(Organism* organism);
 };
 
+
 class ObjectsCollection
 {
 private:
@@ -36,6 +37,7 @@ public:
     void remove(WorldObject*);
 };
 
+
 class WorldObject
 {
 private:
@@ -43,12 +45,14 @@ private:
     Coordinates* coordiantes;
 };
 
+
 class DynamicWorldObject : private WorldObject
 {
 private:
     Velocity* velocity;
     UnitVector* direction;
 };
+
 
 class Velocity : public Vector
 {

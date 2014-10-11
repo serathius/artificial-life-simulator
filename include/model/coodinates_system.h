@@ -11,6 +11,7 @@ public:
     const Coordinates& get_coordinates(float x, float y) const;
 };
 
+
 class Coordinates
 {
 friend CoordinatesSystem;
@@ -27,6 +28,7 @@ public:
 
 };
 
+
 class Vector
 {
 private:
@@ -39,12 +41,14 @@ public:
     const Vector& operator-(const Vector&) const;
 };
 
+
 class DistanceVector : public Vector
 {
 public:
     DistanceVector(float, float);
     const Coordinates& operator+(const Coordinates&) const;
 };
+
 
 class UnitVector: public Vector
 {

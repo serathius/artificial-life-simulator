@@ -20,6 +20,7 @@ public:
     bool operator==(const RealTimeDifference&) const;
 };
 
+
 class RealTime
 {
 public:
@@ -31,6 +32,7 @@ public:
     static const RealTime now();
     const RealTimeDifference operator-(const RealTime&) const;
 };
+
 
 class TimeDifference
 {
@@ -44,6 +46,7 @@ public:
     const AbsoluteTime operator+(const AbsoluteTime&) const;
     bool operator==(const TimeDifference&) const;
 };
+
 
 class AbsoluteTime
 {
@@ -60,6 +63,7 @@ public:
     bool operator>(const AbsoluteTime&) const;
 };
 
+
 class TimePassageSpeed
 {
 friend class RealTimeDifference;
@@ -70,6 +74,7 @@ public:
     TimePassageSpeed(float);
     const TimePassageSpeed operator*(const TimePassageSpeed&) const;
 };
+
 
 class Clock
 {

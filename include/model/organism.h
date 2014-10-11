@@ -12,13 +12,16 @@ class Organism
 
 };
 
+
 class OrganismBody: public DynamicWorldObject
 {
 };
 
+
 class OrganismGenotype
 {
 };
+
 
 class OrganismLogic
 {
@@ -28,9 +31,11 @@ public:
 
 };
 
+
 class OrganismCondition
 {
 };
+
 
 class OrganismUnderstoodWorldInformation
 {

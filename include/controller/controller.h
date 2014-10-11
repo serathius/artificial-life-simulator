@@ -22,12 +22,14 @@ public:
     void handle_events();
 };
 
+
 class ControllerStrategy
 {
 public:
     virtual void react(Event* event);
     ControllerStrategy();
 };
+
 
 class StringStrategy: public ControllerStrategy
 {
