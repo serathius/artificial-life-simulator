@@ -26,8 +26,7 @@ void Controller::handle_events()
 
 void StringStrategy::react(Event* event)
 {
-    StringEvent* stringEven =
-        dynamic_cast<StringEvent*>(event);
+    StringEvent* stringEven = dynamic_cast<StringEvent*>(event);
 }
 
 ControllerStrategy::ControllerStrategy()
