@@ -1,9 +1,11 @@
 #include <cassert>
+
 #include "model/clock.h"
 
 
-Clock::Clock(const AbsoluteTime& time, const TimePassageSpeed& time_passage_speed) :
-        simulation_time(time), real_time(RealTime::now()), time_passage_speed(time_passage_speed), turned_on(false)
+Clock::Clock(const AbsoluteTime& time, const TimePassageSpeed& simulation_speed)
+: simulation_time(time), real_time(RealTime::now()),
+  time_passage_speed(simulation_speed), turned_on(false)
 {
 }
 
@@ -20,7 +22,8 @@ void Clock::stop()
     auto real_time_now = RealTime::now();
     auto real_time_passed = real_time_now - this->real_time;
     this->real_time = real_time_now;
-    this->simulation_time = real_time_passed * this->time_passage_speed + this->simulation_time;
+    this->simulation_time = (real_time_passed * this->time_passage_speed +
+        this->simulation_time);
     this->turned_on = false;
 }
 
@@ -36,7 +39,8 @@ const AbsoluteTime Clock::now()
     if(this->turned_on)
     {
         auto real_time_passed = RealTime::now() - this->real_time;
-        return real_time_passed * this->time_passage_speed + this->simulation_time;
+        return (real_time_passed * this->time_passage_speed +
+                this->simulation_time);
     }
     else
     {
@@ -79,9 +83,11 @@ TimeDifference::TimeDifference(long long nano_seconds)
     this->nano_seconds = nano_seconds;
 };
 
-const AbsoluteTime TimeDifference::operator+(const AbsoluteTime& absolute_time) const
+const AbsoluteTime TimeDifference::operator+(
+    const AbsoluteTime& absolute_time) const
 {
-    long long absolute_nanoseconds = absolute_time.nano_seconds + this->nano_seconds;
+    long long absolute_nanoseconds = (absolute_time.nano_seconds +
+        this->nano_seconds);
     assert(absolute_nanoseconds >= 0);
     return AbsoluteTime(absolute_nanoseconds);
 }
@@ -106,14 +112,18 @@ bool RealTimeDifference::operator==(const RealTimeDifference& other) const
     return this->duration == other.duration;
 }
 
-RealTimeDifference::RealTimeDifference(const RealTimeDifference::Duration& duration)
+RealTimeDifference::RealTimeDifference(
+    const RealTimeDifference::Duration& duration)
 {
     this->duration = duration;
 }
 
-const TimeDifference RealTimeDifference::operator*(const TimePassageSpeed& passage) const
+const TimeDifference RealTimeDifference::operator*(
+    const TimePassageSpeed& passage) const
 {
-    auto duration_in_nanoseconds = std::chrono::duration_cast<std::chrono::nanoseconds>(this->duration).count();
+    auto duration_in_nanoseconds = (
+        std::chrono::duration_cast<std::chrono::nanoseconds>(
+            this->duration).count());
     return TimeDifference(duration_in_nanoseconds * passage.speed);
 }
 
@@ -128,7 +138,8 @@ TimePassageSpeed::TimePassageSpeed(float speed)
     this->speed = speed;
 }
 
-const TimePassageSpeed TimePassageSpeed::operator*(const TimePassageSpeed& other) const
+const TimePassageSpeed TimePassageSpeed::operator*(
+    const TimePassageSpeed& other) const
 {
     return TimePassageSpeed(this->speed * other.speed);
 }
