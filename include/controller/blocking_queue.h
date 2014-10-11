@@ -21,8 +21,25 @@ private:
     std::condition_variable condition;
 
 public:
-    void push(T const& item);
-    T pop();
+    void push(T const &item)
+    {
+        std::unique_lock<std::mutex> mlock(mutex);
+        queue.push(item);
+        mlock.unlock();
+        condition.notify_one();
+    }
+
+    T pop()
+    {
+        std::unique_lock<std::mutex> mlock(mutex);
+        while (queue.empty())
+        {
+            condition.wait(mlock);
+        }
+        auto item = queue.front();
+        queue.pop();
+        return item;
+    }
 };
 
 #endif
