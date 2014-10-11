@@ -40,7 +40,7 @@ $(TARGET): $(OBJECTS)
 	$(CXX) $^ -o $(TARGET) $(CFLAGS)
 
 $(BUILDDIR)/%.o: $(SRCDIR)/%.$(SRCEXT)
-	$(CXX) $(CFLAGS) $(INC) -c -o $@ $<
+	$(CXX) $(CFLAGS) $(INC) -c $< -o $@
 
 $(TEST_TARGET): $(TEST_LIB) $(TEST_OBJECTS)
 	$(CXX) $(CFLAGS) $(TEST_SYSTEM_FLAGS) -pthread  $(TESTS_SOURCES) $(TEST_LIB) $(TEST_OBJECTS) $(INC) -o $(TEST_TARGET)
