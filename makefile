@@ -1,13 +1,4 @@
-CFLAGS = -pthread -std=c++11
-BINDIR = bin
-TARGET = $(BINDIR)/artificial-life-simulator.o
-TEST_TARGET = $(BINDIR)/test.o
-SRCDIR = src
-TESTDIR = test
-LIBDIR = lib
-SRCEXT = cpp
-BUILDDIR = build
-INC = -I include
+include makefile.config
 
 SRCDIRS = $(shell find $(SRCDIR) -type d)
 BUILDDIRS = $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SRCDIRS))
