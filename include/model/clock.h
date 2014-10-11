@@ -50,7 +50,7 @@ public:
 
 class AbsoluteTime
 {
-    friend class Clock;
+    friend class SimulationClock;
     friend class TimeDifference;
 private:
     unsigned long long nano_seconds;
@@ -76,7 +76,7 @@ public:
 };
 
 
-class Clock
+class SimulationClock
 {
 private:
     AbsoluteTime simulation_time;
@@ -85,7 +85,7 @@ private:
     bool turned_on;
 
 public:
-    Clock(const AbsoluteTime&, const TimePassageSpeed&);
+    SimulationClock(const AbsoluteTime&, const TimePassageSpeed&);
     void start();
     void stop();
     void scale_time_passage(const TimePassageSpeed&);

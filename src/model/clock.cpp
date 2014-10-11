@@ -3,20 +3,20 @@
 #include "model/clock.h"
 
 
-Clock::Clock(const AbsoluteTime& time, const TimePassageSpeed& simulation_speed)
+SimulationClock::SimulationClock(const AbsoluteTime& time, const TimePassageSpeed& simulation_speed)
 : simulation_time(time), real_time(RealTime::now()),
   time_passage_speed(simulation_speed), turned_on(false)
 {
 }
 
-void Clock::start()
+void SimulationClock::start()
 {
     assert(this->turned_on == false);
     this->real_time = RealTime::now();
     this->turned_on = true;
 }
 
-void Clock::stop()
+void SimulationClock::stop()
 {
     assert(this->turned_on == true);
     auto real_time_now = RealTime::now();
@@ -27,14 +27,14 @@ void Clock::stop()
     this->turned_on = false;
 }
 
-void Clock::scale_time_passage(const TimePassageSpeed& scale)
+void SimulationClock::scale_time_passage(const TimePassageSpeed& scale)
 {
     this->stop();
     this->time_passage_speed = this->time_passage_speed * scale;
     this->start();
 }
 
-const AbsoluteTime Clock::now()
+const AbsoluteTime SimulationClock::now()
 {
     if(this->turned_on)
     {
@@ -48,7 +48,7 @@ const AbsoluteTime Clock::now()
     }
 }
 
-bool Clock::is_turned_on()
+bool SimulationClock::is_turned_on()
 {
     return this->turned_on;
 }

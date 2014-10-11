@@ -1,22 +1,22 @@
 #include "gtest/gtest.h"
 #include "model/clock.h"
 
-TEST (ClockTest, test_on_new_clock)
+TEST (SimulationClockTest, test_on_new_clock)
 {
-    Clock clock(AbsoluteTime(0), TimePassageSpeed(1.0));
+    SimulationClock clock(AbsoluteTime(0), TimePassageSpeed(1.0));
     ASSERT_EQ(clock.now(), AbsoluteTime(0));
 }
 
-TEST (ClockTest, test_now_on_started_clock)
+TEST (SimulationClockTest, test_now_on_started_clock)
 {
-    Clock clock(AbsoluteTime(0), TimePassageSpeed(1.0));
+    SimulationClock clock(AbsoluteTime(0), TimePassageSpeed(1.0));
     clock.start();
     ASSERT_GT(clock.now(), AbsoluteTime(0));
 }
 
-TEST (ClockTest, test_now_stopped_clock)
+TEST (SimulationClockTest, test_now_stopped_clock)
 {
-    Clock clock(AbsoluteTime(0), TimePassageSpeed(1.0));
+    SimulationClock clock(AbsoluteTime(0), TimePassageSpeed(1.0));
     clock.start();
     clock.stop();
     auto then = clock.now();
@@ -24,22 +24,22 @@ TEST (ClockTest, test_now_stopped_clock)
     ASSERT_EQ(clock.now(), then);
 }
 
-TEST(ClockTest, test_new_clock_is_not_turned_on)
+TEST(SimulationClockTest, test_new_clock_is_not_turned_on)
 {
-    Clock clock(AbsoluteTime(0), TimePassageSpeed(1.0));
+    SimulationClock clock(AbsoluteTime(0), TimePassageSpeed(1.0));
     ASSERT_FALSE(clock.is_turned_on());
 }
 
-TEST(ClockTest, test_is_turned_on)
+TEST(SimulationClockTest, test_is_turned_on)
 {
-    Clock clock(AbsoluteTime(0), TimePassageSpeed(1.0));
+    SimulationClock clock(AbsoluteTime(0), TimePassageSpeed(1.0));
     clock.start();
     ASSERT_TRUE(clock.is_turned_on());
 }
 
-TEST(ClockTest, test_is_turned_off)
+TEST(SimulationClockTest, test_is_turned_off)
 {
-    Clock clock(AbsoluteTime(0), TimePassageSpeed(1.0));
+    SimulationClock clock(AbsoluteTime(0), TimePassageSpeed(1.0));
     clock.start();
     clock.stop();
     ASSERT_FALSE(clock.is_turned_on());
@@ -64,9 +64,9 @@ TEST (TimePassageSpeedTest, test_time_passsage)
     ASSERT_EQ(TimeDifference(1234000000), difference * passage_speed);
 }
 
-TEST(ClockTest, test_assert_on_double_start)
+TEST(SimulationClockTest, test_assert_on_double_start)
 {
-    Clock clock(AbsoluteTime(0), TimePassageSpeed(1.0));
+    SimulationClock clock(AbsoluteTime(0), TimePassageSpeed(1.0));
     clock.start();
     ASSERT_DEATH(clock.start(), "");
 }
