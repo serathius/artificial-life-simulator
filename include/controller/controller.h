@@ -4,35 +4,34 @@
 #include <unordered_map>
 #include <typeinfo>
 #include <typeindex>
-#include "blocking_queue.h"
-#include "events.h"
+
+#include "controller/blocking_queue.h"
+#include "controller/events.h"
+
+class ControllerStrategy;
+typedef BlockingQueue<Event*> EventQueue;
 
 class Controller
 {
-
-public:
-    typedef BlockingQueue<Event*> EventQueue;
-    EventQueue* const event_queue;
-public:
-    Controller(Model* const, View* const, EventQueue* const);
-    void handle_events();
-
-    class ControllerStrategy
-    {
-    public:
-        virtual void react(Event* event);
-        ControllerStrategy();
-    };
-
-    class StringStrategy: public ControllerStrategy
-    {
-    public:
-        virtual void react(Event* event);
-    };
 private:
+    EventQueue* const event_queue;
     std::unordered_map<std::type_index, ControllerStrategy*> strategyMap;
-    EventQueue* event_queue;
 
+public:
+    Controller(EventQueue* const);
+    void handle_events();
 };
 
+class ControllerStrategy
+{
+public:
+    virtual void react(Event* event);
+    ControllerStrategy();
+};
+
+class StringStrategy: public ControllerStrategy
+{
+public:
+    virtual void react(Event* event);
+};
 #endif

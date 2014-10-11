@@ -1,14 +1,12 @@
-#include "controller/controller.h"
 #include <typeindex>
-#include "controller/blocking_queue.h"
 #include <iostream>
-#include "controller/events.h"
 #include <utility>
 
+#include "controller/controller.h"
 
-Controller::Controller(EventQueue* const event_queue)
+
+Controller::Controller(EventQueue* const event_queue) : event_queue(event_queue)
 {
-    this->event_queue = event_queue;
     this->strategyMap.insert(std::make_pair<std::type_index, StringStrategy*>
             (std::type_index(typeid(StringEvent)), new StringStrategy()));
 }
@@ -26,18 +24,18 @@ void Controller::handle_events()
     }
 }
 
-void Controller::StringStrategy::react(Event* event)
+void StringStrategy::react(Event* event)
 {
     StringEvent* stringEven =
         dynamic_cast<StringEvent*>(event);
 }
 
-Controller::ControllerStrategy::ControllerStrategy()
+ControllerStrategy::ControllerStrategy()
 {
 
 }
 
-void Controller::ControllerStrategy::react(Event* event)
+void ControllerStrategy::react(Event* event)
 {
 
 }
