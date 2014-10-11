@@ -8,8 +8,10 @@
 #include "controller/blocking_queue.h"
 #include "controller/events.h"
 
+
 class ControllerStrategy;
 typedef BlockingQueue<Event*> EventQueue;
+
 
 class Controller
 {
