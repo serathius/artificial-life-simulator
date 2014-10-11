@@ -1,6 +1,3 @@
-#ifndef CONTROLLER_H
-#define CONTROLLER_H
-
 #include <unordered_map>
 #include <typeinfo>
 #include <typeindex>
@@ -8,6 +5,8 @@
 #include "controller/blocking_queue.h"
 #include "controller/events.h"
 
+#ifndef CONTROLLER_H
+#define CONTROLLER_H
 
 class ControllerStrategy;
 typedef BlockingQueue<Event*> EventQueue;
