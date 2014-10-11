@@ -29,9 +29,14 @@ void SimulationClock::stop()
 
 void SimulationClock::scale_time_passage(const TimePassageSpeed& scale)
 {
-    this->stop();
-    this->time_passage_speed = this->time_passage_speed * scale;
-    this->start();
+    if (this->turned_on)
+    {
+        this->stop();
+        this->time_passage_speed = this->time_passage_speed * scale;
+        this->start();
+    }
+    else
+        this->time_passage_speed = this->time_passage_speed * scale;
 }
 
 const AbsoluteTime SimulationClock::now()
