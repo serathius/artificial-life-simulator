@@ -1,7 +1,7 @@
-#include "controller/events.h"
 #include <string>
 
-using namespace std;
+#include "controller/events.h"
+
 
 StringEvent::StringEvent(string message)
 {
