@@ -1,59 +1,70 @@
 #ifndef COORDINATES_SYSTEM_H
 #define COORDINATES_SYSTEM_H
 
+class Coordinates;
+class DistanceVector;
+class UnitVector;
+class Vector;
+
+
 class CoordinatesSystem
 {
-private:
-    #macierz transformacji
-
 public:
     CoordinatesSystem();
-    const Coordinates& get_coordinates(float x, float y) const;
+    const Coordinates& get_coordinates(float, float) const;
 };
 
 
 class Coordinates
 {
-friend CoordinatesSystem;
+friend class CoordinatesSystem;
+friend class DistanceVector;
+
 private:
-    CoordinatesSystem* const system;
+    const CoordinatesSystem* const system;
     const float x;
     const float y;
 
-    Coordinates(float, float, CoordinatesSystem*);
+    Coordinates(float, float, const CoordinatesSystem* const);
 
 public:
-    const Vector& operator-(const Coordinates&) const;
-    const Coordinates& transform_to(const CoordinatesSystem&) const;
-
+    const Coordinates transform_to(const CoordinatesSystem&) const;
+    const Vector operator*(const UnitVector&) const;
+    const DistanceVector operator-(const Coordinates&) const;
+    const Coordinates operator+(const DistanceVector&) const;
+    const Coordinates operator-(const DistanceVector&) const;
 };
 
 
 class Vector
 {
-private:
+    friend class UnitVector;
+    friend class Coordinates;
+protected:
     const float x;
     const float y;
 
 public:
     Vector(float, float);
-    const Vector& operator+(const Vector&) const;
-    const Vector& operator-(const Vector&) const;
 };
 
 
-class DistanceVector : public Vector
-{
+class DistanceVector : protected Vector
+{    
+    friend class Coordinates;
 public:
     DistanceVector(float, float);
-    const Coordinates& operator+(const Coordinates&) const;
+    const Coordinates operator+(const Coordinates&) const;
+    const DistanceVector operator+(const DistanceVector&) const;
+    const DistanceVector operator-(const DistanceVector&) const;
 };
 
 
-class UnitVector: public Vector
-{
+class UnitVector : public Vector
+{    
 public:
     UnitVector(float, float);
-    UnitVector(const Vector&);
+    explicit UnitVector(const Vector&);
+    const DistanceVector operator*(float) const;
 };
 #endif
