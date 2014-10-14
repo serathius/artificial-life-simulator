@@ -33,6 +33,7 @@ public:
     const DistanceVector operator-(const Coordinates&) const;
     const Coordinates operator+(const DistanceVector&) const;
     const Coordinates operator-(const DistanceVector&) const;
+    bool operator==(const Coordinates&) const;
 };
 
 
@@ -57,6 +58,7 @@ public:
     const Coordinates operator+(const Coordinates&) const;
     const DistanceVector operator+(const DistanceVector&) const;
     const DistanceVector operator-(const DistanceVector&) const;
+    bool operator==(const DistanceVector&) const;
 };
 
 
@@ -66,5 +68,6 @@ public:
     UnitVector(float, float);
     explicit UnitVector(const Vector&);
     const DistanceVector operator*(float) const;
+    bool operator==(const UnitVector&) const;
 };
 #endif

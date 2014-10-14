@@ -39,6 +39,11 @@ const Coordinates Coordinates::operator-(const DistanceVector& vector) const
     return Coordinates(this->x - vector.x, this->y - vector.y, this->system);
 }
 
+bool Coordinates::operator==(const Coordinates& other) const
+{
+    return this->x == other.x and this->y == other.y;
+}
+
 Vector::Vector(float x, float y) : x(x), y(y)
 {
     
@@ -68,6 +73,11 @@ const DistanceVector DistanceVector::operator-(
     return DistanceVector(this->x - other.x, this->y - other.y);
 }
 
+bool DistanceVector::operator==(const DistanceVector& other) const
+{
+    return this->x == other.x and this->y == other.y;
+}
+
 UnitVector::UnitVector(float x, float y) : Vector(x, y)
 {
     
@@ -76,4 +86,9 @@ UnitVector::UnitVector(float x, float y) : Vector(x, y)
 UnitVector::UnitVector(const Vector& other) : UnitVector(other.x, other.y) 
 {
 
+}
+
+bool UnitVector::operator==(const UnitVector& other) const
+{
+    return this->x == other.x and this->y == other.y;
 }
