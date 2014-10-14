@@ -2,7 +2,7 @@
 #include <typeinfo>
 #include <typeindex>
 
-#include "controller/blocking_queue.h"
+#include "controller/blocking_queue.hpp"
 #include "controller/events.h"
 
 #ifndef CONTROLLER_H
