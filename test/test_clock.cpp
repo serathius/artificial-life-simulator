@@ -111,3 +111,24 @@ TEST(RealTimeTest, test_real_time_gt3)
     RealTime stop = RealTime(RealTime::TimePoint(std::chrono::seconds(1)));
     ASSERT_FALSE(stop > start);
 }
+
+TEST(RealTimeTest, test_real_time_ge1)
+{
+    RealTime start = RealTime(RealTime::TimePoint(std::chrono::seconds(1)));
+    RealTime stop = RealTime(RealTime::TimePoint(std::chrono::seconds(2)));
+    ASSERT_TRUE(stop >= start);
+}
+
+TEST(RealTimeTest, test_real_time_ge2)
+{
+    RealTime start = RealTime(RealTime::TimePoint(std::chrono::seconds(1)));
+    RealTime stop = RealTime(RealTime::TimePoint(std::chrono::seconds(1)));
+    ASSERT_TRUE(stop >= start);
+}
+
+TEST(RealTimeTest, test_real_time_ge3)
+{
+    RealTime start = RealTime(RealTime::TimePoint(std::chrono::seconds(2)));
+    RealTime stop = RealTime(RealTime::TimePoint(std::chrono::seconds(1)));
+    ASSERT_FALSE(stop >= start);
+}

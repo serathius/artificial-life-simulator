@@ -31,6 +31,7 @@ public:
     static const RealTime now();
     const RealTimeDifference operator-(const RealTime&) const;
     bool operator>(const RealTime&) const;
+    bool operator>=(const RealTime&) const;
 };
 
 #include "model/simulation_clock.h"
