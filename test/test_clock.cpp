@@ -2,46 +2,47 @@
 #include "model/simulation_clock.h"
 
 TEST (SimulationClockTest, test_on_new_clock)
-{
-    SimulationClock clock(AbsoluteTime(0), TimePassageSpeed(1.0));
-    ASSERT_EQ(clock.now(), AbsoluteTime(0));
+{ 
+    RealTime::TimePoint time_point;
+    SimulationClock clock(AbsoluteTime(0), RealTime(time_point));
+    ASSERT_EQ(clock.now(RealTime(time_point)), AbsoluteTime(0));
 }
 
 TEST (SimulationClockTest, test_now_on_started_clock)
 {
-    SimulationClock clock(AbsoluteTime(0), TimePassageSpeed(1.0));
-    clock.start();
-    ASSERT_GT(clock.now(), AbsoluteTime(0));
+    SimulationClock clock(AbsoluteTime(0), RealTime(RealTime::TimePoint()));
+    clock.start(RealTime(RealTime::TimePoint(std::chrono::seconds(0))));
+    ASSERT_EQ(clock.now(RealTime(RealTime::TimePoint(std::chrono::seconds(1)))),
+        AbsoluteTime(1000000000));
 }
 
 TEST (SimulationClockTest, test_now_stopped_clock)
 {
-    SimulationClock clock(AbsoluteTime(0), TimePassageSpeed(1.0));
-    clock.start();
-    clock.stop();
-    auto then = clock.now();
-    1 + 1;
-    ASSERT_EQ(clock.now(), then);
+    SimulationClock clock(AbsoluteTime(0), RealTime(RealTime::TimePoint()));
+    clock.start(RealTime(RealTime::TimePoint()));
+    clock.stop(RealTime(RealTime::TimePoint(std::chrono::seconds(1))));
+    ASSERT_EQ(clock.now(RealTime(RealTime::TimePoint(std::chrono::seconds(1)))),
+        AbsoluteTime(1000000000));
 }
 
 TEST(SimulationClockTest, test_new_clock_is_not_turned_on)
 {
-    SimulationClock clock(AbsoluteTime(0), TimePassageSpeed(1.0));
+    SimulationClock clock(AbsoluteTime(0), RealTime(RealTime::TimePoint()));
     ASSERT_FALSE(clock.is_turned_on());
 }
 
 TEST(SimulationClockTest, test_is_turned_on)
 {
-    SimulationClock clock(AbsoluteTime(0), TimePassageSpeed(1.0));
-    clock.start();
+    SimulationClock clock(AbsoluteTime(0), RealTime(RealTime::TimePoint()));
+    clock.start(RealTime(RealTime::TimePoint()));
     ASSERT_TRUE(clock.is_turned_on());
 }
 
 TEST(SimulationClockTest, test_is_turned_off)
 {
-    SimulationClock clock(AbsoluteTime(0), TimePassageSpeed(1.0));
-    clock.start();
-    clock.stop();
+    SimulationClock clock(AbsoluteTime(0), RealTime(RealTime::TimePoint()));
+    clock.start(RealTime(RealTime::TimePoint()));
+    clock.stop(RealTime(RealTime::TimePoint()));
     ASSERT_FALSE(clock.is_turned_on());
 }
 
@@ -66,9 +67,9 @@ TEST (TimePassageSpeedTest, test_time_passsage)
 
 TEST(SimulationClockTest, test_assert_on_double_start)
 {
-    SimulationClock clock(AbsoluteTime(0), TimePassageSpeed(1.0));
-    clock.start();
-    ASSERT_DEATH(clock.start(), "");
+    SimulationClock clock(AbsoluteTime(0), RealTime(RealTime::TimePoint()));
+    clock.start(RealTime(RealTime::TimePoint()));
+    ASSERT_DEATH(clock.start(RealTime(RealTime::TimePoint())), "");
 }
 
 TEST(RealTimeDifferenceTest, test_difference)

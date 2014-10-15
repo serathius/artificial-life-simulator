@@ -3,49 +3,43 @@
 #include "model/simulation_clock.h"
 
 
-SimulationClock::SimulationClock(const AbsoluteTime& time, const TimePassageSpeed& simulation_speed)
-: simulation_time(time), real_time(RealTime::now()),
-  time_passage_speed(simulation_speed), turned_on(false)
+SimulationClock::SimulationClock(const AbsoluteTime& simulation_time, 
+    const RealTime& real_time) : simulation_time(simulation_time), 
+        real_time(real_time), time_passage_speed(TimePassageSpeed(1.0)),
+        turned_on(false)
 {
+
 }
 
-void SimulationClock::start()
+void SimulationClock::start(const RealTime& real_time)
 {
     assert(this->turned_on == false);
-    this->real_time = RealTime::now();
+    this->real_time = real_time;
     this->turned_on = true;
 }
 
-void SimulationClock::stop()
+void SimulationClock::stop(const RealTime& real_time)
 {
     assert(this->turned_on == true);
-    auto real_time_now = RealTime::now();
-    auto real_time_passed = real_time_now - this->real_time;
-    this->real_time = real_time_now;
-    this->simulation_time = (real_time_passed * this->time_passage_speed +
+    auto time_passed = real_time - this->real_time;
+    this->real_time = real_time;
+    this->simulation_time = (time_passed * this->time_passage_speed +
         this->simulation_time);
     this->turned_on = false;
 }
 
 void SimulationClock::scale_time_passage(const TimePassageSpeed& scale)
 {
-    if (this->turned_on)
-    {
-        this->stop();
-        this->time_passage_speed = this->time_passage_speed * scale;
-        this->start();
-    }
-    else
-        this->time_passage_speed = this->time_passage_speed * scale;
+    assert(this->turned_on == false);
+    this->time_passage_speed = this->time_passage_speed * scale;
 }
 
-const AbsoluteTime SimulationClock::now()
+const AbsoluteTime SimulationClock::now(const RealTime& real_time)
 {
     if(this->turned_on)
     {
-        auto real_time_passed = RealTime::now() - this->real_time;
-        return (real_time_passed * this->time_passage_speed +
-                this->simulation_time);
+        auto time_passed = real_time - this->real_time;
+        return time_passed * this->time_passage_speed + this->simulation_time;
     }
     else
     {
