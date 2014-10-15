@@ -2,10 +2,26 @@
 #include "model/simulation_clock.h"
 
 TEST (SimulationClockTest, test_on_new_clock)
-{ 
+{
     RealTime::TimePoint time_point;
     SimulationClock clock(AbsoluteTime(0), RealTime(time_point));
     ASSERT_EQ(clock.now(RealTime(time_point)), AbsoluteTime(0));
+}
+
+TEST (SimulationClockTest, test_now_assert_time)
+{
+    SimulationClock clock(AbsoluteTime(0),
+        RealTime(RealTime::TimePoint(std::chrono::seconds(1))));
+    ASSERT_DEATH(
+        clock.now(RealTime(RealTime::TimePoint(std::chrono::seconds(0)))), "");
+}
+
+TEST (SimulationClockTest, test_stop_assert_time)
+{
+    SimulationClock clock(AbsoluteTime(0),
+        RealTime(RealTime::TimePoint(std::chrono::seconds(1))));
+    ASSERT_DEATH(
+        clock.stop(RealTime(RealTime::TimePoint(std::chrono::seconds(0)))), "");
 }
 
 TEST (SimulationClockTest, test_now_on_started_clock)

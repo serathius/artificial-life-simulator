@@ -21,6 +21,7 @@ void SimulationClock::start(const RealTime& real_time)
 void SimulationClock::stop(const RealTime& real_time)
 {
     assert(this->turned_on == true);
+    assert(real_time >= this->real_time);
     auto time_passed = real_time - this->real_time;
     this->real_time = real_time;
     this->simulation_time = (time_passed * this->time_passage_speed +
@@ -36,6 +37,7 @@ void SimulationClock::scale_time_passage(const TimePassageSpeed& scale)
 
 const AbsoluteTime SimulationClock::now(const RealTime& real_time)
 {
+    assert(real_time >= this->real_time);
     if(this->turned_on)
     {
         auto time_passed = real_time - this->real_time;
