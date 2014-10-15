@@ -5,6 +5,12 @@
 
 class TimeDifference;
 class TimePassageSpeed;
+class RealTime;
+
+class RealTimeClock
+{
+    const RealTime now() const;
+};
 
 class RealTimeDifference
 {
@@ -28,7 +34,6 @@ private:
     TimePoint time_point;
 public:
     explicit RealTime(const TimePoint&);
-    static const RealTime now();
     const RealTimeDifference operator-(const RealTime&) const;
     bool operator>(const RealTime&) const;
     bool operator>=(const RealTime&) const;

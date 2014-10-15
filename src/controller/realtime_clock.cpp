@@ -1,13 +1,14 @@
 #include "controller/realtime_clock.h"
 
+
+const RealTime RealTimeClock::now() const
+{
+    return RealTime(std::chrono::steady_clock::now());
+}
+
 RealTime::RealTime(const RealTime::TimePoint& time_point)
 {
     this->time_point = time_point;
-}
-
-const RealTime RealTime::now()
-{
-    return RealTime(std::chrono::steady_clock::now());
 }
 
 const RealTimeDifference RealTime::operator-(const RealTime& other) const
