@@ -5,7 +5,7 @@ class RealTimeDifference;
 class RealTime;
 
 #include <chrono>
-#include "model/clock.h"
+#include "model/simulation_clock.h"
 
 class RealTimeDifference
 {

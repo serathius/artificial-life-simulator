@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "model/clock.h"
+#include "model/simulation_clock.h"
 
 TEST (SimulationClockTest, test_on_new_clock)
 {

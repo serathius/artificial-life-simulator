@@ -1,6 +1,6 @@
 #include <cassert>
 
-#include "model/clock.h"
+#include "model/simulation_clock.h"
 
 
 SimulationClock::SimulationClock(const AbsoluteTime& time, const TimePassageSpeed& simulation_speed)
