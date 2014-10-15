@@ -26,6 +26,11 @@ RealTimeDifference::RealTimeDifference(
     this->duration = duration;
 }
 
+bool RealTime::operator>(const RealTime& other) const
+{
+    return this->time_point > other.time_point;
+}
+
 const TimeDifference RealTimeDifference::operator*(
     const TimePassageSpeed& passage) const
 {
