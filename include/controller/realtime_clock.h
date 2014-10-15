@@ -1,11 +1,10 @@
 #ifndef REALTIME_CLOCK_H
 #define	REALTIME_CLOCK_H
 
-class RealTimeDifference;
-class RealTime;
-
 #include <chrono>
-#include "model/simulation_clock.h"
+
+class TimeDifference;
+class TimePassageSpeed;
 
 class RealTimeDifference
 {
@@ -32,6 +31,8 @@ public:
     static const RealTime now();
     const RealTimeDifference operator-(const RealTime&) const;
 };
+
+#include "model/simulation_clock.h"
 
 #endif	/* REALTIME_CLOCK_H */
 
