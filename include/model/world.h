@@ -6,31 +6,28 @@
 class World
 {
 private:
-    CoordinatesSystem coordinates_system;
+    Model* const Model model;
+    const CoordinatesSystem coordinates_system;
     ObjectsCollection objects;
 
 public:
-    World();
-    tuple<std::PhysicalObject*> get_objects() const;
-    SimpleWorldMockup* getOrganismWorldMockup(Organism* organism);
+    World(Model* const);
+    void update(const AbsoluteTime&);
+    const AbsoluteTime get_next_event_time() const;
+    void register(WorldObject* const);
 };
 
 
 class ObjectsCollection
 {
 private:
-    vector<std::unique_ptr<Object>> objects;
+    std::vector<std::unique_ptr<Object>> objects;
 
 public:
     ObjectsCollection();
     ~ObjectsCollection();
-    class ObjectsCollectionIterator
-    {
-    private:
-        ObjectsCollection* const collection;
-    public:
-        Object* operator++();
-    };
+    typedef std::vector<std::unique_ptr<Object>>::iterator
+        ObjectCollectionIterator;
     ObjectsCollectionIterator& begin();
     ObjectsCollectionIterator& iterator end();
     void add(WorldObject*);
@@ -42,21 +39,11 @@ class WorldObject
 {
 private:
     World* const world;
-    Coordinates* coordiantes;
-};
+    Coordinates coordiantes;
+    UnitVector direction;
 
-
-class DynamicWorldObject : private WorldObject
-{
-private:
-    Velocity* velocity;
-    UnitVector* direction;
-};
-
-
-class Velocity : public Vector
-{
-
+public:
+    WorldObject(World* const, const Coordinates&, const UnitVector&)
 };
 
 #endif

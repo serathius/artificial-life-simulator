@@ -13,7 +13,7 @@ class Organism
 };
 
 
-class OrganismBody: public DynamicWorldObject
+class OrganismBody: public WorldObject, public EventObject
 {
 };
 
