@@ -52,6 +52,7 @@ private:
 
 public:
     TimePassageSpeed(float);
+    float get_time_passage_spped() const;
     const TimePassageSpeed operator*(const TimePassageSpeed&) const;
     const TimeDifference operator*(const RealTimeDifference&) const;
 };
