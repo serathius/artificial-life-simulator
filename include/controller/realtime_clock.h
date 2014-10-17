@@ -22,7 +22,10 @@ private:
 public:
     explicit RealTimeDifference(const Duration&);
     const TimeDifference operator*(const TimePassageSpeed&) const;
+    const RealTime operator+(const RealTime&) const;
     bool operator==(const RealTimeDifference&) const;
+    bool operator!=(const RealTimeDifference&) const;
+    bool operator>(const RealTimeDifference&) const;
 };
 
 
@@ -35,6 +38,8 @@ private:
 public:
     explicit RealTime(const TimePoint&);
     const RealTimeDifference operator-(const RealTime&) const;
+    bool operator==(const RealTime&) const;
+    bool operator!=(const RealTime&) const;
     bool operator>(const RealTime&) const;
     bool operator>=(const RealTime&) const;
 };

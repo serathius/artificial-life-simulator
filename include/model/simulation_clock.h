@@ -18,7 +18,11 @@ private:
 public:
     TimeDifference(long long);
     const AbsoluteTime operator+(const AbsoluteTime&) const;
+    const RealTimeDifference operator/(const TimePassageSpeed&) const;
+    const TimePassageSpeed operator/(const RealTimeDifference&) const;
     bool operator==(const TimeDifference&) const;
+    bool operator!=(const TimeDifference&) const;
+    bool operator>(const TimeDifference&) const;
 };
 
 
@@ -35,6 +39,8 @@ public:
     bool operator==(const AbsoluteTime&) const;
     bool operator!=(const AbsoluteTime&) const;
     bool operator>(const AbsoluteTime&) const;
+    bool operator>=(const AbsoluteTime&) const;
+
 };
 
 
@@ -47,6 +53,7 @@ private:
 public:
     TimePassageSpeed(float);
     const TimePassageSpeed operator*(const TimePassageSpeed&) const;
+    const TimeDifference operator*(const RealTimeDifference&) const;
 };
 
 
