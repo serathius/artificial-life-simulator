@@ -7,6 +7,7 @@ class TimePassageSpeed;
 
 #include "controller/realtime_clock.h"
 
+
 class TimeDifference
 {
     friend class AbsoluteTime;
