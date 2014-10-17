@@ -29,7 +29,7 @@ private:
 public:
     EventObjectCollection();
     void add(EventObject*);
-    void remove(EventObject*)
+    void remove(EventObject*);
 };
 
 
