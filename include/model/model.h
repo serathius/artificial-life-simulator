@@ -37,7 +37,7 @@ class EventObject
 {
 public:
     EventObject();
-    AbsoluteTime& get_next_event_time();
+    virtual AbsoluteTime& get_next_event_time() = 0;
 };
 
 #endif
