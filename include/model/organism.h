@@ -34,7 +34,7 @@ private:
 
 public:
     explicit Logic(const Genotype&);
-    const std::unique_ptr<const Decision> makeDecision(const OrganismCondition&,
+    const std::unique_ptr<const Decision> make_decision(const OrganismCondition&,
         const tuple<OrganismUnderstoodWorldInformation>&);
 
 };
