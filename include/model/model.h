@@ -33,7 +33,14 @@ public:
 };
 
 
-class EventObject
+class ModelObject
+{
+
+
+};
+
+
+class EventObject : public ModelObject
 {
 public:
     EventObject();

@@ -35,7 +35,7 @@ public:
 };
 
 
-class WorldObject
+class WorldObject : public ModelObject
 {
 private:
     World* const world;
