@@ -2,6 +2,7 @@
 #define ORGANISM_H
 
 #include "world.h"
+#include "genotype.h"
 #include "decision.h"
 
 
