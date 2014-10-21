@@ -62,7 +62,7 @@ class SimulationClock
 {
 private:
     AbsoluteTime simulation_time;
-    RealTime real_time;
+    RealTime realtime;
     TimePassageSpeed time_passage_speed;
     bool turned_on;
 
@@ -71,7 +71,8 @@ public:
     void start(const RealTime&);
     void stop(const RealTime&);
     void scale_time_passage(const TimePassageSpeed&);
-    const AbsoluteTime now(const RealTime&);
+    const AbsoluteTime to_simulation_time(const RealTime&);
+    const RealTime to_realtime(const AbsoluteTime&);
     bool is_turned_on();
 };
 

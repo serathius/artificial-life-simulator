@@ -3,27 +3,27 @@
 #include "model/simulation_clock.h"
 
 
-SimulationClock::SimulationClock(const AbsoluteTime& simulation_time, 
-    const RealTime& real_time) : simulation_time(simulation_time), 
-        real_time(real_time), time_passage_speed(TimePassageSpeed(1.0)),
+SimulationClock::SimulationClock(const AbsoluteTime& simulation_time,
+    const RealTime& realtime) : simulation_time(simulation_time),
+        realtime(realtime), time_passage_speed(TimePassageSpeed(1.0)),
         turned_on(false)
 {
 
 }
 
-void SimulationClock::start(const RealTime& real_time)
+void SimulationClock::start(const RealTime& realtime)
 {
     assert(this->turned_on == false);
-    this->real_time = real_time;
+    this->realtime = realtime;
     this->turned_on = true;
 }
 
-void SimulationClock::stop(const RealTime& real_time)
+void SimulationClock::stop(const RealTime& realtime)
 {
     assert(this->turned_on == true);
-    assert(real_time >= this->real_time);
-    auto time_passed = real_time - this->real_time;
-    this->real_time = real_time;
+    assert(realtime >= this->realtime);
+    auto time_passed = realtime - this->realtime;
+    this->realtime = realtime;
     this->simulation_time = (time_passed * this->time_passage_speed +
         this->simulation_time);
     this->turned_on = false;
@@ -35,12 +35,12 @@ void SimulationClock::scale_time_passage(const TimePassageSpeed& scale)
     this->time_passage_speed = this->time_passage_speed * scale;
 }
 
-const AbsoluteTime SimulationClock::now(const RealTime& real_time)
+const AbsoluteTime SimulationClock::to_simulation_time(const RealTime& realtime)
 {
-    assert(real_time >= this->real_time);
+    assert(realtime >= this->realtime);
     if(this->turned_on)
     {
-        auto time_passed = real_time - this->real_time;
+        auto time_passed = realtime - this->realtime;
         return time_passed * this->time_passage_speed + this->simulation_time;
     }
     else
