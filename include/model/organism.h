@@ -4,6 +4,7 @@
 #include <memory>
 
 #include "world.h"
+#include "genotype.h"
 #include "decision.h"
 
 
