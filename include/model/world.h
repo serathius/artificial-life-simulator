@@ -1,14 +1,12 @@
 #ifndef WORLD_H
 #define WORLD_H
 
-class World;
-class WorldObjectsCollection;
-class WorldObject;
-
-
 #include <memory>
 #include <set>
 
+class World;
+class WorldObjectsCollection;
+class WorldObject;
 typedef std::set<std::unique_ptr<WorldObject>>::iterator
     ObjectCollectionIterator;
 

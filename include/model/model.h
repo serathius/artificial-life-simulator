@@ -1,18 +1,18 @@
 #ifndef MODEL_H
 #define MODEL_H
 
+#include <memory>
+#include <set>
+
 class EventObject;
 class EventObjectCollection;
 class Model;
 class ModelObject;
 class World;
-
-#include <memory>
-#include <set>
+typedef std::set<EventObject*>::iterator EventObjectIterator;
 
 #include "simulation_clock.h"
 
-typedef std::set<EventObject*>::iterator EventObjectIterator;
 
 class EventObjectCollection
 {
@@ -20,8 +20,8 @@ private:
     std::set<EventObject*> event_objects;
 
 public:
-    EventObjectIterator begin();
-    EventObjectIterator end();
+    EventObjectIterator begin() const;
+    EventObjectIterator end() const;
     void add(EventObject*);
     void remove(EventObject*);
 };
