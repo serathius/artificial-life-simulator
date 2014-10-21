@@ -52,6 +52,7 @@ class EventObject : public ModelObject
 public:
     EventObject();
     virtual AbsoluteTime& get_next_event_time() = 0;
+    virtual void update(const AbsoluteTime&) = 0;
 };
 
 #include "world.h"
