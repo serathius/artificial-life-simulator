@@ -1,38 +1,19 @@
-#include <memory>
-
 #ifndef WORLD_H
 #define WORLD_H
 
-class World
-{
-private:
-    Model* const Model model;
-    const CoordinatesSystem coordinates_system;
-    ObjectsCollection objects;
-
-public:
-    World(Model* const);
-    void update(const AbsoluteTime&);
-    const AbsoluteTime get_next_event_time() const;
-    void register(WorldObject* const);
-};
+class World;
+class WorldObjectsCollection;
+class WorldObject;
 
 
-class ObjectsCollection
-{
-private:
-    std::vector<std::unique_ptr<Object>> objects;
+#include <memory>
+#include <set>
 
-public:
-    ObjectsCollection();
-    ~ObjectsCollection();
-    typedef std::vector<std::unique_ptr<Object>>::iterator
-        ObjectCollectionIterator;
-    ObjectsCollectionIterator& begin();
-    ObjectsCollectionIterator& iterator end();
-    void add(WorldObject*);
-    void remove(WorldObject*);
-};
+typedef std::set<std::unique_ptr<WorldObject>>::iterator
+    ObjectCollectionIterator;
+
+#include "model.h"
+#include "coodinates_system.h"
 
 
 class WorldObject : public ModelObject
@@ -43,7 +24,34 @@ private:
     UnitVector direction;
 
 public:
-    WorldObject(World* const, const Coordinates&, const UnitVector&)
+    WorldObject(World* const, const Coordinates&, const UnitVector&);
+};
+
+
+class WorldObjectsCollection
+{
+private:
+    std::set<std::unique_ptr<WorldObject>> objects;
+
+public:
+    ObjectCollectionIterator begin();
+    ObjectCollectionIterator end();
+    void add(WorldObject*);
+    void remove(WorldObject*);
+};
+
+
+class World
+{
+private:
+    Model* const model;
+    const CoordinatesSystem coordinates_system;
+    WorldObjectsCollection objects;
+
+public:
+    World(Model* const);
+    void update(const AbsoluteTime&);
+    const AbsoluteTime get_next_event_time() const;
 };
 
 #endif
