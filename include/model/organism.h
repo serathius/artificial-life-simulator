@@ -3,22 +3,17 @@
 
 #include "world.h"
 
+
 class Organism
 {
     OrganismBody body;
     OrganismCondition condition;
-    const OrganismGenotype genotype;
+    const Genotype genotype;
     const OrganismLogic logic;
-
 };
 
 
 class OrganismBody: public WorldObject, public EventObject
-{
-};
-
-
-class OrganismGenotype
 {
 };
 
