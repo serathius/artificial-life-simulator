@@ -2,14 +2,17 @@
 #define ORGANISM_H
 
 #include "world.h"
+#include "decision.h"
 
 
 class Organism
 {
+private:
     OrganismBody body;
     OrganismCondition condition;
     const Genotype genotype;
     const OrganismLogic logic;
+    void do_decision(const Decision* const);
 };
 
 
@@ -22,7 +25,8 @@ class OrganismLogic
 {
 public:
     explicit Logic(const Genotype&);
-    Decision* const makeDecision(const OrganismCondition&, const tuple<OrganismUnderstoodWorldInformation>&);
+    const Decision* const makeDecision(const OrganismCondition&,
+        const tuple<OrganismUnderstoodWorldInformation>&);
 
 };
 
