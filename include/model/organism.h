@@ -4,14 +4,17 @@
 #include <memory>
 
 #include "world.h"
+#include "decision.h"
 
 
 class Organism
 {
+private:
     OrganismBody body;
     OrganismCondition condition;
     const Genotype genotype;
     const OrganismLogic logic;
+    void do_decision(const Decision* const);
 };
 
 
