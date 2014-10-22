@@ -1,9 +1,9 @@
+#ifndef EVENT_QUEUE_H
+#define EVENT_QUEUE_H
+
 #include <queue>
 #include <mutex>
 #include <condition_variable>
-
-#ifndef EVENT_QUEUE_H
-#define EVENT_QUEUE_H
 
 #include "events.h"
 
