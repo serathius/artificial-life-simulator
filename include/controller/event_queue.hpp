@@ -2,8 +2,10 @@
 #include <mutex>
 #include <condition_variable>
 
-#ifndef BLOCKING_QUEUE_H
-#define BLOCKING_QUEUE_H
+#ifndef EVENT_QUEUE_H
+#define EVENT_QUEUE_H
+
+#include "events.h"
 
 /*
 --------------------WARNING-------------------
@@ -41,5 +43,7 @@ public:
         return item;
     }
 };
+
+typedef BlockingQueue<Event*> EventQueue;
 
 #endif

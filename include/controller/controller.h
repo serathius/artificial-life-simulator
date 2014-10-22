@@ -2,14 +2,14 @@
 #include <typeinfo>
 #include <typeindex>
 
-#include "controller/blocking_queue.hpp"
-#include "controller/events.h"
+#include "controller/event_queue.hpp"
+
 
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
 
 class ControllerStrategy;
-typedef BlockingQueue<Event*> EventQueue;
+
 
 
 class Controller

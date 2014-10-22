@@ -1,7 +1,7 @@
 #ifndef VIEW_H
 #define VIEW_H
 
-#include "controller/blocking_queue.hpp"
+#include "controller/event_queue.hpp"
 
 class View
 {
