@@ -1,15 +1,13 @@
+#ifndef CONTROLLER_H
+#define CONTROLLER_H
+
 #include <unordered_map>
 #include <typeinfo>
 #include <typeindex>
 
-#include "controller/event_queue.hpp"
-
-
-#ifndef CONTROLLER_H
-#define CONTROLLER_H
-
 class ControllerStrategy;
 
+#include "controller/event_queue.hpp"
 
 
 class Controller
