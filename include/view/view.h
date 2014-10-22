@@ -6,8 +6,8 @@
 class View
 {
 private:
-    typedef BlockingQueue<Event*> EventQueue;
     EventQueue* const event_queue;
+
 public:
     View(EventQueue * const);
 };
