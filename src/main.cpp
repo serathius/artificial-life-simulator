@@ -1,3 +1,5 @@
+#include <memory>
+
 #include "view/view.h"
 
 int main(int argc, char** argv)
