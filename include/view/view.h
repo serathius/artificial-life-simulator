@@ -2,6 +2,7 @@
 #define VIEW_H
 
 #include <thread>
+#include <memory>
 
 #include "controller/event_queue.hpp"
 #include "window.h"
