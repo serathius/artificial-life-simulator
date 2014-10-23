@@ -1,7 +1,11 @@
-#include <iostream>
+#include "view/view.h"
 
-
-int main() {
-    std::cout << "Hello, World!" << std::endl;
+int main(int argc, char** argv)
+{
+    std::unique_ptr<EventQueue> queue =
+        std::unique_ptr<EventQueue>(new EventQueue);
+    std::unique_ptr<View> view = std::unique_ptr<View>(new View(queue.get()));
+    view->start();
+    view->join();
     return 0;
 }
