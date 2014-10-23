@@ -1,8 +1,9 @@
 #include "view/window.h"
 
+
 Window::Window(const char* name, int width, int height)
 {
-    this->window_handle = glfwCreateWindow(width, height, name, NULL, NULL);
+    this->window_handle = glfwCreateWindow(width, height, name, nullptr, nullptr);
     if (!this->window_handle)
     {
         glfwTerminate();
