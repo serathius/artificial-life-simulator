@@ -1,0 +1,25 @@
+include makefile.conf
+
+
+SRCDIRS = $(shell find $(SRCDIR) -type d)
+DIRS = $(patsubst $(SRCDIR)%,$(BUILDDIR)%,$(SRCDIRS)) $(BINDIR)
+SOURCES = $(filter-out $(SRCDIR)/main.$(SRCEXT),$(shell find $(SRCDIR) -type f -name '*.$(SRCEXT)'))
+OBJECTS = $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCEXT)=.o))
+
+TEST_SOURCES = $(shell find $(TESTDIR) -type f -name '*.$(SRCEXT)')
+TEST_OBJECTS = $(patsubst $(TESTDIR)/%,$(BUILDDIR)/%,$(TEST_SOURCES:.$(SRCEXT)=.o))
+
+
+all: $(DIRS) $(TEST_TARGET)
+
+$(DIRS):
+	$(MKDIR) $(DIRS)
+
+$(TEST_TARGET): $(OBJECTS) $(TEST_OBJECTS)
+	$(CXX) $^ -o $(TEST_TARGET) $(LIBS) $(CFLAGS)
+
+$(BUILDDIR)/%.o: $(SRCDIR)/%.$(SRCEXT)
+	$(CXX) -c $< -o $@ $(INCLUDE) $(CFLAGS)
+
+$(BUILDDIR)/%.o: $(TESTDIR)/%.$(SRCEXT)
+	$(CXX) -c $< -o $@ $(INCLUDE) $(CFLAGS)

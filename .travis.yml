@@ -7,5 +7,4 @@ install:
   - export CXX="g++-4.8"
   - sudo apt-get install zip
   - sudo apt-get install xorg-dev libglu1-mesa-dev
-  - ./install.sh
 script: ./run_tests.sh
