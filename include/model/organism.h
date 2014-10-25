@@ -2,6 +2,7 @@
 #define ORGANISM_H
 
 #include <memory>
+#include <functional>
 
 #include "world.h"
 #include "genotype.h"
@@ -21,8 +22,10 @@ private:
 
 class OrganismBody: public WorldObject, public EventObject
 {
+	unique_ptr <std::function> draw;
     void realise(const std::unique_ptr<const Decision>);
     void update(const AbsoluteTime&);
+    OrganismBody(std::function);
 };
 
 
