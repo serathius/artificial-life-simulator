@@ -22,6 +22,7 @@ private:
 class OrganismBody: public WorldObject, public EventObject
 {
     void realise(const std::unique_ptr<const Decision>);
+    void update(const AbsoluteTime&);
 };
 
 
