@@ -48,7 +48,6 @@ private:
 
 public:
     World(Model* const);
-    void update(const AbsoluteTime&);
     const AbsoluteTime get_next_event_time() const;
 };
 
