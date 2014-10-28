@@ -30,8 +30,11 @@ private:
     const float x;
     const float y;
     const float z;
+    const float a;
+    const float b;
+    const float c;
 public:
-    BoxShape(float, float, float);
+    BoxShape(float, float, float, float, float, float);
 };
 
 
