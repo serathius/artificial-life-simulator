@@ -9,7 +9,7 @@ class EventObjectCollection;
 class Model;
 class ModelObject;
 class World;
-typedef std::set<EventObject*>::iterator EventObjectIterator;
+
 
 #include "simulation_clock.h"
 
@@ -20,8 +20,9 @@ private:
     std::set<EventObject*> event_objects;
 
 public:
-    EventObjectIterator begin() const;
-    EventObjectIterator end() const;
+    typedef std::set<EventObject*>::iterator Iterator;
+    Iterator begin() const;
+    Iterator end() const;
     void add(EventObject*);
     void remove(EventObject*);
 };
