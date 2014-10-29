@@ -12,8 +12,8 @@ const Coordinates& CoordinatesSystem::get_coordinates(float, float) const
     
 }
 
-Coordinates::Coordinates(float x, float y, const CoordinatesSystem* const system) :
-x(x), y(y), system(system)
+Coordinates::Coordinates(float x, float y, const CoordinatesSystem* const system)
+    : x(x), y(y), system(system)
 {
     
 }
