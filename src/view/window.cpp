@@ -1,3 +1,5 @@
+#include <GLFW/glfw3.h>
+
 #include "view/window.h"
 
 
@@ -20,12 +22,14 @@ void Window::show()
 {
     glfwMakeContextCurrent(this->window_handle);
     glfwSwapInterval(1);
+
     while (!glfwWindowShouldClose(this->window_handle))
     {
         int width, height;
         glfwGetFramebufferSize(this->window_handle, &width, &height);
         this->draw(width, height);
         glfwPollEvents();
+        glfwSwapBuffers(this->window_handle);
     }
 }
 
