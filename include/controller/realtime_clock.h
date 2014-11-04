@@ -31,6 +31,7 @@ public:
 
 class RealTime
 {
+    friend class RealTimeDifference;
 public:
     typedef std::chrono::time_point<std::chrono::steady_clock> TimePoint;
 private:

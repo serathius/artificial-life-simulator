@@ -45,3 +45,13 @@ const TimeDifference RealTimeDifference::operator*(
             this->duration).count());
     return TimeDifference(duration_in_nanoseconds * passage.speed);
 }
+
+const RealTime RealTimeDifference::operator+(const RealTime& other) const
+{
+    return RealTime(this->duration + other.time_point);
+}
+
+bool RealTime::operator== (const RealTime& other) const
+{
+    return this->time_point == other.time_point;
+}

@@ -152,3 +152,12 @@ TEST(RealTimeTest, test_real_time_ge3)
     RealTime stop = RealTime(RealTime::TimePoint(std::chrono::seconds(1)));
     ASSERT_FALSE(stop >= start);
 }
+
+TEST(RealTimeDifferenceTest, test_add_realtime)
+{
+    RealTimeDifference time_passed(
+        RealTimeDifference::Duration(std::chrono::seconds(1)));
+    RealTime begin = RealTime(RealTime::TimePoint(std::chrono::seconds(1)));
+    RealTime end = time_passed + begin;
+    ASSERT_EQ(end, RealTime(RealTime::TimePoint(std::chrono::seconds(2))));
+}
