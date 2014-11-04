@@ -21,7 +21,6 @@ public:
     TimeDifference(long long);
     const AbsoluteTime operator+(const AbsoluteTime&) const;
     const RealTimeDifference operator/(const TimePassageSpeed&) const;
-    const TimePassageSpeed operator/(const RealTimeDifference&) const;
     bool operator==(const TimeDifference&) const;
     bool operator!=(const TimeDifference&) const;
     bool operator>(const TimeDifference&) const;
