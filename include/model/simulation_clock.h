@@ -1,6 +1,8 @@
 #ifndef CLOCK_H
 #define CLOCK_H
 
+#include <exception>
+
 class AbsoluteTime;
 class TimeDifference;
 class TimePassageSpeed;
@@ -76,4 +78,9 @@ public:
     bool is_turned_on();
 };
 
+
+class InfiniteRealTime : public std::exception
+{
+
+};
 #endif

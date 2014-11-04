@@ -192,3 +192,30 @@ TEST(TimeDifferenceTest, test_dividing_by_time_passage)
     ASSERT_EQ(RealTimeDifference(RealTimeDifference::Duration(
             std::chrono::nanoseconds(1))), realtime_passed);
 }
+
+TEST(SimulationClockTest, test_to_realtime_asserts_time_didnt_shift)
+{
+    AbsoluteTime simulation_start(1);
+    RealTime realtime_start(RealTime::TimePoint(std::chrono::seconds(1)));
+    SimulationClock clock(simulation_start, realtime_start);
+    ASSERT_DEATH(clock.to_realtime(AbsoluteTime(0)), "");
+}
+
+
+TEST(SimulationClockTest, test_to_realtime_throws_when_clock_stopped)
+{
+    AbsoluteTime simulation_start(1);
+    RealTime realtime_start(RealTime::TimePoint(std::chrono::seconds(1)));
+    SimulationClock clock(simulation_start, realtime_start);
+    ASSERT_THROW(clock.to_realtime(AbsoluteTime(1)), InfiniteRealTime);
+}
+
+TEST(SimulationClockTest, test_to_realtime)
+{
+    AbsoluteTime simulation_start(0);
+    RealTime realtime_start(RealTime::TimePoint(std::chrono::seconds(0)));
+    SimulationClock clock(simulation_start, realtime_start);
+    clock.start(realtime_start);
+    ASSERT_EQ(RealTime(RealTime::TimePoint(std::chrono::nanoseconds(1))),
+        clock.to_realtime(AbsoluteTime(1)));
+}

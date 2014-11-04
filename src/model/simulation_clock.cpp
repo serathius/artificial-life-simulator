@@ -49,6 +49,18 @@ const AbsoluteTime SimulationClock::to_simulation_time(const RealTime& realtime)
     }
 }
 
+const RealTime SimulationClock::to_realtime(const AbsoluteTime& actual_time)
+{
+    assert(actual_time >= this->simulation_time);
+    if(this->turned_on)
+    {
+        auto time_difference = actual_time - this->simulation_time;
+        return time_difference / this->time_passage_speed + this->realtime;
+    }
+    else
+        throw InfiniteRealTime();
+}
+
 bool SimulationClock::is_turned_on()
 {
     return this->turned_on;
