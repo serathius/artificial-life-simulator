@@ -109,3 +109,9 @@ const TimePassageSpeed TimePassageSpeed::operator*(
 {
     return TimePassageSpeed(this->speed * other.speed);
 }
+
+
+float TimePassageSpeed::get_time_passage_speed() const
+{
+    return this->speed;
+}
