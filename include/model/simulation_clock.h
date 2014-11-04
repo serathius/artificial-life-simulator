@@ -41,7 +41,6 @@ public:
     bool operator!=(const AbsoluteTime&) const;
     bool operator>(const AbsoluteTime&) const;
     bool operator>=(const AbsoluteTime&) const;
-
 };
 
 
