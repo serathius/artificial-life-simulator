@@ -120,3 +120,13 @@ bool AbsoluteTime::operator >=(const AbsoluteTime& other) const
 {
     return this->nano_seconds >= other.nano_seconds;
 }
+
+const RealTimeDifference TimeDifference::operator/(
+    const TimePassageSpeed& time_passage_speed) const
+{
+    float nanoseconds_passed = this->nano_seconds
+        / time_passage_speed.get_time_passage_speed();
+    RealTimeDifference::Duration realtime_passed =
+        std::chrono::nanoseconds((unsigned long long)nanoseconds_passed);
+    return RealTimeDifference(realtime_passed);
+}

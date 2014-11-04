@@ -182,3 +182,13 @@ TEST(AbsoluteTimeTest, test_gte3)
     AbsoluteTime bigger(2);
     ASSERT_FALSE(lesser >= bigger);
 }
+
+TEST(TimeDifferenceTest, test_dividing_by_time_passage)
+{
+    TimeDifference simulation_time_passed(2);
+    TimePassageSpeed time_passage_speed(2.0);
+    RealTimeDifference realtime_passed = (
+        simulation_time_passed / time_passage_speed);
+    ASSERT_EQ(RealTimeDifference(RealTimeDifference::Duration(
+            std::chrono::nanoseconds(1))), realtime_passed);
+}
