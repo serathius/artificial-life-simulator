@@ -161,3 +161,24 @@ TEST(RealTimeDifferenceTest, test_add_realtime)
     RealTime end = time_passed + begin;
     ASSERT_EQ(end, RealTime(RealTime::TimePoint(std::chrono::seconds(2))));
 }
+
+TEST(AbsoluteTimeTest, test_gte1)
+{
+    AbsoluteTime lesser(1);
+    AbsoluteTime bigger(2);
+    ASSERT_TRUE(bigger >= lesser);
+}
+
+TEST(AbsoluteTimeTest, test_gte2)
+{
+    AbsoluteTime first(1);
+    AbsoluteTime second(1);
+    ASSERT_TRUE(first >= second);
+}
+
+TEST(AbsoluteTimeTest, test_gte3)
+{
+    AbsoluteTime lesser(1);
+    AbsoluteTime bigger(2);
+    ASSERT_FALSE(lesser >= bigger);
+}

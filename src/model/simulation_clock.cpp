@@ -115,3 +115,8 @@ float TimePassageSpeed::get_time_passage_speed() const
 {
     return this->speed;
 }
+
+bool AbsoluteTime::operator >=(const AbsoluteTime& other) const
+{
+    return this->nano_seconds >= other.nano_seconds;
+}
