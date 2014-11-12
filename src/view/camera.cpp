@@ -4,6 +4,9 @@
 
 #include "view/camera.h"
 
+Camera::Camera() {
+}
+
 void Camera::look()
 {
     float x = position.x - target.x;
@@ -34,6 +37,11 @@ void Camera::move(float axis_x, float axis_y, float axis_z)
     look();
 }
 
+void Camera::set_depth(float depth)
+{
+    far = near + depth;
+    glFrustum(height,height,width,width,near,far);
+}
 
 void Camera::set_position(float axis_x, float axis_y, float axis_z)
 {
@@ -43,6 +51,14 @@ void Camera::set_position(float axis_x, float axis_y, float axis_z)
     look();
 }
 
+void Camera::set_perspective(float w, float h, float d)
+{
+    width = w;
+    height = h;
+    far = near + d;
+    glFrustum(height,height,width,width,near,far);
+
+}
 
 void Camera::set_target(float axis_x, float axis_y, float axis_z)
 {
@@ -52,6 +68,8 @@ void Camera::set_target(float axis_x, float axis_y, float axis_z)
     look();
 }
 
-
-
-
+void Camera::set_zoom(float n)
+{
+    near = n;
+    glFrustum(height,height,width,width,near,far);
+}
