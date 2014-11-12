@@ -51,11 +51,12 @@ void Camera::set_position(float axis_x, float axis_y, float axis_z)
     look();
 }
 
-void Camera::set_perspective(float w, float h, float d)
+void Camera::set_perspective(float view_width, float view_height,
+                             float view_depth)
 {
-    width = w;
-    height = h;
-    far = near + d;
+    width = view_width;
+    height = view_height;
+    far = near + view_depth;
     glFrustum(height,height,width,width,near,far);
 
 }
