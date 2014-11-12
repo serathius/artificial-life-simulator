@@ -4,7 +4,11 @@
 
 #include "view/camera.h"
 
-Camera::Camera() {
+Camera::Camera() : near(1), far(3), width(1), height(9/16)
+{
+    view::Coordinates first_target(1, 1, 1);
+    target = first_target;
+    look();
 }
 
 void Camera::look()
@@ -73,4 +77,14 @@ void Camera::set_zoom(float n)
 {
     near = n;
     glFrustum(height,height,width,width,near,far);
+}
+
+view::Coordinates::Coordinates(float var_x = 0, float var_y = 0, float var_z = 0)
+{
+    x = var_x;
+    y = var_y;
+    z = var_z;
+}
+view::Coordinates::Coordinates(): x(0), y(0), z(0)
+{
 }

@@ -11,11 +11,14 @@
 namespace view
 {
 
-    struct Coordinates
+    class Coordinates
     {
+    public:
         float x;
         float y;
         float z;
+        Coordinates();
+        Coordinates(float, float, float);
 
     };
 
