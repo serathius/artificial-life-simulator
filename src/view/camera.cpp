@@ -6,15 +6,23 @@
 
 void Camera::look()
 {
-    Coordinates up_vector;
     float x = position.x - target.x;
     float y = position.y - target.y;
     float z = position.z - target.z;
+
+    view::Coordinates up_vector = get_orthagonal(x, y ,z);
+
+    gluLookAt(position.x, position.y, position.z, target.x, target.y, target.z,
+              up_vector.x, up_vector.y, up_vector.z);
+}
+
+view::Coordinates get_orthagonal(float x, float y, float z)
+{
+    view::Coordinates up_vector;
     up_vector.x = ( -x / std::sqrt( x*x + y*y ) ) * z;
     up_vector.y = ( -y / std::sqrt( x*x + y*y ) ) * z;
     up_vector.z = std::sqrt( x*x + y*y );
-    gluLookAt(position.x, position.y, position.z, target.x, target.y, target.z,
-              up_vector.x, up_vector.y, up_vector.z);
+    return up_vector;
 }
 
 
@@ -43,12 +51,6 @@ void Camera::set_target(float axis_x, float axis_y, float axis_z)
     target.z = axis_z;
     look();
 }
-/*
- * camera.cpp
- *
- *  Created on: 12 lis 2014
- *      Author: matfil
- */
 
 
 

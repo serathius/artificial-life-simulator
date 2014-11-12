@@ -8,19 +8,24 @@
 #ifndef CAMERA_H_
 #define CAMERA_H_
 
+namespace view
+{
+
+    struct Coordinates
+    {
+        float x;
+        float y;
+        float z;
+
+    };
 
 
+}
 class Camera
 {
 private:
-    struct Coordinates
-        {
-            float x;
-            float y;
-            float z;
-        };
-    Coordinates position;
-    Coordinates target;
+    view::Coordinates position;
+    view::Coordinates target;
     void look();
 
 public:
