@@ -17,13 +17,13 @@ void Camera::look()
     float y = position.y - target.y;
     float z = position.z - target.z;
 
-    view::Coordinates up_vector = get_orthagonal(x, y ,z);
+    view::Coordinates up_vector = get_orthogonal(x, y ,z);
 
     gluLookAt(position.x, position.y, position.z, target.x, target.y, target.z,
               up_vector.x, up_vector.y, up_vector.z);
 }
 
-view::Coordinates get_orthagonal(float x, float y, float z)
+view::Coordinates get_orthogonal(float x, float y, float z)
 {
     view::Coordinates up_vector;
     up_vector.x = ( -x / std::sqrt( x*x + y*y ) ) * z;

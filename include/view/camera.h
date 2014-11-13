@@ -1,9 +1,3 @@
-/*
- * camera.h
- *
- *  Created on: 12 lis 2014
- *      Author: matfil
- */
 
 #ifndef CAMERA_H_
 #define CAMERA_H_
@@ -24,7 +18,7 @@ namespace view
 
 
 }
-view::Coordinates get_orthagonal(float x, float y, float z);
+view::Coordinates get_orthogonal(float x, float y, float z);
 
 
 class Camera
