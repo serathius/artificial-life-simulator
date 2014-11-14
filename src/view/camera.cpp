@@ -3,6 +3,7 @@
 #include <GL/glu.h>
 
 #include "view/camera.h"
+#include "view/coordinates3d.h"
 
 Camera::Camera() : near(1), far(3), width(1), height(9/16)
 {
@@ -13,31 +14,17 @@ Camera::Camera() : near(1), far(3), width(1), height(9/16)
 
 void Camera::look()
 {
-    float x = position.x - target.x;
-    float y = position.y - target.y;
-    float z = position.z - target.z;
 
-    view::Coordinates up_vector = get_orthogonal(x, y ,z);
+    view::Vector up_vector = get_orthogonal(target - position);
 
     gluLookAt(position.x, position.y, position.z, target.x, target.y, target.z,
               up_vector.x, up_vector.y, up_vector.z);
 }
 
-view::Coordinates get_orthogonal(float x, float y, float z)
-{
-    view::Coordinates up_vector;
-    up_vector.x = ( -x / std::sqrt( x*x + y*y ) ) * z;
-    up_vector.y = ( -y / std::sqrt( x*x + y*y ) ) * z;
-    up_vector.z = std::sqrt( x*x + y*y );
-    return up_vector;
-}
 
-
-void Camera::move(float axis_x, float axis_y, float axis_z)
+void Camera::move(view::Vector& vector)
 {
-    position.x += axis_x;
-    position.y += axis_y;
-    position.z += axis_z;
+    position = position + vector;
     look();
 }
 
@@ -47,11 +34,9 @@ void Camera::set_depth(float depth)
     glFrustum(height,height,width,width,near,far);
 }
 
-void Camera::set_position(float axis_x, float axis_y, float axis_z)
+void Camera::set_position(view::Coordinates point)
 {
-    position.x = axis_x;
-    position.y = axis_y;
-    position.z = axis_z;
+    position = point;
     look();
 }
 
@@ -65,12 +50,19 @@ void Camera::set_perspective(float view_width, float view_height,
 
 }
 
-void Camera::set_target(float axis_x, float axis_y, float axis_z)
+void Camera::set_target(view::Coordinates point)
 {
-    target.x = axis_x;
-    target.y = axis_y;
-    target.z = axis_z;
+    target = point;
     look();
+}
+
+void Camera::move_to(view::Coordinates coordinates)
+{
+    view::Vector vector;
+    vector = coordinates - position;
+    this->move(vector);
+
+
 }
 
 void Camera::set_zoom(float n)
@@ -79,12 +71,3 @@ void Camera::set_zoom(float n)
     glFrustum(height,height,width,width,near,far);
 }
 
-view::Coordinates::Coordinates(float var_x = 0, float var_y = 0, float var_z = 0)
-{
-    x = var_x;
-    y = var_y;
-    z = var_z;
-}
-view::Coordinates::Coordinates(): x(0), y(0), z(0)
-{
-}

@@ -2,23 +2,9 @@
 #ifndef CAMERA_H_
 #define CAMERA_H_
 
-namespace view
-{
+#include "view/coordinates3d.h"
 
-    class Coordinates
-    {
-    public:
-        float x;
-        float y;
-        float z;
-        Coordinates();
-        Coordinates(float, float, float);
-
-    };
-
-
-}
-view::Coordinates get_orthogonal(float x, float y, float z);
+view::Vector get_orthogonal(const view::Vector&);
 
 
 class Camera
@@ -32,11 +18,12 @@ private:
 
 public:
     Camera();
-    void move(float,float,float);
+    void move(view::Vector&);
+    void move_to(view::Coordinates);
     void set_depth(float);
-    void set_perspective(float,float,float);
-    void set_position(float,float,float);
-    void set_target(float,float,float);
+    void set_perspective(float, float, float);
+    void set_position(view::Coordinates);
+    void set_target(view::Coordinates);
     void set_zoom(float);
 };
 
