@@ -27,6 +27,10 @@ void Window::show()
     {
         int width, height;
         glfwGetFramebufferSize(this->window_handle, &width, &height);
+
+        glClear( GL_COLOR_BUFFER_BIT);
+        glLoadIdentity();
+
         this->draw(width, height);
         glfwPollEvents();
         glfwSwapBuffers(this->window_handle);
