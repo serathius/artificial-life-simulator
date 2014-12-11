@@ -3,7 +3,6 @@
 #ifndef EVENTS_H
 #define EVENTS_H
 
-using namespace std;
 class Event
 {
 public:
@@ -13,11 +12,11 @@ public:
 class StringEvent: public Event
 {
 private:
-    string message;
+    std::string message;
 public:
     virtual ~StringEvent();
-    virtual string getMessage();
-        StringEvent(string message);
+    virtual std::string getMessage();
+        StringEvent(std::string message);
 };
 
 #endif
