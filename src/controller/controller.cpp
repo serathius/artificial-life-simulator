@@ -7,7 +7,7 @@
 
 Controller::Controller(EventQueue* const event_queue) : event_queue(event_queue)
 {
-    this->strategyMap.insert(std::make_pair<std::type_index, StringStrategy*>
+    strategyMap.insert(std::make_pair<std::type_index, StringStrategy*>
             (std::type_index(typeid(StringEvent)), new StringStrategy()));
 }
 

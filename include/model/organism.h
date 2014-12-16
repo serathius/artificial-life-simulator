@@ -7,14 +7,13 @@
 #include "genotype.h"
 #include "decision.h"
 
-
 class Organism
 {
 private:
-    OrganismBody body;
-    OrganismCondition condition;
-    const Genotype genotype;
-    const OrganismLogic logic;
+    OrganismBody body_;
+    OrganismCondition condition_;
+    const Genotype genotype_;
+    const OrganismLogic logic_;
     void do_decision(const Decision* const);
 };
 
@@ -28,7 +27,7 @@ class OrganismBody: public WorldObject, public EventObject
 class OrganismLogic
 {
 private:
-    AbsoluteTime last_decision_time;
+    AbsoluteTime last_decision_time_;
 
 public:
     explicit Logic(const Genotype&);

@@ -16,7 +16,7 @@ private:
 public:
     virtual ~StringEvent();
     virtual std::string getMessage();
-        StringEvent(std::string message);
+    StringEvent(std::string message);
 };
 
 #endif

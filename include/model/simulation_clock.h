@@ -15,7 +15,7 @@ class TimeDifference
     friend class AbsoluteTime;
     friend class RealTimeDifference;
 private:
-    long long nano_seconds;
+    long long nano_seconds_;
 
 public:
     TimeDifference(long long);
@@ -32,7 +32,7 @@ class AbsoluteTime
     friend class SimulationClock;
     friend class TimeDifference;
 private:
-    unsigned long long nano_seconds;
+    unsigned long long nano_seconds_;
 
 public:
     AbsoluteTime(unsigned long long);
@@ -48,7 +48,7 @@ class TimePassageSpeed
 {
 friend class RealTimeDifference;
 private:
-    float speed;
+    float speed_;
 
 public:
     TimePassageSpeed(float);
@@ -61,10 +61,10 @@ public:
 class SimulationClock
 {
 private:
-    AbsoluteTime simulation_time;
-    RealTime realtime;
-    TimePassageSpeed time_passage_speed;
-    bool turned_on;
+    AbsoluteTime simulation_time_;
+    RealTime realtime_;
+    TimePassageSpeed time_passage_speed_;
+    bool turned_on_;
 
 public:
     SimulationClock(const AbsoluteTime&, const RealTime&);

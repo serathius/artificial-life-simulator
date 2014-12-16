@@ -3,12 +3,12 @@
 #include "controller/events.h"
 
 
-StringEvent::StringEvent(string message)
+StringEvent::StringEvent(std::string message_text)
 {
-    this->message = message;
+	message = message_text;
 }
 
-string StringEvent::getMessage()
+std::string StringEvent::getMessage()
 {
     return message;
 }

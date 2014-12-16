@@ -10,8 +10,8 @@ class Genotype
 class GenotypeMixer
 {
 private:
-	const Genotype& a;
-	const Genotype& b;
+	const Genotype& a_;
+	const Genotype& b_;
 
 public:
 	GenotypeMixer(const Genotype&, const Genotype&);

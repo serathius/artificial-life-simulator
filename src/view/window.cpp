@@ -5,8 +5,8 @@
 
 Window::Window(const char* name, int width, int height)
 {
-    this->window_handle = glfwCreateWindow(width, height, name, nullptr, nullptr);
-    if (!this->window_handle)
+    window_handle_ = glfwCreateWindow(width, height, name, nullptr, nullptr);
+    if (!window_handle_)
     {
         glfwTerminate();
         std::exit(2);
@@ -15,25 +15,25 @@ Window::Window(const char* name, int width, int height)
 
 Window::~Window()
 {
-    glfwDestroyWindow(this->window_handle);
+    glfwDestroyWindow(window_handle_);
 }
 
 void Window::show()
 {
-    glfwMakeContextCurrent(this->window_handle);
+    glfwMakeContextCurrent(window_handle_);
     glfwSwapInterval(1);
 
-    while (!glfwWindowShouldClose(this->window_handle))
+    while (!glfwWindowShouldClose(window_handle_))
     {
         int width, height;
-        glfwGetFramebufferSize(this->window_handle, &width, &height);
+        glfwGetFramebufferSize(window_handle_, &width, &height);
 
         glClear( GL_COLOR_BUFFER_BIT);
         glLoadIdentity();
 
         this->draw(width, height);
         glfwPollEvents();
-        glfwSwapBuffers(this->window_handle);
+        glfwSwapBuffers(window_handle_);
     }
 }
 

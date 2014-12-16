@@ -17,7 +17,7 @@ class World;
 class EventObjectCollection
 {
 private:
-    std::set<EventObject*> event_objects;
+    std::set<EventObject*> event_objects_;
 
 public:
     typedef std::set<EventObject*>::iterator Iterator;
@@ -31,9 +31,9 @@ public:
 class Model
 {
 private:
-    std::unique_ptr<World> world;
-    std::unique_ptr<SimulationClock> clock;
-    EventObjectCollection event_objects;
+    std::unique_ptr<World> world_;
+    std::unique_ptr<SimulationClock> clock_;
+    EventObjectCollection event_objects_;
 
 public:
     void update(const RealTime&);

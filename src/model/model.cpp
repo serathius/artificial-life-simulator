@@ -2,8 +2,8 @@
 
 void Model::update(const RealTime& realtime)
 {
-    auto simulation_time = this->clock->to_simulation_time(realtime);
-    for (auto event_object: this->event_objects)
+    auto simulation_time = clock_->to_simulation_time(realtime);
+    for (auto event_object: event_objects_)
     {
         event_object->update(simulation_time);
     }
@@ -12,22 +12,22 @@ void Model::update(const RealTime& realtime)
 const RealTime Model::get_next_event_time() const
 {
     AbsoluteTime earliest_event_time =
-        (*this->event_objects.begin())->get_next_event_time();
-    for (auto event_object: this->event_objects)
+        (*event_objects_.begin())->get_next_event_time();
+    for (auto event_object: event_objects_)
     {
         auto event_time = event_object->get_next_event_time();
         if (earliest_event_time > event_time)
             earliest_event_time = event_time;
     }
-    return this->clock->to_realtime(earliest_event_time);
+    return clock_->to_realtime(earliest_event_time);
 }
 
 EventObjectCollection::Iterator EventObjectCollection::begin() const
 {
-    return this->event_objects.begin();
+    return event_objects_.begin();
 }
 
 EventObjectCollection::Iterator EventObjectCollection::end() const
 {
-    return this->event_objects.end();
+    return event_objects_.end();
 }

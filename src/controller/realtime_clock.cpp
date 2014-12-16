@@ -43,7 +43,7 @@ const TimeDifference RealTimeDifference::operator*(
     auto duration_in_nanoseconds = (
         std::chrono::duration_cast<std::chrono::nanoseconds>(
             this->duration).count());
-    return TimeDifference(duration_in_nanoseconds * passage.speed);
+    return TimeDifference(duration_in_nanoseconds * passage.speed_);
 }
 
 const RealTime RealTimeDifference::operator+(const RealTime& other) const

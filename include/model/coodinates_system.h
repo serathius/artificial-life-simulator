@@ -21,9 +21,9 @@ friend class CoordinatesSystem;
 friend class DistanceVector;
 
 private:
-    const CoordinatesSystem* const system;
-    const float x;
-    const float y;
+    const CoordinatesSystem* const system_;
+    const float x_;
+    const float y_;
 
     Coordinates(float, float, const CoordinatesSystem* const);
 
@@ -42,8 +42,8 @@ class Vector
     friend class UnitVector;
     friend class Coordinates;
 protected:
-    const float x;
-    const float y;
+    const float x_;
+    const float y_;
 
 public:
     Vector(float, float);

@@ -4,58 +4,58 @@
 
 
 SimulationClock::SimulationClock(const AbsoluteTime& simulation_time,
-    const RealTime& realtime) : simulation_time(simulation_time),
-        realtime(realtime), time_passage_speed(TimePassageSpeed(1.0)),
-        turned_on(false)
+    const RealTime& realtime) : simulation_time_(simulation_time),
+        realtime_(realtime), time_passage_speed_(TimePassageSpeed(1.0)),
+        turned_on_(false)
 {
 
 }
 
 void SimulationClock::start(const RealTime& realtime)
 {
-    assert(this->turned_on == false);
-    this->realtime = realtime;
-    this->turned_on = true;
+    assert(turned_on_ == false);
+    realtime_ = realtime;
+    turned_on_ = true;
 }
 
 void SimulationClock::stop(const RealTime& realtime)
 {
-    assert(this->turned_on == true);
-    assert(realtime >= this->realtime);
-    auto time_passed = realtime - this->realtime;
-    this->realtime = realtime;
-    this->simulation_time = (time_passed * this->time_passage_speed +
-        this->simulation_time);
-    this->turned_on = false;
+    assert(turned_on_ == true);
+    assert(realtime >= realtime_);
+    auto time_passed = realtime - realtime_;
+    realtime_ = realtime;
+    simulation_time_ = (time_passed * time_passage_speed_ +
+        simulation_time_);
+    turned_on_ = false;
 }
 
 void SimulationClock::scale_time_passage(const TimePassageSpeed& scale)
 {
-    assert(this->turned_on == false);
-    this->time_passage_speed = this->time_passage_speed * scale;
+    assert(turned_on_ == false);
+    time_passage_speed_ = time_passage_speed_ * scale;
 }
 
 const AbsoluteTime SimulationClock::to_simulation_time(const RealTime& realtime)
 {
-    assert(realtime >= this->realtime);
-    if(this->turned_on)
+    assert(realtime >= realtime_);
+    if(turned_on_)
     {
-        auto time_passed = realtime - this->realtime;
-        return time_passed * this->time_passage_speed + this->simulation_time;
+        auto time_passed = realtime - realtime_;
+        return time_passed * time_passage_speed_ + simulation_time_;
     }
     else
     {
-        return this->simulation_time;
+        return simulation_time_;
     }
 }
 
 const RealTime SimulationClock::to_realtime(const AbsoluteTime& actual_time)
 {
-    assert(actual_time >= this->simulation_time);
-    if(this->turned_on)
+    assert(actual_time >= simulation_time_);
+    if(turned_on_)
     {
-        auto time_difference = actual_time - this->simulation_time;
-        return time_difference / this->time_passage_speed + this->realtime;
+        auto time_difference = actual_time - simulation_time_;
+        return time_difference / time_passage_speed_ + realtime_;
     }
     else
         throw InfiniteRealTime();
@@ -63,80 +63,80 @@ const RealTime SimulationClock::to_realtime(const AbsoluteTime& actual_time)
 
 bool SimulationClock::is_turned_on()
 {
-    return this->turned_on;
+    return turned_on_;
 }
 
 AbsoluteTime::AbsoluteTime(unsigned long long nano_seconds)
 {
-    this->nano_seconds = nano_seconds;
+    nano_seconds_ = nano_seconds;
 }
 
 bool AbsoluteTime::operator==(const AbsoluteTime& other) const
 {
-    return this->nano_seconds == other.nano_seconds;
+    return nano_seconds_ == other.nano_seconds_;
 }
 
 bool AbsoluteTime::operator!=(const AbsoluteTime& other) const
 {
-    return this->nano_seconds != other.nano_seconds;
+    return nano_seconds_ != other.nano_seconds_;
 }
 
 bool AbsoluteTime::operator>(const AbsoluteTime& other) const
 {
-    return this->nano_seconds > other.nano_seconds;
+    return nano_seconds_ > other.nano_seconds_;
 }
 
 const TimeDifference AbsoluteTime::operator-(const AbsoluteTime& other) const
 {
-    return TimeDifference(this->nano_seconds - other.nano_seconds);
+    return TimeDifference(nano_seconds_ - other.nano_seconds_);
 }
 
 TimeDifference::TimeDifference(long long nano_seconds)
 {
-    this->nano_seconds = nano_seconds;
+    nano_seconds_ = nano_seconds;
 };
 
 const AbsoluteTime TimeDifference::operator+(
     const AbsoluteTime& absolute_time) const
 {
-    long long absolute_nanoseconds = (absolute_time.nano_seconds +
-        this->nano_seconds);
+    long long absolute_nanoseconds = (absolute_time.nano_seconds_ +
+        nano_seconds_);
     assert(absolute_nanoseconds >= 0);
     return AbsoluteTime(absolute_nanoseconds);
 }
 
 bool TimeDifference::operator==(const TimeDifference& other) const
 {
-    return this->nano_seconds == other.nano_seconds;
+    return nano_seconds_ == other.nano_seconds_;
 }
 
 TimePassageSpeed::TimePassageSpeed(float speed)
 {
     assert(speed > 0);
-    this->speed = speed;
+    speed_ = speed;
 }
 
 const TimePassageSpeed TimePassageSpeed::operator*(
     const TimePassageSpeed& other) const
 {
-    return TimePassageSpeed(this->speed * other.speed);
+    return TimePassageSpeed(speed_ * other.speed_);
 }
 
 
 float TimePassageSpeed::get_time_passage_speed() const
 {
-    return this->speed;
+    return speed_;
 }
 
 bool AbsoluteTime::operator >=(const AbsoluteTime& other) const
 {
-    return this->nano_seconds >= other.nano_seconds;
+    return nano_seconds_ >= other.nano_seconds_;
 }
 
 const RealTimeDifference TimeDifference::operator/(
     const TimePassageSpeed& time_passage_speed) const
 {
-    float nanoseconds_passed = this->nano_seconds
+    float nanoseconds_passed = nano_seconds_
         / time_passage_speed.get_time_passage_speed();
     RealTimeDifference::Duration realtime_passed =
         std::chrono::nanoseconds((unsigned long long)nanoseconds_passed);

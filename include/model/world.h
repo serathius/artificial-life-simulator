@@ -17,9 +17,9 @@ typedef std::set<std::unique_ptr<WorldObject>>::iterator
 class WorldObject : public ModelObject
 {
 private:
-    World* const world;
-    Coordinates coordiantes;
-    UnitVector direction;
+    World* const world_;
+    Coordinates coordiantes_;
+    UnitVector direction_;
 
 public:
     WorldObject(World* const, const Coordinates&, const UnitVector&);
@@ -29,7 +29,7 @@ public:
 class WorldObjectsCollection
 {
 private:
-    std::set<std::unique_ptr<WorldObject>> objects;
+    std::set<std::unique_ptr<WorldObject>> objects_;
 
 public:
     ObjectCollectionIterator begin();
@@ -42,9 +42,9 @@ public:
 class World
 {
 private:
-    Model* const model;
-    const CoordinatesSystem coordinates_system;
-    WorldObjectsCollection objects;
+    Model* const model_;
+    const CoordinatesSystem coordinates_system_;
+    WorldObjectsCollection objects_;
 
 public:
     World(Model* const);

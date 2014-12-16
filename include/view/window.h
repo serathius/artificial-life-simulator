@@ -9,7 +9,7 @@
 class Window
 {
 private:
-    GLFWwindow* window_handle;
+    GLFWwindow* window_handle_;
     virtual void draw(int, int) = 0;
 
 public:
