@@ -24,6 +24,21 @@ public:
 };
 
 
+class Dimension
+{
+private:
+    const float x_;
+    const float y_;
+
+public:
+    Dimension(float x, float y);
+    bool operator==(const Dimension &other) const;
+    bool operator!=(const Dimension &other) const;
+    const Coordinates operator+(const Coordinates &point) const;
+    const Vector to_vector() const;
+};
+
+
 class Vector
 {
     friend class UnitVector;
