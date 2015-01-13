@@ -8,7 +8,7 @@ class Vector;
 
 class Coordinates
 {
-friend class DistanceVector;
+friend class Vector;
 
 private:
     const float x_;
@@ -38,38 +38,32 @@ public:
     const Vector to_vector() const;
 };
 
-
 class Vector
 {
-    friend class UnitVector;
     friend class Coordinates;
-protected:
+
+private:
     const float x_;
     const float y_;
 
 public:
     Vector(float, float);
-};
-
-
-class DistanceVector : protected Vector
-{    
-    friend class Coordinates;
-public:
-    DistanceVector(float, float);
     const Coordinates operator+(const Coordinates&) const;
-    const DistanceVector operator+(const DistanceVector&) const;
-    const DistanceVector operator-(const DistanceVector&) const;
-    bool operator==(const DistanceVector&) const;
+    const Vector operator+(const Vector&) const;
+    const Vector operator-(const Vector&) const;
+    bool operator==(const Vector&) const;
 };
 
 
 class UnitVector : public Vector
-{    
+{
+private:
+    const float x_;
+    const float y_;
+
 public:
     UnitVector(float, float);
     explicit UnitVector(const Vector&);
-    const DistanceVector operator*(float) const;
     bool operator==(const UnitVector&) const;
 };
 #endif
