@@ -1,34 +1,21 @@
 #ifndef COORDINATES_SYSTEM_H
 #define COORDINATES_SYSTEM_H
 
-class Coordinates;
 class DistanceVector;
 class UnitVector;
 class Vector;
 
 
-class CoordinatesSystem
-{
-public:
-    CoordinatesSystem();
-    const Coordinates& get_coordinates(float, float) const;
-};
-
-
 class Coordinates
 {
-friend class CoordinatesSystem;
 friend class DistanceVector;
 
 private:
-    const CoordinatesSystem* const system_;
     const float x_;
     const float y_;
 
-    Coordinates(float, float, const CoordinatesSystem* const);
-
 public:
-    const Coordinates transform_to(const CoordinatesSystem&) const;
+    Coordinates(float, float);
     const Vector operator*(const UnitVector&) const;
     const DistanceVector operator-(const Coordinates&) const;
     const Coordinates operator+(const DistanceVector&) const;

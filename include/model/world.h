@@ -11,7 +11,7 @@ typedef std::set<std::unique_ptr<WorldObject>>::iterator
     ObjectCollectionIterator;
 
 #include "model.h"
-#include "coodinates_system.h"
+#include "primitives.h"
 
 
 class WorldObject : public ModelObject
@@ -43,7 +43,6 @@ class World
 {
 private:
     Model* const model_;
-    const CoordinatesSystem coordinates_system_;
     WorldObjectsCollection objects_;
 
 public:

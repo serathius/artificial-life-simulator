@@ -1,19 +1,10 @@
 #include <cassert>
 
-#include "model/coodinates_system.h"
+#include "model/primitives.h"
 
-CoordinatesSystem::CoordinatesSystem()
-{
-    
-}
 
-const Coordinates& CoordinatesSystem::get_coordinates(float, float) const
-{
-    
-}
-
-Coordinates::Coordinates(float x, float y, const CoordinatesSystem* const system)
-    : x_(x), y_(y), system_(system)
+Coordinates::Coordinates(float x, float y)
+    : x_(x), y_(y)
 {
     
 }
@@ -25,18 +16,17 @@ const Vector Coordinates::operator*(const UnitVector& unit_vector) const
 
 const DistanceVector Coordinates::operator-(const Coordinates& other) const
 {
-    assert(this->system == other.system);
     return DistanceVector(x_ - other.x_, y_ - other.y_);
 }
 
 const Coordinates Coordinates::operator+(const DistanceVector& vector) const
 {
-    return Coordinates(x_ + vector.x_, y_ + vector.y_, system_);
+    return Coordinates(x_ + vector.x_, y_ + vector.y_);
 }
 
 const Coordinates Coordinates::operator-(const DistanceVector& vector) const
 {
-    return Coordinates(x_ - vector.x_, y_ - vector.y_, system_);
+    return Coordinates(x_ - vector.x_, y_ - vector.y_);
 }
 
 bool Coordinates::operator==(const Coordinates& other) const
@@ -57,8 +47,7 @@ DistanceVector::DistanceVector(float x, float y) : Vector(x, y)
 const Coordinates DistanceVector::operator+(
     const Coordinates& coordinates) const
 {
-    return Coordinates(x_ + coordinates.x_, y_ + coordinates.y_,  
-        coordinates._system);
+    return Coordinates(x_ + coordinates.x_, y_ + coordinates.y_);
 }
 
 const DistanceVector DistanceVector::operator+(
