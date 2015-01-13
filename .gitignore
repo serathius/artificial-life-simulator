@@ -30,3 +30,9 @@
 # IDE
 .idea
 nbproject
+
+# Build
+build/
+
+# External Libraries
+external/
