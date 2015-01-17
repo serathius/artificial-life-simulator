@@ -4,7 +4,8 @@
 
 #include "model/organism.h"
 
-World::World(Model* const model) : model_(model)
+
+World::World(Model* const model) : objects_(WorldObjectsCollection(model))
 {
   objects_.add(
     new WorldPlane(this, Dimension(1, 1)));
@@ -18,9 +19,20 @@ WorldObject::WorldObject(World *const world)
 
 }
 
+WorldObjectsCollection::WorldObjectsCollection(Model* const model)
+  : model_(model)
+{
+
+}
+
 void WorldObjectsCollection::add(WorldObject* object)
 {
   objects_.insert(std::shared_ptr<WorldObject>(object));
+  EventObject* event_object = dynamic_cast<EventObject*>(object);
+  if (event_object != nullptr)
+  {
+    model_->register_event_object(event_object);
+  }
 }
 
 const std::vector<WorldObject*> World::get_objects() const

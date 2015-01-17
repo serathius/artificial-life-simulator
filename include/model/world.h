@@ -37,9 +37,11 @@ public:
 class WorldObjectsCollection
 {
 private:
+    Model* const model_;
     std::set<std::shared_ptr<WorldObject>> objects_;
 
 public:
+    WorldObjectsCollection(Model* const model);
     typedef std::set<std::shared_ptr<WorldObject>>::iterator iterator;
     iterator begin() const;
     iterator end() const;
@@ -51,7 +53,6 @@ public:
 class World
 {
 private:
-    Model* const model_;
     WorldObjectsCollection objects_;
 
 public:

@@ -34,6 +34,11 @@ const RealTime Model::get_next_event_time() const
     return clock_->to_realtime(earliest_event_time);
 }
 
+void EventObjectCollection::add(EventObject *event_object)
+{
+    event_objects_.insert(event_object);
+}
+
 EventObjectCollection::Iterator EventObjectCollection::begin() const
 {
     return event_objects_.begin();
@@ -47,4 +52,9 @@ EventObjectCollection::Iterator EventObjectCollection::end() const
 const ViewModel Model::get_viewmodel() const
 {
     return ViewModel(world_->get_objects());
+}
+
+void Model::register_event_object(EventObject *event_object)
+{
+    event_objects_.add(event_object);
 }
