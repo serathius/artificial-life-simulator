@@ -97,5 +97,6 @@ float Dimension::get_y()
 
 Dimension::Dimension(float x, float y) : x_(x), y_(y)
 {
-
+  assert(x > 0);
+  assert(y > 0);
 }
