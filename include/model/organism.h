@@ -7,13 +7,9 @@
 #include "genotype.h"
 #include "decision.h"
 #include "primitives.h"
-
+#include "logic.h"
 
 class OrganismCondition
-{
-};
-
-class OrganismLogic
 {
 };
 
