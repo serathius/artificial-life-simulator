@@ -3,10 +3,10 @@
 #include "model/simulation_clock.h"
 
 
-SimulationClock::SimulationClock(const AbsoluteTime& simulation_time,
-    const RealTime& realtime) : simulation_time_(simulation_time),
-        realtime_(realtime), time_passage_speed_(TimePassageSpeed(1.0)),
-        turned_on_(false)
+SimulationClock::SimulationClock(const AbsoluteTime& simulation_time)
+  : simulation_time_(simulation_time),
+    realtime_(RealTime::TimePoint(std::chrono::seconds(0))),
+    time_passage_speed_(TimePassageSpeed(1.0)), turned_on_(false)
 {
 
 }

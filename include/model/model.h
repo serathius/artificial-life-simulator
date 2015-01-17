@@ -9,10 +9,10 @@ class EventObjectCollection;
 class Model;
 class ModelObject;
 class World;
-
+class ViewModel;
 
 #include "simulation_clock.h"
-
+#include "view/viewmodel.h"
 
 class EventObjectCollection
 {
@@ -36,23 +36,19 @@ private:
     EventObjectCollection event_objects_;
 
 public:
+    Model();
+    void create_new_game();
     void update(const RealTime&);
     const RealTime get_next_event_time() const;
+    void register_event_object(EventObject* event_object);
+    const ViewModel get_viewmodel() const;
 };
 
 
-class ModelObject
-{
-
-
-};
-
-
-class EventObject : public ModelObject
+class EventObject
 {
 public:
-    EventObject();
-    virtual AbsoluteTime& get_next_event_time() = 0;
+    virtual const AbsoluteTime get_next_event_time() = 0;
     virtual void update(const AbsoluteTime&) = 0;
 };
 

@@ -5,6 +5,8 @@
 
 #include <GLFW/glfw3.h>
 
+#include "view/viewmodel.h"
+
 
 class Window
 {
@@ -25,6 +27,7 @@ private:
     virtual void draw(int, int);
 
 public:
+    ViewModel viewmodel_;
     MainWindow(const char *, int, int);
 };
 

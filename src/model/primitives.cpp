@@ -9,22 +9,17 @@ Coordinates::Coordinates(float x, float y)
     
 }
 
-const Vector Coordinates::operator*(const UnitVector& unit_vector) const
+const Vector Coordinates::operator-(const Coordinates& other) const
 {
-    return Vector(x_ * unit_vector.x_, y_ * unit_vector.y_);
+    return Vector(x_ - other.x_, y_ - other.y_);
 }
 
-const DistanceVector Coordinates::operator-(const Coordinates& other) const
-{
-    return DistanceVector(x_ - other.x_, y_ - other.y_);
-}
-
-const Coordinates Coordinates::operator+(const DistanceVector& vector) const
+const Coordinates Coordinates::operator+(const Vector& vector) const
 {
     return Coordinates(x_ + vector.x_, y_ + vector.y_);
 }
 
-const Coordinates Coordinates::operator-(const DistanceVector& vector) const
+const Coordinates Coordinates::operator-(const Vector& vector) const
 {
     return Coordinates(x_ - vector.x_, y_ - vector.y_);
 }
@@ -39,45 +34,68 @@ Vector::Vector(float x, float y) : x_(x), y_(y)
     
 }
 
-DistanceVector::DistanceVector(float x, float y) : Vector(x, y)
-{
-    
-}
-
-const Coordinates DistanceVector::operator+(
+const Coordinates Vector::operator+(
     const Coordinates& coordinates) const
 {
     return Coordinates(x_ + coordinates.x_, y_ + coordinates.y_);
 }
 
-const DistanceVector DistanceVector::operator+(
-    const DistanceVector& other) const
+const Vector Vector::operator+(
+    const Vector& other) const
 {
-    return DistanceVector(x_ + other.x_, y_ + other.y_);
+    return Vector(x_ + other.x_, y_ + other.y_);
 }
 
-const DistanceVector DistanceVector::operator-(
-    const DistanceVector& other) const
+const Vector Vector::operator-(
+    const Vector& other) const
 {
-    return DistanceVector(x_ - other.x_, y_ - other.y_);
+    return Vector(x_ - other.x_, y_ - other.y_);
 }
 
-bool DistanceVector::operator==(const DistanceVector& other) const
+bool Vector::operator==(const Vector& other) const
 {
     return x_ == other.x_ and y_ == other.y_;
 }
 
-UnitVector::UnitVector(float x, float y) : Vector(x, y)
+UnitVector::UnitVector(float angle) : angle_(angle)
 {
     
 }
 
-UnitVector::UnitVector(const Vector& other) : UnitVector(other.x_, other.y_)
-{
-
-}
-
 bool UnitVector::operator==(const UnitVector& other) const
 {
-    return x_ == other.x_ and y_ == other.y_;
+    return angle_ == other.angle_;
+}
+
+float Coordinates::get_x()
+{
+    return x_;
+}
+
+
+float Coordinates::get_y()
+{
+    return y_;
+}
+
+
+float UnitVector::get_angle()
+{
+    return angle_;
+}
+
+float Dimension::get_x()
+{
+    return x_;
+}
+
+
+float Dimension::get_y()
+{
+    return y_;
+}
+
+Dimension::Dimension(float x, float y) : x_(x), y_(y)
+{
+
 }

@@ -8,17 +8,23 @@
 class ControllerStrategy;
 
 #include "controller/event_queue.hpp"
+#include "model/model.h"
+#include "view/view.h"
 
 
 class Controller
 {
 private:
-    EventQueue* const event_queue;
+    Model model_;
+    View view_;
+    EventQueue event_queue_;
+
     std::unordered_map<std::type_index, ControllerStrategy*> strategyMap;
+    void handle_events();
 
 public:
-    Controller(EventQueue* const);
-    void handle_events();
+    Controller();
+    void start();
 };
 
 

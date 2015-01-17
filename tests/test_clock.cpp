@@ -4,29 +4,13 @@
 TEST (SimulationClockTest, test_on_new_clock)
 {
     RealTime::TimePoint time_point;
-    SimulationClock clock(AbsoluteTime(0), RealTime(time_point));
+    SimulationClock clock(AbsoluteTime(0));
     ASSERT_EQ(clock.to_simulation_time(RealTime(time_point)), AbsoluteTime(0));
-}
-
-TEST (SimulationClockTest, test_to_simulation_time_assert_time)
-{
-    SimulationClock clock(AbsoluteTime(0),
-        RealTime(RealTime::TimePoint(std::chrono::seconds(1))));
-    ASSERT_DEATH(clock.to_simulation_time(
-        RealTime(RealTime::TimePoint(std::chrono::seconds(0)))), "");
-}
-
-TEST (SimulationClockTest, test_stop_assert_time)
-{
-    SimulationClock clock(AbsoluteTime(0),
-        RealTime(RealTime::TimePoint(std::chrono::seconds(1))));
-    ASSERT_DEATH(
-        clock.stop(RealTime(RealTime::TimePoint(std::chrono::seconds(0)))), "");
 }
 
 TEST (SimulationClockTest, test_to_simulation_time_on_started_clock)
 {
-    SimulationClock clock(AbsoluteTime(0), RealTime(RealTime::TimePoint()));
+    SimulationClock clock(AbsoluteTime(0));
     clock.start(RealTime(RealTime::TimePoint(std::chrono::seconds(0))));
     ASSERT_EQ(
         clock.to_simulation_time(RealTime(
@@ -36,7 +20,7 @@ TEST (SimulationClockTest, test_to_simulation_time_on_started_clock)
 
 TEST (SimulationClockTest, test_to_simulation_time_stopped_clock)
 {
-    SimulationClock clock(AbsoluteTime(0), RealTime(RealTime::TimePoint()));
+    SimulationClock clock(AbsoluteTime(0));
     clock.start(RealTime(RealTime::TimePoint()));
     clock.stop(RealTime(RealTime::TimePoint(std::chrono::seconds(1))));
     ASSERT_EQ(
@@ -47,20 +31,20 @@ TEST (SimulationClockTest, test_to_simulation_time_stopped_clock)
 
 TEST(SimulationClockTest, test_new_clock_is_not_turned_on)
 {
-    SimulationClock clock(AbsoluteTime(0), RealTime(RealTime::TimePoint()));
+    SimulationClock clock(AbsoluteTime(0));
     ASSERT_FALSE(clock.is_turned_on());
 }
 
 TEST(SimulationClockTest, test_is_turned_on)
 {
-    SimulationClock clock(AbsoluteTime(0), RealTime(RealTime::TimePoint()));
+    SimulationClock clock(AbsoluteTime(0));
     clock.start(RealTime(RealTime::TimePoint()));
     ASSERT_TRUE(clock.is_turned_on());
 }
 
 TEST(SimulationClockTest, test_is_turned_off)
 {
-    SimulationClock clock(AbsoluteTime(0), RealTime(RealTime::TimePoint()));
+    SimulationClock clock(AbsoluteTime(0));
     clock.start(RealTime(RealTime::TimePoint()));
     clock.stop(RealTime(RealTime::TimePoint()));
     ASSERT_FALSE(clock.is_turned_on());
@@ -87,7 +71,7 @@ TEST (TimePassageSpeedTest, test_time_passsage)
 
 TEST(SimulationClockTest, test_assert_on_double_start)
 {
-    SimulationClock clock(AbsoluteTime(0), RealTime(RealTime::TimePoint()));
+    SimulationClock clock(AbsoluteTime(0));
     clock.start(RealTime(RealTime::TimePoint()));
     ASSERT_DEATH(clock.start(RealTime(RealTime::TimePoint())), "");
 }
@@ -197,7 +181,7 @@ TEST(SimulationClockTest, test_to_realtime_asserts_time_didnt_shift)
 {
     AbsoluteTime simulation_start(1);
     RealTime realtime_start(RealTime::TimePoint(std::chrono::seconds(1)));
-    SimulationClock clock(simulation_start, realtime_start);
+    SimulationClock clock(simulation_start);
     ASSERT_DEATH(clock.to_realtime(AbsoluteTime(0)), "");
 }
 
@@ -205,8 +189,7 @@ TEST(SimulationClockTest, test_to_realtime_asserts_time_didnt_shift)
 TEST(SimulationClockTest, test_to_realtime_throws_when_clock_stopped)
 {
     AbsoluteTime simulation_start(1);
-    RealTime realtime_start(RealTime::TimePoint(std::chrono::seconds(1)));
-    SimulationClock clock(simulation_start, realtime_start);
+    SimulationClock clock(simulation_start);
     ASSERT_THROW(clock.to_realtime(AbsoluteTime(1)), InfiniteRealTime);
 }
 
@@ -214,7 +197,7 @@ TEST(SimulationClockTest, test_to_realtime)
 {
     AbsoluteTime simulation_start(0);
     RealTime realtime_start(RealTime::TimePoint(std::chrono::seconds(0)));
-    SimulationClock clock(simulation_start, realtime_start);
+    SimulationClock clock(simulation_start);
     clock.start(realtime_start);
     ASSERT_EQ(RealTime(RealTime::TimePoint(std::chrono::nanoseconds(1))),
         clock.to_realtime(AbsoluteTime(1)));

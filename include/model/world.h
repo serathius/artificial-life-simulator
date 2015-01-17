@@ -7,33 +7,42 @@
 class World;
 class WorldObjectsCollection;
 class WorldObject;
-typedef std::set<std::unique_ptr<WorldObject>>::iterator
-    ObjectCollectionIterator;
+
 
 #include "model.h"
 #include "primitives.h"
 
 
-class WorldObject : public ModelObject
+class WorldObject
 {
 private:
     World* const world_;
-    Coordinates coordiantes_;
-    UnitVector direction_;
 
 public:
-    WorldObject(World* const, const Coordinates&, const UnitVector&);
+    WorldObject(World* const);
+    virtual void draw() = 0;
 };
 
+
+class WorldPlane : public WorldObject
+{
+private:
+    Dimension dimension_;
+
+public:
+    WorldPlane(World* const, const Dimension&);
+    virtual void draw();
+};
 
 class WorldObjectsCollection
 {
 private:
-    std::set<std::unique_ptr<WorldObject>> objects_;
+    std::set<std::shared_ptr<WorldObject>> objects_;
 
 public:
-    ObjectCollectionIterator begin();
-    ObjectCollectionIterator end();
+    typedef std::set<std::shared_ptr<WorldObject>>::iterator iterator;
+    iterator begin() const;
+    iterator end() const;
     void add(WorldObject*);
     void remove(WorldObject*);
 };
@@ -48,6 +57,7 @@ private:
 public:
     World(Model* const);
     const AbsoluteTime get_next_event_time() const;
+    const std::vector<WorldObject*> get_objects() const;
 };
 
 #endif

@@ -1,5 +1,17 @@
 #include "model/model.h"
 
+Model::Model()
+{
+
+}
+
+void Model::create_new_game()
+{
+    world_ = std::unique_ptr<World>(new World(this));
+    clock_ = std::unique_ptr<SimulationClock>(
+      new SimulationClock(AbsoluteTime(0)));
+}
+
 void Model::update(const RealTime& realtime)
 {
     auto simulation_time = clock_->to_simulation_time(realtime);
@@ -30,4 +42,9 @@ EventObjectCollection::Iterator EventObjectCollection::begin() const
 EventObjectCollection::Iterator EventObjectCollection::end() const
 {
     return event_objects_.end();
+}
+
+const ViewModel Model::get_viewmodel() const
+{
+    return ViewModel(world_->get_objects());
 }

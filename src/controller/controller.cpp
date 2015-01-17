@@ -5,27 +5,34 @@
 #include "controller/controller.h"
 
 
-Controller::Controller(EventQueue* const event_queue) : event_queue(event_queue)
+Controller::Controller() : view_(&event_queue_)
 {
-    strategyMap.insert(std::make_pair<std::type_index, StringStrategy*>
-            (std::type_index(typeid(StringEvent)), new StringStrategy()));
+
+}
+
+void Controller::start()
+{
+    view_.start();
+    model_.create_new_game();
+    handle_events();
+    view_.finish();
 }
 
 void Controller::handle_events()
 {
     while(true)
     {
-        Event* event = event_queue->pop();
+        view_.update(model_.get_viewmodel());
+        Event* event = event_queue_.pop();
         ControllerStrategy* strategy =
             strategyMap[std::type_index(typeid(*event))];
         strategy->react(event);
-
     }
 }
 
 void StringStrategy::react(Event* event)
 {
-    StringEvent* stringEven = dynamic_cast<StringEvent*>(event);
+
 }
 
 ControllerStrategy::ControllerStrategy()

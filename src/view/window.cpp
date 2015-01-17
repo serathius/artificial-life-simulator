@@ -1,4 +1,5 @@
 #include <GLFW/glfw3.h>
+#include <math.h>
 
 #include "view/window.h"
 
@@ -43,7 +44,22 @@ MainWindow::MainWindow(const char* name, int width, int height)
 
 }
 
-void MainWindow::draw(int width, int height)
-{
-
+void MainWindow::draw(int width, int height) {
+    viewmodel_.draw();
+    float a = 0.1;
+    glColor3f(1.f, 1.f, 1.f);
+    glBegin(GL_TRIANGLES);
+      glVertex2f(0.f, 0.f);
+      glVertex2f(0.f, a);
+      glVertex2f(a, a);
+      glVertex2f(0.f, 0.f);
+      glVertex2f(a, 0.f);
+      glVertex2f(a, -a);
+      glVertex2f(0.f, 0.f);
+      glVertex2f(0.f, -a);
+      glVertex2f(-a, -a);
+      glVertex2f(0.f, 0.f);
+      glVertex2f(-a, 0.f);
+      glVertex2f(-a, a);
+    glEnd();
 }

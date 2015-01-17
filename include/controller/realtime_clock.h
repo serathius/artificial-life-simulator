@@ -37,7 +37,7 @@ public:
 private:
     TimePoint time_point;
 public:
-    explicit RealTime(const TimePoint&);
+    RealTime(const TimePoint&);
     const RealTimeDifference operator-(const RealTime&) const;
     bool operator==(const RealTime&) const;
     bool operator!=(const RealTime&) const;

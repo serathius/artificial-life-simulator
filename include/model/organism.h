@@ -6,45 +6,38 @@
 #include "world.h"
 #include "genotype.h"
 #include "decision.h"
-
-class Organism
-{
-private:
-    OrganismBody body_;
-    OrganismCondition condition_;
-    const Genotype genotype_;
-    const OrganismLogic logic_;
-    void do_decision(const Decision* const);
-};
-
-
-class OrganismBody: public WorldObject, public EventObject
-{
-    void realise(const std::unique_ptr<const Decision>);
-};
-
-
-class OrganismLogic
-{
-private:
-    AbsoluteTime last_decision_time_;
-
-public:
-    explicit Logic(const Genotype&);
-    const std::unique_ptr<const Decision> make_decision(const OrganismCondition&,
-        const tuple<OrganismUnderstoodWorldInformation>&);
-
-};
+#include "primitives.h"
 
 
 class OrganismCondition
 {
 };
 
+class OrganismLogic
+{
+};
 
 class OrganismUnderstoodWorldInformation
 {
-
 };
+
+class Organism : public WorldObject, public EventObject
+{
+private:
+    Coordinates coordinates_;
+    UnitVector direction_;
+    OrganismCondition condition_;
+    const Genotype genotype_;
+    const OrganismLogic logic_;
+
+public:
+    Organism(World * const world, const Coordinates& coordinates, const UnitVector& direction);
+    const AbsoluteTime get_next_event_time();
+    void update(const AbsoluteTime&);
+    void draw();
+};
+
+
+
 
 #endif

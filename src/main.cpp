@@ -1,13 +1,8 @@
-#include <memory>
-
-#include "view/view.h"
+#include "controller/controller.h"
 
 int main(int argc, char** argv)
 {
-    std::unique_ptr<EventQueue> queue =
-        std::unique_ptr<EventQueue>(new EventQueue);
-    std::unique_ptr<View> view = std::unique_ptr<View>(new View(queue.get()));
-    view->start();
-    view->join();
+    Controller controller;
+    controller.start();
     return 0;
 }

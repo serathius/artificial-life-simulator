@@ -12,6 +12,8 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 # Libraries.
 set(EXTERNAL_LIBS ${CMAKE_CURRENT_SOURCE_DIR}/external/lib/libglfw3.a pthread GL X11 Xxf86vm Xrandr Xi)
 
+add_library(Controller ${CMAKE_CURRENT_SOURCE_DIR}/src/controller/controller.cpp)
+target_link_libraries(Controller ${EXTERNAL_LIBS})
 
 add_library(ControllerEvents ${CMAKE_CURRENT_SOURCE_DIR}/src/controller/events.cpp)
 target_link_libraries(ControllerEvents ${EXTERNAL_LIBS})
@@ -25,10 +27,25 @@ target_link_libraries(Model ${EXTERNAL_LIBS})
 add_library(ModelSimulationClock ${CMAKE_CURRENT_SOURCE_DIR}/src/model/simulation_clock.cpp)
 target_link_libraries(ModelSimulationClock ${EXTERNAL_LIBS})
 
+add_library(ModelWorld ${CMAKE_CURRENT_SOURCE_DIR}/src/model/world.cpp)
+target_link_libraries(ModelWorld ${EXTERNAL_LIBS})
+
+add_library(ModelPrimitives ${CMAKE_CURRENT_SOURCE_DIR}/src/model/primitives.cpp)
+target_link_libraries(ModelPrimitives ${EXTERNAL_LIBS})
+
+add_library(ModelOrganism ${CMAKE_CURRENT_SOURCE_DIR}/src/model/organism.cpp)
+target_link_libraries(ModelOrganism ${EXTERNAL_LIBS})
+
+add_library(View ${CMAKE_CURRENT_SOURCE_DIR}/src/view/view.cpp)
+target_link_libraries(View ${EXTERNAL_LIBS})
+
 add_library(ViewWindow ${CMAKE_CURRENT_SOURCE_DIR}/src/view/window.cpp)
 target_link_libraries(ViewWindow ${EXTERNAL_LIBS})
 
-set(INTERNAL_LIBS ControllerEvents ControllerRealTimeClock Model  ModelSimulationClock ViewWindow)
+add_library(ViewModel ${CMAKE_CURRENT_SOURCE_DIR}/src/view/viewmodel.cpp)
+target_link_libraries(ViewModel ${EXTERNAL_LIBS})
+
+set(INTERNAL_LIBS ControllerEvents View ViewWindow Controller Model ModelSimulationClock ControllerRealTimeClock ModelWorld ModelPrimitives ViewModel ModelOrganism)
 
 target_link_libraries(main ${INTERNAL_LIBS} ${EXTERNAL_LIBS})
 

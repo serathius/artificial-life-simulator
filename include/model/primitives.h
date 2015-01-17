@@ -1,7 +1,7 @@
 #ifndef COORDINATES_SYSTEM_H
 #define COORDINATES_SYSTEM_H
 
-class DistanceVector;
+
 class UnitVector;
 class Vector;
 
@@ -17,10 +17,12 @@ private:
 public:
     Coordinates(float, float);
     const Vector operator*(const UnitVector&) const;
-    const DistanceVector operator-(const Coordinates&) const;
-    const Coordinates operator+(const DistanceVector&) const;
-    const Coordinates operator-(const DistanceVector&) const;
+    const Vector operator-(const Coordinates&) const;
+    const Coordinates operator+(const Vector&) const;
+    const Coordinates operator-(const Vector&) const;
     bool operator==(const Coordinates&) const;
+    float get_x();
+    float get_y();
 };
 
 
@@ -36,12 +38,14 @@ public:
     bool operator!=(const Dimension &other) const;
     const Coordinates operator+(const Coordinates &point) const;
     const Vector to_vector() const;
+    float get_x();
+    float get_y();
 };
 
 class Vector
 {
     friend class Coordinates;
-
+    friend class UnitVector;
 private:
     const float x_;
     const float y_;
@@ -55,15 +59,17 @@ public:
 };
 
 
-class UnitVector : public Vector
+class UnitVector
 {
+    friend class Coordinates;
+
 private:
-    const float x_;
-    const float y_;
+    const float angle_;
 
 public:
-    UnitVector(float, float);
+    UnitVector(float);
     explicit UnitVector(const Vector&);
     bool operator==(const UnitVector&) const;
+    float get_angle();
 };
 #endif

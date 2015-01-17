@@ -67,7 +67,7 @@ private:
     bool turned_on_;
 
 public:
-    SimulationClock(const AbsoluteTime&, const RealTime&);
+    SimulationClock(const AbsoluteTime&);
     void start(const RealTime&);
     void stop(const RealTime&);
     void scale_time_passage(const TimePassageSpeed&);
