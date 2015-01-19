@@ -2,6 +2,7 @@
 #define CLOCK_H
 
 #include <exception>
+#include <iostream>
 
 class AbsoluteTime;
 class TimeDifference;
@@ -17,8 +18,10 @@ class TimeDifference
 private:
     long long nano_seconds_;
 
+    TimeDifference(long long nanoseconds);
+
 public:
-    TimeDifference(long long);
+    static const TimeDifference seconds(float seconds);
     const AbsoluteTime operator+(const AbsoluteTime&) const;
     const RealTimeDifference operator/(const TimePassageSpeed&) const;
     bool operator==(const TimeDifference&) const;
@@ -35,8 +38,11 @@ private:
     unsigned long long nano_seconds_;
 
 public:
-    AbsoluteTime(unsigned long long);
+    AbsoluteTime(unsigned long long nanoseconds);
+    friend std::ostream& operator<<(
+      std::ostream& os, const AbsoluteTime& simulation_time);
     const TimeDifference operator-(const AbsoluteTime&) const;
+    const AbsoluteTime operator+(const TimeDifference&) const;
     bool operator==(const AbsoluteTime&) const;
     bool operator!=(const AbsoluteTime&) const;
     bool operator>(const AbsoluteTime&) const;
@@ -47,12 +53,16 @@ public:
 class TimePassageSpeed
 {
 friend class RealTimeDifference;
+
 private:
-    float speed_;
+    unsigned int speed_thousandth_;
 
 public:
     TimePassageSpeed(float);
-    float get_time_passage_speed() const;
+    friend long long operator/(long long value,
+      const TimePassageSpeed& time_passage_speed);
+    friend long long operator*(long int value,
+      const TimePassageSpeed& time_passage_speed);
     const TimePassageSpeed operator*(const TimePassageSpeed&) const;
     const TimeDifference operator*(const RealTimeDifference&) const;
 };

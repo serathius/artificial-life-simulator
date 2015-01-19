@@ -64,11 +64,13 @@ class UnitVector
     friend class Coordinates;
 
 private:
-    const float angle_;
+    float angle_;
 
 public:
     UnitVector(float);
     explicit UnitVector(const Vector&);
+    UnitVector& operator=(const UnitVector&);
+    const UnitVector operator+(const UnitVector&) const;
     bool operator==(const UnitVector&) const;
     float get_angle();
 };

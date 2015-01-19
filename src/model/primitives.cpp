@@ -62,9 +62,20 @@ UnitVector::UnitVector(float angle) : angle_(angle)
     
 }
 
+UnitVector& UnitVector::operator=(const UnitVector& other)
+{
+    angle_ = other.angle_;
+    return *this;
+}
+
 bool UnitVector::operator==(const UnitVector& other) const
 {
     return angle_ == other.angle_;
+}
+
+const UnitVector UnitVector::operator+(const UnitVector& other) const
+{
+    return UnitVector(angle_ + other.angle_);
 }
 
 float Coordinates::get_x()

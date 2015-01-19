@@ -3,7 +3,8 @@
 
 class OrganismLogic
 {
-
+public:
+  void make_decision() const;
 };
 
 #endif

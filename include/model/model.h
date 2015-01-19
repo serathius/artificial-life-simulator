@@ -37,7 +37,7 @@ private:
 
 public:
     Model();
-    void create_new_game();
+    void create_new_game(const RealTime& time);
     void update(const RealTime&);
     const RealTime get_next_event_time() const;
     void register_event_object(EventObject* event_object);

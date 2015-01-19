@@ -3,9 +3,11 @@
 #include <GLFW/glfw3.h>
 #include <cmath>
 
-Organism::Organism(World * const world, const Coordinates &coordinates, const UnitVector &direction)
+Organism::Organism(World * const world, const Coordinates &coordinates, 
+  const UnitVector &direction, const AbsoluteTime& time)
   : WorldObject(world), coordinates_(coordinates),
-    direction_(direction), genotype_(Genotype()), logic_(OrganismLogic())
+    direction_(direction), last_decision_time_(time),
+    genotype_(Genotype()), logic_(OrganismLogic())
 {
 
 }
@@ -29,10 +31,14 @@ void Organism::draw()
 
 void Organism::update(AbsoluteTime const &time)
 {
-
+  if(time >= last_decision_time_ + TimeDifference::seconds(1))
+  {
+    logic_.make_decision();
+    last_decision_time_ = time;
+  }
 }
 
 const AbsoluteTime Organism::get_next_event_time()
 {
-  return AbsoluteTime(0);
+  return last_decision_time_ + TimeDifference::seconds(1);
 }

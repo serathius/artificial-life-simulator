@@ -96,6 +96,11 @@ TimeDifference::TimeDifference(long long nano_seconds)
     nano_seconds_ = nano_seconds;
 };
 
+const TimeDifference TimeDifference::seconds(float seconds)
+{
+    return TimeDifference((long long)(seconds * 1000000000));
+};
+
 const AbsoluteTime TimeDifference::operator+(
     const AbsoluteTime& absolute_time) const
 {
@@ -113,19 +118,25 @@ bool TimeDifference::operator==(const TimeDifference& other) const
 TimePassageSpeed::TimePassageSpeed(float speed)
 {
     assert(speed > 0);
-    speed_ = speed;
+    speed_thousandth_ = speed * 1000;
+}
+
+long long operator/(long long value,
+  const TimePassageSpeed& time_passage_speed)
+{
+    return value * 1000 / time_passage_speed.speed_thousandth_;
+}
+
+long long operator*(long int value,
+  const TimePassageSpeed& time_passage_speed)
+{
+    return value * time_passage_speed.speed_thousandth_ / 1000;
 }
 
 const TimePassageSpeed TimePassageSpeed::operator*(
     const TimePassageSpeed& other) const
 {
-    return TimePassageSpeed(speed_ * other.speed_);
-}
-
-
-float TimePassageSpeed::get_time_passage_speed() const
-{
-    return speed_;
+    return TimePassageSpeed(speed_thousandth_ * other.speed_thousandth_ / 1000);
 }
 
 bool AbsoluteTime::operator >=(const AbsoluteTime& other) const
@@ -136,9 +147,19 @@ bool AbsoluteTime::operator >=(const AbsoluteTime& other) const
 const RealTimeDifference TimeDifference::operator/(
     const TimePassageSpeed& time_passage_speed) const
 {
-    float nanoseconds_passed = nano_seconds_
-        / time_passage_speed.get_time_passage_speed();
+    unsigned long long nanoseconds_passed = (nano_seconds_ / time_passage_speed);
     RealTimeDifference::Duration realtime_passed =
-        std::chrono::nanoseconds((unsigned long long)nanoseconds_passed);
+        std::chrono::nanoseconds(nanoseconds_passed);
     return RealTimeDifference(realtime_passed);
+}
+
+const AbsoluteTime AbsoluteTime::operator+(TimeDifference const &difference) const
+{
+    return AbsoluteTime(nano_seconds_ + difference.nano_seconds_);
+}
+
+std::ostream& operator<<(std::ostream& os, const AbsoluteTime& simulation_time)
+{
+    os << "AbsoluteTime(" << simulation_time.nano_seconds_ << ")";
+    return os;
 }

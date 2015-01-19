@@ -5,16 +5,18 @@ Model::Model()
 
 }
 
-void Model::create_new_game()
+void Model::create_new_game(const RealTime& time)
 {
     world_ = std::unique_ptr<World>(new World(this));
     clock_ = std::unique_ptr<SimulationClock>(
       new SimulationClock(AbsoluteTime(0)));
+    clock_->start(time);
 }
 
 void Model::update(const RealTime& realtime)
 {
     auto simulation_time = clock_->to_simulation_time(realtime);
+    std::cout << "Update " << simulation_time << std::endl;
     for (auto event_object: event_objects_)
     {
         event_object->update(simulation_time);
@@ -31,6 +33,7 @@ const RealTime Model::get_next_event_time() const
         if (earliest_event_time > event_time)
             earliest_event_time = event_time;
     }
+    std::cout << "Earliest Event Time " << earliest_event_time << std::endl;
     return clock_->to_realtime(earliest_event_time);
 }
 

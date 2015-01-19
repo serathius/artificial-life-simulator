@@ -36,6 +36,9 @@ target_link_libraries(ModelPrimitives ${EXTERNAL_LIBS})
 add_library(ModelOrganism ${CMAKE_CURRENT_SOURCE_DIR}/src/model/organism.cpp)
 target_link_libraries(ModelOrganism ${EXTERNAL_LIBS})
 
+add_library(ModelLogic ${CMAKE_CURRENT_SOURCE_DIR}/src/model/logic.cpp)
+target_link_libraries(ModelLogic ${EXTERNAL_LIBS})
+
 add_library(View ${CMAKE_CURRENT_SOURCE_DIR}/src/view/view.cpp)
 target_link_libraries(View ${EXTERNAL_LIBS})
 
@@ -45,7 +48,7 @@ target_link_libraries(ViewWindow ${EXTERNAL_LIBS})
 add_library(ViewModel ${CMAKE_CURRENT_SOURCE_DIR}/src/view/viewmodel.cpp)
 target_link_libraries(ViewModel ${EXTERNAL_LIBS})
 
-set(INTERNAL_LIBS ControllerEvents View ViewWindow Controller Model ModelSimulationClock ControllerRealTimeClock ModelWorld ModelPrimitives ViewModel ModelOrganism)
+set(INTERNAL_LIBS View ViewWindow Controller Model ModelSimulationClock ControllerRealTimeClock ModelWorld ModelPrimitives ViewModel ModelOrganism ModelLogic ControllerEvents)
 
 target_link_libraries(main ${INTERNAL_LIBS} ${EXTERNAL_LIBS})
 

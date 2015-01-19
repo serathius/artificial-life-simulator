@@ -5,6 +5,13 @@
 #include <mutex>
 #include <condition_variable>
 
+template<typename T>
+class BlockingQueue;
+
+class Event;
+
+typedef BlockingQueue<Event*> EventQueue;
+
 #include "events.h"
 
 /*
@@ -43,7 +50,5 @@ public:
         return item;
     }
 };
-
-typedef BlockingQueue<Event*> EventQueue;
 
 #endif

@@ -1,11 +1,6 @@
 #include "controller/realtime_clock.h"
 
 
-const RealTime RealTimeClock::now() const
-{
-    return RealTime(std::chrono::steady_clock::now());
-}
-
 RealTime::RealTime(const RealTime::TimePoint& time_point)
 {
     this->time_point = time_point;
@@ -43,7 +38,7 @@ const TimeDifference RealTimeDifference::operator*(
     auto duration_in_nanoseconds = (
         std::chrono::duration_cast<std::chrono::nanoseconds>(
             this->duration).count());
-    return TimeDifference(duration_in_nanoseconds * passage.speed_);
+    return TimeDifference(duration_in_nanoseconds * passage);
 }
 
 const RealTime RealTimeDifference::operator+(const RealTime& other) const
@@ -54,4 +49,21 @@ const RealTime RealTimeDifference::operator+(const RealTime& other) const
 bool RealTime::operator== (const RealTime& other) const
 {
     return this->time_point == other.time_point;
+}
+
+const RealTime RealTime::now()
+{
+    return RealTime(std::chrono::steady_clock::now());
+}
+
+const RealTimeDifference::Duration RealTimeDifference::get_duration() const
+{
+    std::cout << "Duration(" << std::chrono::duration_cast<std::chrono::nanoseconds>(duration).count() / 1000000000.f << "s)" << std::endl;
+    return duration;
+}
+
+std::ostream& operator<<(std::ostream& os, const RealTime& realtime)
+{
+    os << "RealTime(" << realtime.time_point.time_since_epoch().count() << ")";
+    return os;
 }

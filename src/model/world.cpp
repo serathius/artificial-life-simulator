@@ -10,7 +10,7 @@ World::World(Model* const model) : objects_(WorldObjectsCollection(model))
   objects_.add(
     new WorldPlane(this, Dimension(1, 1)));
   objects_.add(
-    new Organism(this, Coordinates(0.5, 0.5), UnitVector(90)));
+    new Organism(this, Coordinates(0.5, 0.5), UnitVector(90), AbsoluteTime(0)));
 }
 
 WorldObject::WorldObject(World *const world)
