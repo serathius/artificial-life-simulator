@@ -20,6 +20,7 @@ private:
 
 public:
     WorldObject(World* const);
+    virtual ~WorldObject();
     virtual void draw() = 0;
 };
 
@@ -38,11 +39,12 @@ class WorldObjectsCollection
 {
 private:
     Model* const model_;
-    std::set<std::shared_ptr<WorldObject>> objects_;
+    std::set<WorldObject*> objects_;
 
 public:
     WorldObjectsCollection(Model* const model);
-    typedef std::set<std::shared_ptr<WorldObject>>::iterator iterator;
+    ~WorldObjectsCollection();
+    typedef std::set<WorldObject*>::iterator iterator;
     iterator begin() const;
     iterator end() const;
     void add(WorldObject*);

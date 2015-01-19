@@ -12,6 +12,11 @@ Organism::Organism(World * const world, const Coordinates &coordinates,
 
 }
 
+Organism::~Organism()
+{
+
+}
+
 void Organism::draw()
 {
   float x = coordinates_.get_x();

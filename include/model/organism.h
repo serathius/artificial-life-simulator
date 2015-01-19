@@ -30,6 +30,7 @@ private:
 public:
     Organism(World * const world, const Coordinates& coordinates,
       const UnitVector& direction, const AbsoluteTime &time);
+    virtual ~Organism();
     const AbsoluteTime get_next_event_time();
     void update(const AbsoluteTime&);
     void draw();

@@ -19,15 +19,28 @@ WorldObject::WorldObject(World *const world)
 
 }
 
+WorldObject::~WorldObject()
+{
+
+}
+
 WorldObjectsCollection::WorldObjectsCollection(Model* const model)
   : model_(model)
 {
 
 }
 
+WorldObjectsCollection::~WorldObjectsCollection()
+{
+  for(auto object_ptr: objects_)
+  {
+    delete object_ptr;
+  }
+}
+
 void WorldObjectsCollection::add(WorldObject* object)
 {
-  objects_.insert(std::shared_ptr<WorldObject>(object));
+  objects_.insert(object);
   EventObject* event_object = dynamic_cast<EventObject*>(object);
   if (event_object != nullptr)
   {
@@ -40,7 +53,7 @@ const std::vector<WorldObject*> World::get_objects() const
   std::vector<WorldObject*> result;
   for (auto object_unique_ptr: objects_)
   {
-    result.push_back(object_unique_ptr.get());
+    result.push_back(object_unique_ptr);
   }
   return result;
 }
