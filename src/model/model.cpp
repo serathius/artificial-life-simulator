@@ -1,4 +1,5 @@
 #include "model/model.h"
+#include "common.h"
 
 Model::Model()
 {
@@ -16,7 +17,7 @@ void Model::create_new_game(const RealTime& time)
 void Model::update(const RealTime& realtime)
 {
     auto simulation_time = clock_->to_simulation_time(realtime);
-    std::cout << "Update " << simulation_time << std::endl;
+    LOG(realtime);
     for (auto event_object: event_objects_)
     {
         event_object->update(simulation_time);
@@ -33,7 +34,7 @@ const RealTime Model::get_next_event_time() const
         if (earliest_event_time > event_time)
             earliest_event_time = event_time;
     }
-    std::cout << "Earliest Event Time " << earliest_event_time << std::endl;
+    LOG(earliest_event_time);
     return clock_->to_realtime(earliest_event_time);
 }
 

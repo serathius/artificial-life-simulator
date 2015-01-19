@@ -18,6 +18,8 @@ private:
 
 public:
     explicit RealTimeDifference(const Duration&);
+    friend std::ostream& operator<<(std::ostream& os,
+      const RealTimeDifference& realtime);
     const Duration get_duration() const;
     const TimeDifference operator*(const TimePassageSpeed&) const;
     const RealTime operator+(const RealTime&) const;

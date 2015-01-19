@@ -22,6 +22,15 @@ RealTimeDifference::RealTimeDifference(
     this->duration = duration;
 }
 
+std::ostream& operator<<(std::ostream& os,
+  const RealTimeDifference& realtime)
+{
+    os << "RealTimeDifference(" << std::chrono::duration_cast<
+      std::chrono::nanoseconds>(realtime.duration).count() / 1000000000.f
+      << "s)";
+    return os;
+}
+
 bool RealTime::operator>(const RealTime& other) const
 {
     return this->time_point > other.time_point;
@@ -58,7 +67,6 @@ const RealTime RealTime::now()
 
 const RealTimeDifference::Duration RealTimeDifference::get_duration() const
 {
-    std::cout << "Duration(" << std::chrono::duration_cast<std::chrono::nanoseconds>(duration).count() / 1000000000.f << "s)" << std::endl;
     return duration;
 }
 
