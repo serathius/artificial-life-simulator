@@ -59,14 +59,14 @@ TEST (TimeDifferenceTest, test_time_difference)
 {
     RealTimeDifference difference(std::chrono::seconds(1));
     TimePassageSpeed passage_speed(1.0);
-    ASSERT_EQ(TimeDifference(1000000000), difference * passage_speed);
+    ASSERT_EQ(TimeDifference::seconds(1), difference * passage_speed);
 }
 
 TEST (TimePassageSpeedTest, test_time_passsage)
 {
     RealTimeDifference difference(std::chrono::seconds(1));
     TimePassageSpeed passage_speed(1.234);
-    ASSERT_EQ(TimeDifference(1234000000), difference * passage_speed);
+    ASSERT_EQ(TimeDifference::seconds(1.234), difference * passage_speed);
 }
 
 TEST(SimulationClockTest, test_assert_on_double_start)
@@ -85,14 +85,14 @@ TEST(RealTimeDifferenceTest, test_difference)
 
 TEST(TimeTest, test_time_operators)
 {
-    TimeDifference a(1);
-    AbsoluteTime b(1);
-    ASSERT_EQ(AbsoluteTime(2), a + b);
+    TimeDifference a = TimeDifference::seconds(1);
+    AbsoluteTime b(1000000000);
+    ASSERT_EQ(AbsoluteTime(2000000000), a + b);
 }
 
 TEST(AbsoluteTime, test_assert_positive_time)
 {
-    ASSERT_DEATH(TimeDifference(-1) + AbsoluteTime(0), "");
+    ASSERT_DEATH(TimeDifference::seconds(-1) + AbsoluteTime(0), "");
 }
 
 TEST(RealTimeTest, test_real_time_gt1)
@@ -169,12 +169,12 @@ TEST(AbsoluteTimeTest, test_gte3)
 
 TEST(TimeDifferenceTest, test_dividing_by_time_passage)
 {
-    TimeDifference simulation_time_passed(2);
+    TimeDifference simulation_time_passed = TimeDifference::seconds(2);
     TimePassageSpeed time_passage_speed(2.0);
     RealTimeDifference realtime_passed = (
         simulation_time_passed / time_passage_speed);
     ASSERT_EQ(RealTimeDifference(RealTimeDifference::Duration(
-            std::chrono::nanoseconds(1))), realtime_passed);
+            std::chrono::seconds(1))), realtime_passed);
 }
 
 TEST(SimulationClockTest, test_to_realtime_asserts_time_didnt_shift)
