@@ -47,21 +47,4 @@ void MainWindow::draw(int width, int height) {
     std::unique_lock<std::mutex> mlock(mutex);
     viewmodel_.draw();
     mlock.unlock();
-    float a = 0.1;
-    glColor3f(1.f, 1.f, 1.f);
-    glBegin(GL_TRIANGLES);
-      glVertex2f(0.f, 0.f);
-      glVertex2f(0.f, a);
-      glVertex2f(a, a);
-      glVertex2f(0.f, 0.f);
-      glVertex2f(a, 0.f);
-      glVertex2f(a, -a);
-      glVertex2f(0.f, 0.f);
-      glVertex2f(0.f, -a);
-      glVertex2f(-a, -a);
-      glVertex2f(0.f, 0.f);
-      glVertex2f(-a, 0.f);
-      glVertex2f(-a, a);
-    glEnd();
-
 }
