@@ -1,3 +1,6 @@
+#ifndef COMMON_H_
+#define COMMON_H_
+
 #include <iostream>
 
 struct None { };
@@ -52,3 +55,5 @@ void log(const char *file,int line,const LogData<List> &data)
 #else
   #define LOG(x)
 #endif
+
+#endif /* COMMON_H_ */
