@@ -20,20 +20,17 @@ class OrganismUnderstoodWorldInformation
 class Organism : public WorldObject, public EventObject
 {
 private:
-    Coordinates coordinates_;
-    UnitVector direction_;
     OrganismCondition condition_;
     AbsoluteTime last_decision_time_;
     const Genotype genotype_;
     const OrganismLogic logic_;
 
 public:
-    Organism(World * const world, const Coordinates& coordinates,
-      const UnitVector& direction, const AbsoluteTime &time);
+    Organism(World * const world, const AbsoluteTime &time);
     virtual ~Organism();
     const AbsoluteTime get_next_event_time();
     void update(const AbsoluteTime&);
-    void draw();
+    virtual WorldObjectView* get_view(const Coordinates&, const UnitVector&);
 };
 
 

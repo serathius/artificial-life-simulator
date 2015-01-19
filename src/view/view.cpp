@@ -32,5 +32,5 @@ View::~View()
 
 void View::update(const ViewModel& viewmodel_)
 {
-    main_window->viewmodel_ = viewmodel_;
+    main_window->set_viewmodel(viewmodel_);
 }

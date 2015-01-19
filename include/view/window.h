@@ -2,6 +2,7 @@
 #define WINDOW_H_
 
 #include <cstdlib>
+#include <mutex>
 
 #include <GLFW/glfw3.h>
 
@@ -25,10 +26,17 @@ class MainWindow : public Window
 {
 private:
     virtual void draw(int, int);
+    ViewModel viewmodel_;
+    std::mutex mutex;
 
 public:
-    ViewModel viewmodel_;
+    void set_viewmodel(const ViewModel& viewmodel)
+    {
+        std::unique_lock<std::mutex> mlock(mutex);
+        viewmodel_ = viewmodel;
+    }
     MainWindow(const char *, int, int);
+
 };
 
 #endif /* WINDOW_H_ */

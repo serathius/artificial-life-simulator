@@ -1,5 +1,4 @@
 #include <GLFW/glfw3.h>
-#include <math.h>
 
 #include "view/window.h"
 
@@ -45,7 +44,9 @@ MainWindow::MainWindow(const char* name, int width, int height)
 }
 
 void MainWindow::draw(int width, int height) {
+    std::unique_lock<std::mutex> mlock(mutex);
     viewmodel_.draw();
+    mlock.unlock();
     float a = 0.1;
     glColor3f(1.f, 1.f, 1.f);
     glBegin(GL_TRIANGLES);
@@ -62,4 +63,5 @@ void MainWindow::draw(int width, int height) {
       glVertex2f(-a, 0.f);
       glVertex2f(-a, a);
     glEnd();
+
 }

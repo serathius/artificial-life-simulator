@@ -78,30 +78,30 @@ const UnitVector UnitVector::operator+(const UnitVector& other) const
     return UnitVector(angle_ + other.angle_);
 }
 
-float Coordinates::get_x()
+float Coordinates::get_x() const
 {
     return x_;
 }
 
 
-float Coordinates::get_y()
+float Coordinates::get_y() const
 {
     return y_;
 }
 
 
-float UnitVector::get_angle()
+float UnitVector::get_angle() const
 {
     return angle_;
 }
 
-float Dimension::get_x()
+float Dimension::get_x() const
 {
     return x_;
 }
 
 
-float Dimension::get_y()
+float Dimension::get_y() const
 {
     return y_;
 }

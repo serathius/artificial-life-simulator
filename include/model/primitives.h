@@ -21,8 +21,8 @@ public:
     const Coordinates operator+(const Vector&) const;
     const Coordinates operator-(const Vector&) const;
     bool operator==(const Coordinates&) const;
-    float get_x();
-    float get_y();
+    float get_x() const;
+    float get_y() const;
 };
 
 
@@ -38,8 +38,8 @@ public:
     bool operator!=(const Dimension &other) const;
     const Coordinates operator+(const Coordinates &point) const;
     const Vector to_vector() const;
-    float get_x();
-    float get_y();
+    float get_x() const;
+    float get_y() const;
 };
 
 class Vector
@@ -72,6 +72,6 @@ public:
     UnitVector& operator=(const UnitVector&);
     const UnitVector operator+(const UnitVector&) const;
     bool operator==(const UnitVector&) const;
-    float get_angle();
+    float get_angle() const;
 };
 #endif

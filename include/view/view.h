@@ -17,6 +17,7 @@ private:
     std::unique_ptr<MainWindow> main_window;
     std::unique_ptr<std::thread> main_window_thread;
 
+
 public:
     View(EventQueue * const);
     void update(const ViewModel& viewmodel_);
