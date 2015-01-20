@@ -28,6 +28,12 @@ WorldObjectView* Organism::get_view(const Coordinates& coordinates,
   return new TriangleWorldObjectView(coordinates, direction);
 }
 
+Shape* Organism::get_shape(const Coordinates& coordinates,
+  const UnitVector& direction)
+{
+  return new Circle(coordinates, Distance(0.1));
+}
+
 const AbsoluteTime Organism::get_next_event_time()
 {
   return last_decision_time_ + TimeDifference::seconds(1);

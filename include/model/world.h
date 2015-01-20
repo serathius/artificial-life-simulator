@@ -10,6 +10,7 @@ class WorldObject;
 
 #include "model.h"
 #include "primitives.h"
+#include "model/intersection.h"
 
 
 class WorldObject
@@ -21,6 +22,7 @@ public:
     WorldObject(World* const);
     virtual ~WorldObject();
     virtual WorldObjectView* get_view(const Coordinates&, const UnitVector&) = 0;
+    virtual Shape* get_shape(const Coordinates&, const UnitVector&) = 0;
 };
 
 
@@ -32,6 +34,7 @@ private:
 public:
     WorldPlane(World* const, const Distance&);
     virtual WorldObjectView* get_view(const Coordinates&, const UnitVector&);
+    virtual Shape* get_shape(const Coordinates&, const UnitVector&);
 };
 
 struct Position
@@ -67,7 +70,7 @@ public:
     };
     iterator begin() const;
     iterator end() const;
-    void add(WorldObject*, const Coordinates&, const UnitVector&);
+    bool add(WorldObject*, const Coordinates&, const UnitVector&);
     void remove(WorldObject*);
     const std::vector<std::shared_ptr<WorldObjectView>> get_view() const;
 };

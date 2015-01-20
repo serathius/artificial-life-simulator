@@ -69,8 +69,18 @@ bool ReverseCircleVisitor::visit(ReverseCircle &reverse_circle)
   return are_intersecting(reverse_circle, reverse_circle_);
 }
 
+Shape::~Shape()
+{
+
+}
+
 Circle::Circle(const Coordinates &coordinates, const Distance &radius)
  : coordinates(coordinates), radius(radius)
+{
+
+}
+
+Circle::~Circle()
 {
 
 }
@@ -93,6 +103,11 @@ bool Circle::accept(ReverseCircleVisitor & visitor)
 ReverseCircle::ReverseCircle(const Coordinates &coordinates, const Distance& radius)
   : coordinates(coordinates), radius(radius)
 {
+}
+
+ReverseCircle::~ReverseCircle()
+{
+
 }
 
 bool ReverseCircle::accept(IntersectionVisitor & visitor)

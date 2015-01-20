@@ -1,3 +1,4 @@
+#include <assert.h>
 #include "model/world.h"
 
 #include "model/organism.h"
@@ -5,10 +6,10 @@
 
 World::World(Model* const model) : objects_(WorldObjectsCollection(model))
 {
-  objects_.add(
-    new WorldPlane(this, Distance(1)), Coordinates(0, 0), UnitVector(0));
-  objects_.add(
-    new Organism(this, AbsoluteTime(0)), Coordinates(0.5, 0.5), UnitVector(90));
+  assert(objects_.add(
+    new WorldPlane(this, Distance(1)), Coordinates(0, 0), UnitVector(0)));
+  assert(objects_.add(
+    new Organism(this, AbsoluteTime(0)), Coordinates(0, 0), UnitVector(0)));
 }
 
 WorldObject::WorldObject(World *const world)
@@ -36,15 +37,30 @@ WorldObjectsCollection::~WorldObjectsCollection()
   }
 }
 
-void WorldObjectsCollection::add(WorldObject* object,
+bool WorldObjectsCollection::add(WorldObject* object,
   const Coordinates& coordinates, const UnitVector& direction)
 {
+  Shape* first_shape = object->get_shape(coordinates, direction);
+  for (auto pair: objects_)
+  {
+    Shape* second_shape = pair.first->get_shape(pair.second.coordinates,
+      pair.second.direction);
+    if (are_intersecting(*first_shape, *second_shape))
+    {
+      delete first_shape;
+      delete second_shape;
+      return false;
+    }
+      delete second_shape;
+  }
+  delete first_shape;
   objects_.insert(element(object, {coordinates, direction}));
   EventObject* event_object = dynamic_cast<EventObject*>(object);
   if (event_object != nullptr)
   {
     model_->register_event_object(event_object);
   }
+  return true;
 }
 
 const std::vector<std::shared_ptr<WorldObjectView>> WorldObjectsCollection::get_view() const
@@ -85,4 +101,9 @@ WorldObjectView* WorldPlane::get_view(Coordinates const &coordinates,
   UnitVector const &direction)
 {
   return new CircleWorldObjectView(coordinates, distance_);
+}
+
+Shape* WorldPlane::get_shape(const Coordinates& coordinates, const UnitVector&)
+{
+  return new ReverseCircle(coordinates, distance_);
 }
