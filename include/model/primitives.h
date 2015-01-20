@@ -1,10 +1,11 @@
-#ifndef COORDINATES_SYSTEM_H
-#define COORDINATES_SYSTEM_H
+#ifndef PRIMITIVES_H
+#define PRIMITIVES_H
 
+#include <iostream>
 
 class UnitVector;
 class Vector;
-
+class Distance;
 
 class Coordinates
 {
@@ -21,6 +22,7 @@ public:
     const Coordinates operator+(const Vector&) const;
     const Coordinates operator-(const Vector&) const;
     bool operator==(const Coordinates&) const;
+    const Distance distance(const Coordinates&) const;
     float get_x() const;
     float get_y() const;
 };
@@ -42,6 +44,7 @@ public:
     float get_y() const;
 };
 
+
 class Vector
 {
     friend class Coordinates;
@@ -55,6 +58,7 @@ public:
     const Coordinates operator+(const Coordinates&) const;
     const Vector operator+(const Vector&) const;
     const Vector operator-(const Vector&) const;
+    const Distance length() const;
     bool operator==(const Vector&) const;
 };
 
@@ -73,5 +77,21 @@ public:
     const UnitVector operator+(const UnitVector&) const;
     bool operator==(const UnitVector&) const;
     float get_angle() const;
+};
+
+
+class Distance
+{
+private:
+    float distance_;
+
+public:
+    Distance(float);
+    friend std::ostream& operator<<(
+      std::ostream& os, const Distance& distance);
+    const Distance operator+(const Distance&) const;
+    bool operator==(const Distance&) const;
+    bool operator<(const Distance&) const;
+    bool operator<=(const Distance&) const;
 };
 #endif
