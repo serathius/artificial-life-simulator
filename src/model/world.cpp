@@ -6,7 +6,7 @@
 World::World(Model* const model) : objects_(WorldObjectsCollection(model))
 {
   objects_.add(
-    new WorldPlane(this, Dimension(1, 1)), Coordinates(0, 0), UnitVector(0));
+    new WorldPlane(this, Distance(1)), Coordinates(0, 0), UnitVector(0));
   objects_.add(
     new Organism(this, AbsoluteTime(0)), Coordinates(0.5, 0.5), UnitVector(90));
 }
@@ -75,8 +75,8 @@ WorldObjectsCollection::iterator WorldObjectsCollection::end() const
 }
 
 
-WorldPlane::WorldPlane(World *const world, Dimension const & dimension)
-  : WorldObject(world), dimension_(dimension)
+WorldPlane::WorldPlane(World *const world, Distance const & distance)
+  : WorldObject(world), distance_(distance)
 {
 
 }
@@ -84,5 +84,5 @@ WorldPlane::WorldPlane(World *const world, Dimension const & dimension)
 WorldObjectView* WorldPlane::get_view(Coordinates const &coordinates,
   UnitVector const &direction)
 {
-  return new SquareWorldObjectView(coordinates, direction, dimension_);
+  return new CircleWorldObjectView(coordinates, distance_);
 }

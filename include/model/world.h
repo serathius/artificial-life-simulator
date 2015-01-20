@@ -27,10 +27,10 @@ public:
 class WorldPlane : public WorldObject
 {
 private:
-    Dimension dimension_;
+    Distance distance_;
 
 public:
-    WorldPlane(World* const, const Dimension&);
+    WorldPlane(World* const, const Distance&);
     virtual WorldObjectView* get_view(const Coordinates&, const UnitVector&);
 };
 

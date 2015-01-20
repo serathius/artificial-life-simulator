@@ -56,3 +56,28 @@ void SquareWorldObjectView::draw()
   glVertex2f(0, dimension_.get_y());
   glEnd();
 }
+
+CircleWorldObjectView::CircleWorldObjectView(const Coordinates &coordinates,
+  const Distance &distance) : coordinates_(coordinates), distance_(distance)
+{
+
+}
+
+void CircleWorldObjectView::draw()
+{
+  glColor3f(0.f, 0.5f, 0.f);
+  float theta = static_cast<float>(2 * M_PI / SEGMENTS_COUNT);
+  float tangetial_factor = tanf(theta);
+  float radial_factor = cosf(theta);
+  float dx = distance_.get_distance();
+  float dy = 0.f;
+  glBegin(GL_POLYGON);
+  for (int i=0; i<SEGMENTS_COUNT; ++i)
+  {
+    glVertex2f(coordinates_.get_x() + dx, coordinates_.get_y() + dy);
+    float tmp_x = (dx - dy * tangetial_factor) * radial_factor;
+    dy = (dy + dx * tangetial_factor) * radial_factor;
+    dx = tmp_x;
+  }
+  glEnd();
+}

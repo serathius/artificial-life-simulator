@@ -54,4 +54,18 @@ public:
   virtual void draw();
 };
 
+class CircleWorldObjectView : public WorldObjectView
+{
+private:
+  const Coordinates coordinates_;
+  const Distance distance_;
+  static const int SEGMENTS_COUNT = 32;
+
+public:
+  CircleWorldObjectView(const Coordinates& coordinates,
+    const Distance& distance);
+  virtual ~CircleWorldObjectView(){;}
+  virtual void draw();
+};
+
 #endif /* VIEWMODEL_H_ */
