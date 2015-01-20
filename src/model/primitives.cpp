@@ -135,6 +135,16 @@ bool Distance::operator<(const Distance& other) const
     return distance_ < other.distance_;
 }
 
+bool Distance::operator<=(const Distance& other) const
+{
+    return distance_ <= other.distance_;
+}
+
+float Distance::get_distance() const
+{
+    return distance_;
+}
+
 std::ostream& operator<<(std::ostream& os, const Distance& distance)
 {
     os << "Distance(" << distance.distance_ << ")";

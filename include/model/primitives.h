@@ -93,5 +93,6 @@ public:
     bool operator==(const Distance&) const;
     bool operator<(const Distance&) const;
     bool operator<=(const Distance&) const;
+    float get_distance() const;
 };
 #endif
