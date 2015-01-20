@@ -1,20 +1,20 @@
-#include "model/collision.h"
+#include "model/intersection.h"
 
 #include <cassert>
 #include <cmath>
 
-bool are_colliding(CollisionShape& first, CollisionShape& second)
+bool are_intersecting(Shape & first, Shape & second)
 {
-  CollisionVisitor visitor(first);
+  IntersectionVisitor visitor(first);
   return second.accept(visitor);
 }
 
-bool are_colliding(CircleShape& first, CircleShape& second)
+bool are_intersecting(Circle & first, Circle & second)
 {
   return first.coordinates.distance(second.coordinates) <= first.radius + second.radius;
 }
 
-bool are_colliding(CircleShape& circle, RectangleShape& rectangle)
+bool are_intersecting(Circle & circle, Rectangle & rectangle)
 {
   float distance_x = abs(circle.coordinates.get_x() - rectangle.coordinates.get_x());
   float distance_y = abs(circle.coordinates.get_y() - rectangle.coordinates.get_y());
@@ -38,7 +38,7 @@ bool are_colliding(CircleShape& circle, RectangleShape& rectangle)
     circle.radius.get_distance() * circle.radius.get_distance()));
 }
 
-bool are_colliding(RectangleShape& first, RectangleShape& second)
+bool are_intersecting(Rectangle & first, Rectangle & second)
 {
   float first_point1x = first.coordinates.get_x() - first.dimension.get_x() / 2;
   float first_point1y = first.coordinates.get_y() - first.dimension.get_y() / 2;
@@ -57,93 +57,93 @@ bool are_colliding(RectangleShape& first, RectangleShape& second)
   return (first_x_overlap || second_x_overlap) && (first_y_overlap || second_y_overlap);
 }
 
-CollisionVisitor::CollisionVisitor(CollisionShape &shape)
+IntersectionVisitor::IntersectionVisitor(Shape &shape)
   : shape_(shape)
 {
 
 }
 
-bool CollisionVisitor::visit(CircleShape& circle)
+bool IntersectionVisitor::visit(Circle & circle)
 {
   CircleVisitor visitor(circle);
   return shape_.accept(visitor);
 }
 
-bool CollisionVisitor::visit(RectangleShape& rectangle)
+bool IntersectionVisitor::visit(Rectangle & rectangle)
 {
   RectangleVisitor visitor(rectangle);
   return shape_.accept(visitor);
 }
 
-CircleVisitor::CircleVisitor(CircleShape &circle) : circle_(circle)
+CircleVisitor::CircleVisitor(Circle &circle) : circle_(circle)
 {
 
 }
 
-bool CircleVisitor::visit(CircleShape& circle)
+bool CircleVisitor::visit(Circle & circle)
 {
-  return are_colliding(circle, circle_);
+  return are_intersecting(circle, circle_);
 }
 
-bool CircleVisitor::visit(RectangleShape& rectangle)
+bool CircleVisitor::visit(Rectangle & rectangle)
 {
-  return are_colliding(circle_, rectangle);
+  return are_intersecting(circle_, rectangle);
 }
 
-RectangleVisitor::RectangleVisitor(RectangleShape &rectangle) : rectangle_(rectangle)
+RectangleVisitor::RectangleVisitor(Rectangle &rectangle) : rectangle_(rectangle)
 {
 
 }
 
-bool RectangleVisitor::visit(CircleShape &circle)
+bool RectangleVisitor::visit(Circle &circle)
 {
-  return are_colliding(circle, rectangle_);
+  return are_intersecting(circle, rectangle_);
 }
 
-bool RectangleVisitor::visit(RectangleShape &rectangle)
+bool RectangleVisitor::visit(Rectangle &rectangle)
 {
-  return are_colliding(rectangle, rectangle_);
+  return are_intersecting(rectangle, rectangle_);
 }
 
-CircleShape::CircleShape(const Coordinates &coordinates, const Distance &radius)
+Circle::Circle(const Coordinates &coordinates, const Distance &radius)
  : coordinates(coordinates), radius(radius)
 {
 
 }
 
-bool CircleShape::accept(CollisionVisitor& visitor)
+bool Circle::accept(IntersectionVisitor & visitor)
 {
   return visitor.visit(*this);
 }
 
-bool CircleShape::accept(CircleVisitor &visitor)
+bool Circle::accept(CircleVisitor &visitor)
 {
   return visitor.visit(*this);
 }
 
-bool CircleShape::accept(RectangleVisitor& visitor)
+bool Circle::accept(RectangleVisitor& visitor)
 {
   return visitor.visit(*this);
 }
 
-RectangleShape::RectangleShape(const Coordinates &coordinates,
+Rectangle::Rectangle(const Coordinates &coordinates,
   const UnitVector &direction, const Dimension& dimension)
   : coordinates(coordinates), direction(direction), dimension(dimension)
 {
   assert(direction == UnitVector(0));
 }
 
-bool RectangleShape::accept(CollisionVisitor& visitor)
+bool Rectangle::accept(IntersectionVisitor & visitor)
 {
   return visitor.visit(*this);
 }
 
-bool RectangleShape::accept(CircleVisitor &visitor)
+bool Rectangle::accept(CircleVisitor &visitor)
 {
   return visitor.visit(*this);
 }
 
-bool RectangleShape::accept(RectangleVisitor& visitor)
+bool Rectangle::accept(RectangleVisitor& visitor)
 {
   return visitor.visit(*this);
 }

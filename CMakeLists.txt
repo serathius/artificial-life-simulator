@@ -39,8 +39,8 @@ target_link_libraries(ModelOrganism ${EXTERNAL_LIBS})
 add_library(ModelLogic ${CMAKE_CURRENT_SOURCE_DIR}/src/model/logic.cpp)
 target_link_libraries(ModelLogic ${EXTERNAL_LIBS})
 
-add_library(ModelCollision ${CMAKE_CURRENT_SOURCE_DIR}/src/model/collision.cpp)
-target_link_libraries(ModelCollision ${EXTERNAL_LIBS})
+add_library(ModelIntersection ${CMAKE_CURRENT_SOURCE_DIR}/src/model/intersection.cpp)
+target_link_libraries(ModelIntersection ${EXTERNAL_LIBS})
 
 add_library(View ${CMAKE_CURRENT_SOURCE_DIR}/src/view/view.cpp)
 target_link_libraries(View ${EXTERNAL_LIBS})
@@ -51,7 +51,7 @@ target_link_libraries(ViewWindow ${EXTERNAL_LIBS})
 add_library(ViewModel ${CMAKE_CURRENT_SOURCE_DIR}/src/view/viewmodel.cpp)
 target_link_libraries(ViewModel ${EXTERNAL_LIBS})
 
-set(INTERNAL_LIBS View ViewWindow Controller Model ModelSimulationClock ControllerRealTimeClock ModelWorld ModelPrimitives ViewModel ModelOrganism ModelLogic ControllerEvents ModelCollision)
+set(INTERNAL_LIBS View ViewWindow Controller Model ModelSimulationClock ControllerRealTimeClock ModelWorld ModelPrimitives ViewModel ModelOrganism ModelLogic ControllerEvents ModelIntersection)
 
 target_link_libraries(main ${INTERNAL_LIBS} ${EXTERNAL_LIBS})
 
@@ -63,7 +63,7 @@ include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 
 enable_testing()
 
-add_executable(unittests tests/test_clock.cpp tests/test_collision.cpp)
+add_executable(unittests tests/test_clock.cpp tests/test_intersection.cpp)
 
 target_link_libraries(unittests gmock gtest gtest_main ${INTERNAL_LIBS})
 add_test(unittests unittests)
