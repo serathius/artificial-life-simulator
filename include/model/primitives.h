@@ -90,6 +90,7 @@ public:
     friend std::ostream& operator<<(
       std::ostream& os, const Distance& distance);
     const Distance operator+(const Distance&) const;
+    const Distance operator-(const Distance&) const;
     bool operator==(const Distance&) const;
     bool operator<(const Distance&) const;
     bool operator<=(const Distance&) const;

@@ -3,20 +3,21 @@
 
 struct Shape;
 struct Circle;
-struct Rectangle;
+struct ReverseCircle;
 
 #include "primitives.h"
 
 bool are_intersecting(Shape& first, Shape& second);
 bool are_intersecting(Circle& first, Circle& second);
-bool are_intersecting(Rectangle& first, Rectangle& second);
-bool are_intersecting(Circle& first, Rectangle& second);
+bool are_intersecting(Circle& first, ReverseCircle& second);
+bool are_intersecting(ReverseCircle& first, ReverseCircle& second);
+
 
 class IntersectionVisitorBase
 {
 public:
   virtual bool visit(Circle&) = 0;
-  virtual bool visit(Rectangle&) = 0;
+  virtual bool visit(ReverseCircle&) = 0;
 
 };
 
@@ -28,7 +29,7 @@ private:
 public:
   IntersectionVisitor(Shape&);
   virtual bool visit(Circle&);
-  virtual bool visit(Rectangle&);
+  virtual bool visit(ReverseCircle&);
 };
 
 class CircleVisitor : public IntersectionVisitorBase
@@ -39,18 +40,18 @@ private:
 public:
   CircleVisitor(Circle&);
   virtual bool visit(Circle&);
-  virtual bool visit(Rectangle&);
+  virtual bool visit(ReverseCircle&);
 };
 
-class RectangleVisitor : public IntersectionVisitorBase
+class ReverseCircleVisitor : public IntersectionVisitorBase
 {
 private:
-  Rectangle& rectangle_;
+  ReverseCircle& reverse_circle_;
 
 public:
-  RectangleVisitor(Rectangle&);
+  ReverseCircleVisitor(ReverseCircle&);
   virtual bool visit(Circle&);
-  virtual bool visit(Rectangle&);
+  virtual bool visit(ReverseCircle&);
 };
 
 class Shape
@@ -58,7 +59,7 @@ class Shape
 public:
   virtual bool accept(IntersectionVisitor& visitor) = 0;
   virtual bool accept(CircleVisitor& visitor) = 0;
-  virtual bool accept(RectangleVisitor& visitor) = 0;
+  virtual bool accept(ReverseCircleVisitor& visitor) = 0;
 };
 
 struct Circle : public Shape
@@ -66,23 +67,21 @@ struct Circle : public Shape
   Circle(const Coordinates& coordinates, const Distance& radius);
   virtual bool accept(IntersectionVisitor& visitor);
   virtual bool accept(CircleVisitor& visitor);
-  virtual bool accept(RectangleVisitor& visitor);
+  virtual bool accept(ReverseCircleVisitor& visitor);
 
   const Coordinates coordinates;
   const Distance radius;
 };
 
-struct Rectangle : public Shape
+struct ReverseCircle : public Shape
 {
-  Rectangle(const Coordinates& coordinates, const UnitVector& direction,
-    const Dimension& dimension);
+  ReverseCircle(const Coordinates& coordinates, const Distance& radius);
   virtual bool accept(IntersectionVisitor& visitor);
   virtual bool accept(CircleVisitor& visitor);
-  virtual bool accept(RectangleVisitor& visitor);
+  virtual bool accept(ReverseCircleVisitor& visitor);
 
   const Coordinates coordinates;
-  const UnitVector direction;
-  const Dimension dimension;
+  const Distance radius;
 };
 
 #endif /* INTERSECTION_H_ */

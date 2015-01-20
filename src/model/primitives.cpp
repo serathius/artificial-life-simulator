@@ -130,6 +130,12 @@ const Distance Distance::operator+(const Distance& other) const
     return Distance(distance_ + other.distance_);
 }
 
+const Distance Distance::operator-(const Distance& other) const
+{
+    return Distance(distance_ - other.distance_);
+}
+
+
 bool Distance::operator<(const Distance& other) const
 {
     return distance_ < other.distance_;
