@@ -16,6 +16,17 @@ public:
   virtual void draw() = 0;
 };
 
+class ViewModel
+{
+private:
+  std::vector<std::shared_ptr<WorldObjectView>> objects_;
+
+public:
+  ViewModel(){};
+  ViewModel(const std::vector<std::shared_ptr<WorldObjectView>>& objects);
+  void draw();
+};
+
 class TriangleWorldObjectView : public WorldObjectView
 {
 private:
@@ -27,17 +38,6 @@ public:
     const UnitVector& direction);
   virtual ~TriangleWorldObjectView(){;}
   virtual void draw();
-};
-
-class ViewModel
-{
-private:
-  std::vector<std::shared_ptr<WorldObjectView>> objects_;
-
-public:
-  ViewModel(){};
-  ViewModel(const std::vector<std::shared_ptr<WorldObjectView>>& objects);
-  void draw();
 };
 
 class SquareWorldObjectView : public WorldObjectView
