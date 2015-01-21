@@ -2,39 +2,19 @@
 #define MODEL_H
 
 #include <memory>
-#include <set>
 
-class EventObject;
-class EventObjectCollection;
 class Model;
-class ModelObject;
-class World;
-class ViewModel;
 
 #include "simulation_clock.h"
 #include "view/viewmodel.h"
-#include "model/objects.h"
-
-class EventObjectCollection
-{
-public:
-  typedef std::set<EventObject*>::iterator Iterator;
-
-  Iterator begin() const;
-  Iterator end() const;
-  void add(EventObject*);
-  void remove(EventObject*);
-
-private:
-  std::set<EventObject*> event_objects_;
-};
-
+#include "collections.h"
+#include "world.h"
 
 class Model
 {
 public:
   Model();
-  void create_new_game(const RealTime& time);
+  void create_new_game(const RealTime&);
   void update(const RealTime&);
   const RealTime get_next_event_time() const;
   void register_event_object(EventObject* event_object);

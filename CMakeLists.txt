@@ -45,6 +45,9 @@ target_link_libraries(ModelIntersection ${EXTERNAL_LIBS})
 add_library(ModelObjects ${CMAKE_CURRENT_SOURCE_DIR}/src/model/objects.cpp)
 target_link_libraries(ModelObjects ${EXTERNAL_LIBS})
 
+add_library(ModelCollections ${CMAKE_CURRENT_SOURCE_DIR}/src/model/collections.cpp)
+target_link_libraries(ModelCollections ${EXTERNAL_LIBS})
+
 add_library(View ${CMAKE_CURRENT_SOURCE_DIR}/src/view/view.cpp)
 target_link_libraries(View ${EXTERNAL_LIBS})
 
@@ -54,7 +57,7 @@ target_link_libraries(ViewWindow ${EXTERNAL_LIBS})
 add_library(ViewModel ${CMAKE_CURRENT_SOURCE_DIR}/src/view/viewmodel.cpp)
 target_link_libraries(ViewModel ${EXTERNAL_LIBS})
 
-set(INTERNAL_LIBS View ViewWindow Controller Model ModelSimulationClock ControllerRealTimeClock ModelWorld ModelPrimitives ViewModel ModelOrganism ModelLogic ControllerEvents ModelIntersection ModelObjects)
+set(INTERNAL_LIBS View ViewWindow Controller Model ModelSimulationClock ControllerRealTimeClock ModelWorld ModelPrimitives ViewModel ModelOrganism ModelLogic ControllerEvents ModelIntersection ModelObjects ModelCollections)
 
 target_link_libraries(main ${INTERNAL_LIBS} ${EXTERNAL_LIBS})
 
