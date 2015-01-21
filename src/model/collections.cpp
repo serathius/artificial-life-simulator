@@ -1,3 +1,5 @@
+#include <assert.h>
+
 #include "model/collections.h"
 #include "model/model.h"
 
@@ -18,19 +20,11 @@ EventObjectCollection::Iterator EventObjectCollection::end() const
 
 WorldObjectsCollection::WorldObjectsCollection(Model* const model)
 : model_(model)
-  {
-
-  }
-
-WorldObjectsCollection::~WorldObjectsCollection()
 {
-  for(auto object_ptr: objects_)
-  {
-    delete object_ptr.first;
-  }
+
 }
 
-bool WorldObjectsCollection::add(WorldObject* object,
+void WorldObjectsCollection::add(WorldObject* object,
   const Coordinates& coordinates, const UnitVector& direction)
 {
   Shape* first_shape = object->get_shape(coordinates, direction);
@@ -42,18 +36,12 @@ bool WorldObjectsCollection::add(WorldObject* object,
     {
       delete first_shape;
       delete second_shape;
-      return false;
+      assert(false);
     }
     delete second_shape;
   }
   delete first_shape;
   objects_.insert(element(object, {coordinates, direction}));
-  EventObject* event_object = dynamic_cast<EventObject*>(object);
-  if (event_object != nullptr)
-  {
-    model_->register_event_object(event_object);
-  }
-  return true;
 }
 
 const WorldObjectViewCollection WorldObjectsCollection::get_view() const

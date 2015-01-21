@@ -41,7 +41,6 @@ private:
 
 public:
   WorldObjectsCollection(Model* const model);
-  ~WorldObjectsCollection();
   class iterator
   {
   private:
@@ -59,7 +58,7 @@ public:
   };
   iterator begin() const;
   iterator end() const;
-  bool add(WorldObject*, const Coordinates&, const UnitVector&);
+  void add(WorldObject*, const Coordinates&, const UnitVector&);
   void remove(WorldObject*);
   const WorldObjectViewCollection get_view() const;
 };
