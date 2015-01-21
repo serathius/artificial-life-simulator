@@ -13,6 +13,7 @@ class ViewModel;
 
 #include "simulation_clock.h"
 #include "view/viewmodel.h"
+#include "model/objects.h"
 
 class EventObjectCollection
 {
@@ -44,15 +45,5 @@ private:
   std::unique_ptr<SimulationClock> clock_;
   EventObjectCollection event_objects_;
 };
-
-
-class EventObject
-{
-public:
-  virtual const AbsoluteTime get_next_event_time() = 0;
-  virtual void update(const AbsoluteTime&) = 0;
-};
-
-#include "world.h"
 
 #endif /* MODEL_H */
