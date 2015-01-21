@@ -13,17 +13,6 @@ class WorldObjectsCollection;
 #include "model/intersection.h"
 
 
-class WorldPlane : public WorldObject
-{
-private:
-    Distance distance_;
-
-public:
-    WorldPlane(World* const, const Distance&);
-    virtual WorldObjectView* get_view(const Coordinates&, const UnitVector&);
-    virtual Shape* get_shape(const Coordinates&, const UnitVector&);
-};
-
 struct Position
 {
     Coordinates coordinates;

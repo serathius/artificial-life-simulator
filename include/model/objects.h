@@ -28,4 +28,16 @@ public:
   virtual Shape* get_shape(const Coordinates&, const UnitVector&) = 0;
 };
 
+
+class WorldPlane : public WorldObject
+{
+private:
+  Distance distance_;
+
+public:
+  WorldPlane(World* const, const Distance&);
+  virtual WorldObjectView* get_view(const Coordinates&, const UnitVector&);
+  virtual Shape* get_shape(const Coordinates&, const UnitVector&);
+};
+
 #endif /* OBJECTS_H_ */
