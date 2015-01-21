@@ -23,7 +23,8 @@ const UnitVector &direction)
   return new CircleWorldObjectView(coordinates, distance_);
 }
 
-Shape* WorldPlane::get_shape(const Coordinates &coordinates, const UnitVector&)
+std::shared_ptr<Shape> WorldPlane::get_shape(
+  const Coordinates &coordinates, const UnitVector&)
 {
-  return new ReverseCircle(coordinates, distance_);
+  return std::shared_ptr<Shape>(new ReverseCircle(coordinates, distance_));
 }

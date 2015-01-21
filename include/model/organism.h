@@ -26,7 +26,7 @@ public:
   const AbsoluteTime get_next_event_time();
   void update(const AbsoluteTime&);
   virtual WorldObjectView* get_view(const Coordinates&, const UnitVector&);
-  virtual Shape* get_shape(const Coordinates&, const UnitVector&);
+  virtual std::shared_ptr<Shape> get_shape(const Coordinates&, const UnitVector&);
 
 private:
   OrganismCondition condition_;

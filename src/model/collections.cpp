@@ -27,20 +27,17 @@ WorldObjectsCollection::WorldObjectsCollection(Model* const model)
 void WorldObjectsCollection::add(std::shared_ptr<WorldObject> object,
   const Coordinates &coordinates, const UnitVector &direction)
 {
-  Shape* first_shape = object->get_shape(coordinates, direction);
+  std::shared_ptr<Shape> first_shape = object->get_shape(coordinates, direction);
+  std::shared_ptr<Shape> second_shape;
   for (auto pair: objects_)
   {
-    Shape* second_shape = pair.first->get_shape(pair.second.coordinates,
-      pair.second.direction);
+     second_shape = pair.first->get_shape(pair.second.coordinates,
+                                          pair.second.direction);
     if (are_intersecting(*first_shape, *second_shape))
     {
-      delete first_shape;
-      delete second_shape;
       assert(false);
     }
-    delete second_shape;
   }
-  delete first_shape;
   objects_.insert(element(object, {coordinates, direction}));
 }
 
