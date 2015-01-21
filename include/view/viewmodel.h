@@ -2,8 +2,10 @@
 #define VIEWMODEL_H_
 
 #include <vector>
+#include <memory>
 
 class WorldObjectView;
+typedef std::vector<std::shared_ptr<WorldObjectView>> WorldObjectViewCollection;
 
 #include "model/world.h"
 #include "model/primitives.h"
@@ -19,11 +21,11 @@ public:
 class ViewModel
 {
 private:
-  std::vector<std::shared_ptr<WorldObjectView>> objects_;
+  WorldObjectViewCollection objects_;
 
 public:
   ViewModel(){};
-  ViewModel(const std::vector<std::shared_ptr<WorldObjectView>>& objects);
+  ViewModel(const WorldObjectViewCollection& objects);
   void draw();
 };
 

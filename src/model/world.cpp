@@ -63,9 +63,9 @@ bool WorldObjectsCollection::add(WorldObject* object,
   return true;
 }
 
-const std::vector<std::shared_ptr<WorldObjectView>> WorldObjectsCollection::get_view() const
+const WorldObjectViewCollection WorldObjectsCollection::get_view() const
 {
-  std::vector<std::shared_ptr<WorldObjectView>> result;
+  WorldObjectViewCollection result;
   for (auto pair: objects_)
   {
     WorldObjectView* view_object = pair.first->get_view(
@@ -75,7 +75,7 @@ const std::vector<std::shared_ptr<WorldObjectView>> WorldObjectsCollection::get_
   return result;
 }
 
-const std::vector<std::shared_ptr<WorldObjectView>> World::get_objects() const
+const WorldObjectViewCollection World::get_objects() const
 {
   return objects_.get_view();
 }

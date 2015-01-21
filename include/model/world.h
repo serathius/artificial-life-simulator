@@ -72,7 +72,7 @@ public:
     iterator end() const;
     bool add(WorldObject*, const Coordinates&, const UnitVector&);
     void remove(WorldObject*);
-    const std::vector<std::shared_ptr<WorldObjectView>> get_view() const;
+    const WorldObjectViewCollection get_view() const;
 };
 
 

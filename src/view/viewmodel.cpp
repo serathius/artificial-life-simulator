@@ -11,7 +11,7 @@ void ViewModel::draw()
   }
 }
 
-ViewModel::ViewModel(const std::vector<std::shared_ptr<WorldObjectView>> &objects)
+ViewModel::ViewModel(const WorldObjectViewCollection &objects)
 {
   objects_ = objects;
 }
