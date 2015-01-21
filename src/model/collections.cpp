@@ -25,7 +25,7 @@ WorldObjectsCollection::WorldObjectsCollection(Model* const model)
 }
 
 void WorldObjectsCollection::add(std::shared_ptr<WorldObject> object,
-  const Coordinates& coordinates, const UnitVector& direction)
+  const Coordinates &coordinates, const UnitVector &direction)
 {
   Shape* first_shape = object->get_shape(coordinates, direction);
   for (auto pair: objects_)

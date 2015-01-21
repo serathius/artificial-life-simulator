@@ -11,19 +11,19 @@ WorldObject::~WorldObject()
 
 }
 
-WorldPlane::WorldPlane(World *const world, Distance const & distance)
+WorldPlane::WorldPlane(World *const world, const Distance &distance)
   : WorldObject(world), distance_(distance)
 {
 
 }
 
-WorldObjectView* WorldPlane::get_view(Coordinates const &coordinates,
-  UnitVector const &direction)
+WorldObjectView* WorldPlane::get_view(const Coordinates &coordinates,
+const UnitVector &direction)
 {
   return new CircleWorldObjectView(coordinates, distance_);
 }
 
-Shape* WorldPlane::get_shape(const Coordinates& coordinates, const UnitVector&)
+Shape* WorldPlane::get_shape(const Coordinates &coordinates, const UnitVector&)
 {
   return new ReverseCircle(coordinates, distance_);
 }
