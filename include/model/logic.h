@@ -7,4 +7,4 @@ public:
   void make_decision() const;
 };
 
-#endif
+#endif /* LOGIC_H */

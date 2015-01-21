@@ -9,91 +9,91 @@ class Distance;
 
 class Coordinates
 {
-friend class Vector;
-
-private:
-    const float x_;
-    const float y_;
+  friend class Vector;
 
 public:
-    Coordinates(float, float);
-    const Vector operator*(const UnitVector&) const;
-    const Vector operator-(const Coordinates&) const;
-    const Coordinates operator+(const Vector&) const;
-    const Coordinates operator-(const Vector&) const;
-    bool operator==(const Coordinates&) const;
-    const Distance distance(const Coordinates&) const;
-    float get_x() const;
-    float get_y() const;
+  Coordinates(float, float);
+  const Vector operator*(const UnitVector&) const;
+  const Vector operator-(const Coordinates&) const;
+  const Coordinates operator+(const Vector&) const;
+  const Coordinates operator-(const Vector&) const;
+  bool operator==(const Coordinates&) const;
+  const Distance distance(const Coordinates&) const;
+  float get_x() const;
+  float get_y() const;
+
+private:
+  const float x_;
+  const float y_;
 };
 
 
 class Dimension
 {
-private:
-    const float x_;
-    const float y_;
-
 public:
-    Dimension(float x, float y);
-    bool operator==(const Dimension &other) const;
-    bool operator!=(const Dimension &other) const;
-    const Coordinates operator+(const Coordinates &point) const;
-    const Vector to_vector() const;
-    float get_x() const;
-    float get_y() const;
+  Dimension(float x, float y);
+  bool operator==(const Dimension &other) const;
+  bool operator!=(const Dimension &other) const;
+  const Coordinates operator+(const Coordinates &point) const;
+  const Vector to_vector() const;
+  float get_x() const;
+  float get_y() const;
+
+private:
+  const float x_;
+  const float y_;
 };
 
 
 class Vector
 {
-    friend class Coordinates;
-    friend class UnitVector;
-private:
-    const float x_;
-    const float y_;
+  friend class Coordinates;
+  friend class UnitVector;
 
 public:
-    Vector(float, float);
-    const Coordinates operator+(const Coordinates&) const;
-    const Vector operator+(const Vector&) const;
-    const Vector operator-(const Vector&) const;
-    const Distance length() const;
-    bool operator==(const Vector&) const;
+  Vector(float, float);
+  bool operator==(const Vector&) const;
+  const Coordinates operator+(const Coordinates&) const;
+  const Vector operator+(const Vector&) const;
+  const Vector operator-(const Vector&) const;
+  const Distance length() const;
+
+private:
+  const float x_;
+  const float y_;
 };
 
 
 class UnitVector
 {
-    friend class Coordinates;
-
-private:
-    float angle_;
+  friend class Coordinates;
 
 public:
-    UnitVector(float);
-    explicit UnitVector(const Vector&);
-    UnitVector& operator=(const UnitVector&);
-    const UnitVector operator+(const UnitVector&) const;
-    bool operator==(const UnitVector&) const;
-    float get_angle() const;
+  UnitVector(float);
+  explicit UnitVector(const Vector&);
+  UnitVector& operator=(const UnitVector&);
+  bool operator==(const UnitVector&) const;
+  const UnitVector operator+(const UnitVector&) const;
+  float get_angle() const;
+
+private:
+  float angle_;
 };
 
 
 class Distance
 {
-private:
-    float distance_;
-
 public:
-    Distance(float);
-    friend std::ostream& operator<<(
-      std::ostream& os, const Distance& distance);
-    const Distance operator+(const Distance&) const;
-    const Distance operator-(const Distance&) const;
-    bool operator==(const Distance&) const;
-    bool operator<(const Distance&) const;
-    bool operator<=(const Distance&) const;
-    float get_distance() const;
+  Distance(float);
+  friend std::ostream& operator<<(std::ostream& os, const Distance& distance);
+  const Distance operator+(const Distance&) const;
+  const Distance operator-(const Distance&) const;
+  bool operator==(const Distance&) const;
+  bool operator<(const Distance&) const;
+  bool operator<=(const Distance&) const;
+  float get_distance() const;
+
+private:
+  float distance_;
 };
-#endif
+#endif /* PRIMITIVES_H */

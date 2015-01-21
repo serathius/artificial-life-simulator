@@ -57,17 +57,18 @@ private:
 class Shape
 {
 public:
-  virtual bool accept(IntersectionVisitor &visitor) = 0;
-  virtual bool accept(CircleVisitor &visitor) = 0;
-  virtual bool accept(ReverseCircleVisitor &visitor) = 0;
+  virtual bool accept(IntersectionVisitor&) = 0;
+  virtual bool accept(CircleVisitor&) = 0;
+  virtual bool accept(ReverseCircleVisitor&) = 0;
 };
 
 struct Circle : public Shape
 {
-  Circle(const Coordinates& coordinates, const Distance& radius);
-  virtual bool accept(IntersectionVisitor& visitor);
-  virtual bool accept(CircleVisitor& visitor);
-  virtual bool accept(ReverseCircleVisitor& visitor);
+
+  Circle(const Coordinates&, const Distance &radius);
+  virtual bool accept(IntersectionVisitor &visitor);
+  virtual bool accept(CircleVisitor &visitor);
+  virtual bool accept(ReverseCircleVisitor &visitor);
 
   const Coordinates coordinates;
   const Distance radius;
@@ -75,10 +76,10 @@ struct Circle : public Shape
 
 struct ReverseCircle : public Shape
 {
-  ReverseCircle(const Coordinates& coordinates, const Distance& radius);
-  virtual bool accept(IntersectionVisitor& visitor);
-  virtual bool accept(CircleVisitor& visitor);
-  virtual bool accept(ReverseCircleVisitor& visitor);
+  ReverseCircle(const Coordinates &coordinates, const Distance &radius);
+  virtual bool accept(IntersectionVisitor &visitor);
+  virtual bool accept(CircleVisitor &visitor);
+  virtual bool accept(ReverseCircleVisitor &visitor);
 
   const Coordinates coordinates;
   const Distance radius;
