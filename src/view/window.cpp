@@ -18,33 +18,35 @@ Window::~Window()
     glfwDestroyWindow(window_handle_);
 }
 
+void MainWindow::set_viewmodel(const ViewModel &viewmodel)
+    {
+        std::unique_lock<std::mutex> mlock(mutex_);
+        viewmodel_ = viewmodel;
+    }
+
 void Window::show()
 {
-    glfwMakeContextCurrent(window_handle_);
-    glfwSwapInterval(1);
-
-    while (!glfwWindowShouldClose(window_handle_))
-    {
-        int width, height;
-        glfwGetFramebufferSize(window_handle_, &width, &height);
-
-        glClear( GL_COLOR_BUFFER_BIT);
-        glLoadIdentity();
-
-        this->draw(width, height);
-        glfwPollEvents();
-        glfwSwapBuffers(window_handle_);
-    }
+  glfwMakeContextCurrent(window_handle_);
+  glfwSwapInterval(1);
+  while (!glfwWindowShouldClose(window_handle_))
+  {
+    int width, height;
+    glfwGetFramebufferSize(window_handle_, &width, &height);
+    glClear( GL_COLOR_BUFFER_BIT);
+    glLoadIdentity();
+    this->draw(width, height);
+    glfwPollEvents();
+    glfwSwapBuffers(window_handle_);
+  }
 }
 
 MainWindow::MainWindow(const char* name, int width, int height)
     : Window(name, width, height)
 {
-
 }
 
 void MainWindow::draw(int width, int height) {
-    std::unique_lock<std::mutex> mlock(mutex);
-    viewmodel_.draw();
-    mlock.unlock();
+  std::unique_lock<std::mutex> mlock(mutex_);
+  viewmodel_.draw();
+  mlock.unlock();
 }

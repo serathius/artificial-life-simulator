@@ -25,7 +25,7 @@ public:
 
 
 private:
-    Duration duration;
+    Duration duration_;
 };
 
 
@@ -40,16 +40,16 @@ public:
   bool operator!=(const RealTime&) const;
   bool operator>(const RealTime&) const;
   bool operator>=(const RealTime&) const;
-  friend std::ostream& operator<<(std::ostream &os, const RealTime &realtime);
+  friend std::ostream& operator<<(std::ostream&, const RealTime&);
   const RealTimeDifference operator-(const RealTime&) const;
   void schedule() const;
 
 private:
-  TimePoint time_point;
+  TimePoint time_point_;
 
 };
 
 #include "model/simulation_clock.h"
 
-#endif	/* REALTIME_CLOCK_H */
+#endif /* REALTIME_CLOCK_H */
 
