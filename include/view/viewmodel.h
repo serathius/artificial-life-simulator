@@ -7,7 +7,6 @@
 class WorldObjectView;
 typedef std::vector<std::shared_ptr<WorldObjectView>> WorldObjectViewCollection;
 
-#include "model/world.h"
 #include "model/primitives.h"
 #include "common.h"
 

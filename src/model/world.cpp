@@ -12,17 +12,6 @@ World::World(Model* const model) : objects_(WorldObjectsCollection(model))
     new Organism(this, AbsoluteTime(0)), Coordinates(0, 0), UnitVector(0)));
 }
 
-WorldObject::WorldObject(World *const world)
- : world_(world)
-{
-
-}
-
-WorldObject::~WorldObject()
-{
-
-}
-
 WorldObjectsCollection::WorldObjectsCollection(Model* const model)
   : model_(model)
 {

@@ -6,24 +6,11 @@
 
 class World;
 class WorldObjectsCollection;
-class WorldObject;
 
 #include "model.h"
 #include "primitives.h"
+#include "objects.h"
 #include "model/intersection.h"
-
-
-class WorldObject
-{
-private:
-    World* const world_;
-
-public:
-    WorldObject(World* const);
-    virtual ~WorldObject();
-    virtual WorldObjectView* get_view(const Coordinates&, const UnitVector&) = 0;
-    virtual Shape* get_shape(const Coordinates&, const UnitVector&) = 0;
-};
 
 
 class WorldPlane : public WorldObject
