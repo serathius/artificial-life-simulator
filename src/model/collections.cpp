@@ -3,7 +3,7 @@
 #include "model/collections.h"
 #include "model/model.h"
 
-void EventObjectCollection::add(EventObject *event_object)
+void EventObjectCollection::add(std::shared_ptr<EventObject> event_object)
 {
   event_objects_.insert(event_object);
 }
@@ -24,7 +24,7 @@ WorldObjectsCollection::WorldObjectsCollection(Model* const model)
 
 }
 
-void WorldObjectsCollection::add(WorldObject* object,
+void WorldObjectsCollection::add(std::shared_ptr<WorldObject> object,
   const Coordinates& coordinates, const UnitVector& direction)
 {
   Shape* first_shape = object->get_shape(coordinates, direction);

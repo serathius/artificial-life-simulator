@@ -4,8 +4,8 @@
 
 World::World(Model* const model) : world_objects_(WorldObjectsCollection(model))
 {
-  auto organism = new Organism(this, AbsoluteTime(0));
-  auto plane = new WorldPlane(this, Distance(1));
+  std::shared_ptr<Organism> organism = std::shared_ptr<Organism>(new Organism(this, AbsoluteTime(0)));
+  std::shared_ptr<WorldPlane> plane = std::shared_ptr<WorldPlane>(new WorldPlane(this, Distance(1)));
   world_objects_.add(organism, Coordinates(0, 0), UnitVector(0));
   world_objects_.add(plane, Coordinates(0, 0), UnitVector(0));
   event_objects_.add(organism);

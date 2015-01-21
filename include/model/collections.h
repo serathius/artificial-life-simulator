@@ -3,6 +3,7 @@
 
 #include <set>
 #include <map>
+#include <memory>
 
 class WorldObjectsCollection;
 class Model;
@@ -13,15 +14,15 @@ class Model;
 class EventObjectCollection
 {
 public:
-  typedef std::set<EventObject*>::iterator Iterator;
+  typedef std::set<std::shared_ptr<EventObject>>::iterator Iterator;
 
   Iterator begin() const;
   Iterator end() const;
-  void add(EventObject*);
-  void remove(EventObject*);
+  void add(std::shared_ptr<EventObject>);
+  void remove(std::shared_ptr<EventObject>);
 
 private:
-  std::set<EventObject*> event_objects_;
+  std::set<std::shared_ptr<EventObject>> event_objects_;
 };
 
 
@@ -35,18 +36,18 @@ struct Position
 class WorldObjectsCollection
 {
 private:
-  typedef std::pair<WorldObject*, Position> element;
+  typedef std::pair<std::shared_ptr<WorldObject>, Position> element;
   Model* const model_;
-  std::map<WorldObject*, Position> objects_;
+  std::map<std::shared_ptr<WorldObject>, Position> objects_;
 
 public:
   WorldObjectsCollection(Model* const model);
   class iterator
   {
   private:
-    std::map<WorldObject*, Position>::const_iterator iterator_;
+    std::map<std::shared_ptr<WorldObject>, Position>::const_iterator iterator_;
   public:
-    iterator(const std::map<WorldObject*, Position>::const_iterator& iterator)
+    iterator(const std::map<std::shared_ptr<WorldObject>, Position>::const_iterator& iterator)
     {
       iterator_ = iterator;
     }
@@ -54,11 +55,11 @@ public:
     iterator operator++(int) {iterator tmp(*this); operator++(); return tmp;}
     bool operator==(const iterator& rhs) {return iterator_==rhs.iterator_;}
     bool operator!=(const iterator& rhs) {return iterator_!=rhs.iterator_;}
-    WorldObject* operator*() {return iterator_->first;}
+    std::shared_ptr<WorldObject> operator*() {return iterator_->first;}
   };
   iterator begin() const;
   iterator end() const;
-  void add(WorldObject*, const Coordinates&, const UnitVector&);
+  void add(std::shared_ptr<WorldObject>, const Coordinates&, const UnitVector&);
   void remove(WorldObject*);
   const WorldObjectViewCollection get_view() const;
 };
