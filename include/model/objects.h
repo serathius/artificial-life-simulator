@@ -1,9 +1,10 @@
 #ifndef OBJECTS_H_
 #define OBJECTS_H_
 
+class WorldObject;
+class EventObject;
 class World;
 
-#include "primitives.h"
 #include "intersection.h"
 #include "simulation_clock.h"
 #include "view/viewmodel.h"
