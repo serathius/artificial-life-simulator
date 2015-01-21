@@ -85,17 +85,7 @@ Circle::~Circle()
 
 }
 
-bool Circle::accept(IntersectionVisitor &visitor)
-{
-  return visitor.visit(*this);
-}
-
-bool Circle::accept(CircleVisitor &visitor)
-{
-  return visitor.visit(*this);
-}
-
-bool Circle::accept(ReverseCircleVisitor &visitor)
+bool Circle::accept(IntersectionVisitorBase &visitor)
 {
   return visitor.visit(*this);
 }
@@ -110,17 +100,7 @@ ReverseCircle::~ReverseCircle()
 
 }
 
-bool ReverseCircle::accept(IntersectionVisitor &visitor)
-{
-  return visitor.visit(*this);
-}
-
-bool ReverseCircle::accept(CircleVisitor &visitor)
-{
-  return visitor.visit(*this);
-}
-
-bool ReverseCircle::accept(ReverseCircleVisitor &visitor)
+bool ReverseCircle::accept(IntersectionVisitorBase &visitor)
 {
   return visitor.visit(*this);
 }
