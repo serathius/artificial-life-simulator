@@ -2,8 +2,6 @@
 #define CONTROLLER_H
 
 #include <unordered_map>
-#include <typeinfo>
-#include <typeindex>
 
 class Controller;
 
@@ -12,20 +10,20 @@ class Controller;
 #include "model/model.h"
 
 
-
 class Controller
 {
-private:
-    Model model_;
-    View view_;
-    EventQueue event_queue_;
-
-    void handle_events();
-    void schedule_model_update();
-
 public:
-    Controller();
-    void start();
-    void visit(UpdateModelEvent* event);
+  Controller();
+  void start();
+  void visit(UpdateModelEvent* event);
+
+private:
+  void handle_events();
+  void schedule_model_update();
+
+  Model model_;
+  View view_;
+  EventQueue event_queue_;
 };
-#endif
+
+#endif /* CONTROLLER_H */

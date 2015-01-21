@@ -12,42 +12,41 @@ class RealTime;
 class RealTimeDifference
 {
 public:
-    typedef std::chrono::steady_clock::duration Duration;
+  typedef std::chrono::steady_clock::duration Duration;
+  explicit RealTimeDifference(const Duration&);
+  bool operator==(const RealTimeDifference&) const;
+  bool operator!=(const RealTimeDifference&) const;
+  bool operator>(const RealTimeDifference&) const;
+  friend std::ostream& operator<<(std::ostream &os,
+  const RealTimeDifference &realtime);
+  const Duration get_duration() const;
+  const TimeDifference operator*(const TimePassageSpeed&) const;
+  const RealTime operator+(const RealTime&) const;
+
+
 private:
     Duration duration;
-
-public:
-    explicit RealTimeDifference(const Duration&);
-    friend std::ostream& operator<<(std::ostream& os,
-      const RealTimeDifference& realtime);
-    const Duration get_duration() const;
-    const TimeDifference operator*(const TimePassageSpeed&) const;
-    const RealTime operator+(const RealTime&) const;
-    bool operator==(const RealTimeDifference&) const;
-    bool operator!=(const RealTimeDifference&) const;
-    bool operator>(const RealTimeDifference&) const;
 };
 
 
 class RealTime
 {
-    friend class RealTimeDifference;
+  friend class RealTimeDifference;
 public:
-    typedef std::chrono::time_point<std::chrono::steady_clock> TimePoint;
+  typedef std::chrono::time_point<std::chrono::steady_clock> TimePoint;
+  RealTime(const TimePoint&);
+  static const RealTime now();
+  bool operator==(const RealTime&) const;
+  bool operator!=(const RealTime&) const;
+  bool operator>(const RealTime&) const;
+  bool operator>=(const RealTime&) const;
+  friend std::ostream& operator<<(std::ostream &os, const RealTime &realtime);
+  const RealTimeDifference operator-(const RealTime&) const;
+  void schedule() const;
 
 private:
-    TimePoint time_point;
+  TimePoint time_point;
 
-public:
-    RealTime(const TimePoint&);
-    static const RealTime now();
-    friend std::ostream& operator<<(std::ostream& os, const RealTime& realtime);
-    const RealTimeDifference operator-(const RealTime&) const;
-    void schedule() const;
-    bool operator==(const RealTime&) const;
-    bool operator!=(const RealTime&) const;
-    bool operator>(const RealTime&) const;
-    bool operator>=(const RealTime&) const;
 };
 
 #include "model/simulation_clock.h"

@@ -1,13 +1,12 @@
 #ifndef EVENT_QUEUE_H
 #define EVENT_QUEUE_H
 
-#include <queue>
-#include <mutex>
 #include <condition_variable>
+#include <mutex>
+#include <queue>
 
 template<typename T>
 class BlockingQueue;
-
 class Event;
 
 typedef BlockingQueue<Event*> EventQueue;
@@ -24,31 +23,32 @@ do not modify this unless you run your own tests
 template<typename T>
 class BlockingQueue
 {
-private:
-    std::queue<T> queue;
-    std::mutex mutex;
-    std::condition_variable condition;
-
 public:
-    void push(T const &item)
-    {
-        std::unique_lock<std::mutex> mlock(mutex);
-        queue.push(item);
-        mlock.unlock();
-        condition.notify_one();
-    }
+  void push(T const &item)
+  {
+	  std::unique_lock<std::mutex> mlock(mutex_);
+      queue_.push(item);
+      mlock.unlock();
+      condition_.notify_one();
+  }
 
-    T pop()
+  T pop()
+  {
+    std::unique_lock<std::mutex> mlock(mutex_);
+    while (queue_.empty())
     {
-        std::unique_lock<std::mutex> mlock(mutex);
-        while (queue.empty())
-        {
-            condition.wait(mlock);
-        }
-        auto item = queue.front();
-        queue.pop();
-        return item;
+        condition_.wait(mlock);
     }
+    auto item = queue_.front();
+    queue_.pop();
+    return item;
+  }
+
+private:
+  std::queue<T> queue_;
+  std::mutex mutex_;
+  std::condition_variable condition_;
+
 };
 
-#endif
+#endif /* EVENT_QUEUE_H */

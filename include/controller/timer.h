@@ -5,7 +5,7 @@ class Timer
 {
 public:
   template <class callable, class... arguments>
-  Timer(const RealTime& time, bool async, callable&& f, arguments&&... args)
+  Timer(const RealTime &time, bool async, callable&& f, arguments&&... args)
   {
     std::function<typename std::result_of<callable(arguments...)>::type()> task(std::bind(std::forward<callable>(f), std::forward<arguments>(args)...));
     std::thread([time, task]() {
@@ -16,4 +16,4 @@ public:
 
 };
 
-#endif
+#endif /* TIMER_H */
