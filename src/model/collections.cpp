@@ -31,12 +31,9 @@ void WorldObjectsCollection::add(std::shared_ptr<WorldObject> object,
   std::shared_ptr<Shape> second_shape;
   for (auto pair: objects_)
   {
-     second_shape = pair.first->get_shape(pair.second.coordinates,
-                                          pair.second.direction);
-    if (are_intersecting(*first_shape, *second_shape))
-    {
-      assert(false);
-    }
+    second_shape = pair.first->get_shape(pair.second.coordinates,
+                                         pair.second.direction);
+    assert(!are_intersecting(*first_shape, *second_shape));
   }
   objects_.insert(element(object, {coordinates, direction}));
 }

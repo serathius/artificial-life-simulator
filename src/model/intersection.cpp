@@ -2,38 +2,63 @@
 
 bool are_intersecting(Shape &first, Shape &second)
 {
-  IntersectionVisitor visitor(first);
-  return second.accept(visitor);
+  return distance(first, second) == Vector(0, 0);
 }
 
-bool are_intersecting(Circle &first, Circle &second)
+const Vector distance(Shape &first, Shape &second)
 {
-  return first.coordinates.distance(second.coordinates) <= first.radius + second.radius;
+  DistanceVisitor visitor(second);
+  return first.accept(visitor);
 }
 
-bool are_intersecting(Circle &circle, ReverseCircle &reverse_circle)
+const Vector distance(Circle &first, Circle &second)
 {
-  return reverse_circle.radius - circle.radius <=
-    reverse_circle.coordinates.distance(circle.coordinates);
-}
-bool are_intersecting(ReverseCircle &first, ReverseCircle &second)
-{
-  return true;
+  Vector centers_vector = first.coordinates - second.coordinates;
+  Distance center_vector_length = centers_vector.length();
+  Distance radius_sum = first.radius + second.radius;
+  if (center_vector_length <= radius_sum)
+  {
+    return Vector(0, 0);
+  }
+  else
+  {
+    return UnitVector(centers_vector) * (center_vector_length - radius_sum);
+  }
 }
 
-IntersectionVisitor::IntersectionVisitor(Shape &shape)
+const Vector distance(Circle &circle, ReverseCircle &reverse_circle)
+{
+  Vector centers_vector = circle.coordinates - reverse_circle.coordinates;
+  Distance center_vector_length = centers_vector.length();
+  Distance radius_difference= reverse_circle.radius - circle.radius;
+  if(radius_difference <= center_vector_length)
+  {
+    return Vector(0, 0);
+  }
+  else
+  {
+    return UnitVector(centers_vector) * (radius_difference - center_vector_length);
+  }
+}
+
+const Vector distance(ReverseCircle &first, ReverseCircle &second)
+{
+  return Vector(0, 0);
+}
+
+DistanceVisitor::DistanceVisitor(Shape &shape)
   : shape_(shape)
 {
 
 }
 
-bool IntersectionVisitor::visit(Circle &circle)
+const Vector DistanceVisitor::visit(Circle &circle)
 {
   CircleVisitor visitor(circle);
   return shape_.accept(visitor);
 }
 
-bool IntersectionVisitor::visit(ReverseCircle &reverse_circle)
+const Vector DistanceVisitor::visit(ReverseCircle &reverse_circle)
 {
   ReverseCircleVisitor visitor(reverse_circle);
   return shape_.accept(visitor);
@@ -44,14 +69,14 @@ CircleVisitor::CircleVisitor(Circle &circle) : circle_(circle)
 
 }
 
-bool CircleVisitor::visit(Circle &circle)
+const Vector CircleVisitor::visit(Circle &circle)
 {
-  return are_intersecting(circle, circle_);
+  return distance(circle, circle_);
 }
 
-bool CircleVisitor::visit(ReverseCircle &reverse_circle)
+const Vector CircleVisitor::visit(ReverseCircle &reverse_circle)
 {
-  return are_intersecting(circle_, reverse_circle);
+  return distance(circle_, reverse_circle);
 }
 
 ReverseCircleVisitor::ReverseCircleVisitor(ReverseCircle &reverse_circle) : reverse_circle_(reverse_circle)
@@ -59,14 +84,14 @@ ReverseCircleVisitor::ReverseCircleVisitor(ReverseCircle &reverse_circle) : reve
 
 }
 
-bool ReverseCircleVisitor::visit(Circle &circle)
+const Vector ReverseCircleVisitor::visit(Circle &circle)
 {
-  return are_intersecting(circle, reverse_circle_);
+  return distance(circle, reverse_circle_);
 }
 
-bool ReverseCircleVisitor::visit(ReverseCircle &reverse_circle)
+const Vector ReverseCircleVisitor::visit(ReverseCircle &reverse_circle)
 {
-  return are_intersecting(reverse_circle, reverse_circle_);
+  return distance(reverse_circle, reverse_circle_);
 }
 
 Shape::~Shape()
@@ -85,7 +110,7 @@ Circle::~Circle()
 
 }
 
-bool Circle::accept(IntersectionVisitorBase &visitor)
+const Vector Circle::accept(DistanceVisitorBase &visitor)
 {
   return visitor.visit(*this);
 }
@@ -100,7 +125,8 @@ ReverseCircle::~ReverseCircle()
 
 }
 
-bool ReverseCircle::accept(IntersectionVisitorBase &visitor)
+const Vector ReverseCircle::accept(DistanceVisitorBase &visitor)
 {
   return visitor.visit(*this);
 }
+

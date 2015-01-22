@@ -1,8 +1,18 @@
 #include <cassert>
-#include <math.h>
+#include <cmath>
+#include <limits>
 
 #include "model/primitives.h"
 
+bool almost_equal(float first, float second)
+{
+  return fabs(first - second) < std::numeric_limits<float>::epsilon();
+}
+
+bool almost_equal(double first, double second)
+{
+  return fabs(first - second) < std::numeric_limits<double>::epsilon();
+}
 
 Coordinates::Coordinates(float x, float y)
     : x_(x), y_(y)
@@ -12,7 +22,7 @@ Coordinates::Coordinates(float x, float y)
 
 bool Coordinates::operator==(const Coordinates& other) const
 {
-    return x_ == other.x_ and y_ == other.y_;
+    return almost_equal(x_, other.x_) and almost_equal(y_, other.y_);
 }
 
 const Vector Coordinates::operator-(const Coordinates &other) const
@@ -40,6 +50,12 @@ Vector::Vector(float x, float y) : x_(x), y_(y)
     
 }
 
+std::ostream& operator<<(std::ostream &os, const Vector &vector)
+{
+  os << "Vector(" << vector.x_ << ", " << vector.y_ << ")";
+  return os;
+}
+
 const Coordinates Vector::operator+(
     const Coordinates &coordinates) const
 {
@@ -65,28 +81,45 @@ const Distance Vector::length() const
 
 bool Vector::operator==(const Vector &other) const
 {
-    return x_ == other.x_ and y_ == other.y_;
+  return almost_equal(x_, other.x_) and almost_equal(y_, other.y_);
 }
 
-UnitVector::UnitVector(float angle) : angle_(angle)
+const UnitVector UnitVector::from_degrees(float angle)
+{
+    return UnitVector(angle / 180 * M_PI);
+}
+
+UnitVector::UnitVector(double radians) : radians_(radians)
 {
     
 }
 
+UnitVector::UnitVector(Vector const &vector)
+  : radians_(atan2(vector.y_, vector.x_))
+{
+
+}
+
 UnitVector& UnitVector::operator=(const UnitVector &other)
 {
-    angle_ = other.angle_;
+    radians_ = other.radians_;
     return *this;
 }
 
 bool UnitVector::operator==(const UnitVector &other) const
 {
-    return angle_ == other.angle_;
+    return almost_equal(radians_, other.radians_);
 }
 
 const UnitVector UnitVector::operator+(const UnitVector &other) const
 {
-    return UnitVector(angle_ + other.angle_);
+    return UnitVector(radians_ + other.radians_);
+}
+
+const Vector UnitVector::operator*(const Distance &distance) const
+{
+    return Vector(static_cast<float>(cos(radians_) * distance.get_distance()),
+                  static_cast<float>(sin(radians_) * distance.get_distance()));
 }
 
 float Coordinates::get_x() const
@@ -101,7 +134,7 @@ float Coordinates::get_y() const
 
 float UnitVector::get_angle() const
 {
-    return angle_;
+    return static_cast<float>(radians_ * 180 / M_PI);
 }
 
 float Dimension::get_x() const
