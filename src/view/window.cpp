@@ -37,10 +37,10 @@ Window::~Window()
 }
 
 void MainWindow::set_viewmodel(const ViewModel &viewmodel)
-    {
-        std::unique_lock<std::mutex> mlock(mutex_);
-        viewmodel_ = viewmodel;
-    }
+{
+    std::unique_lock<std::mutex> mlock(mutex_);
+    viewmodel_ = viewmodel;
+}
 
 void Window::show()
 {
