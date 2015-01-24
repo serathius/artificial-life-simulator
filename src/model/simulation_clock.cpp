@@ -153,6 +153,11 @@ const RealTimeDifference TimeDifference::operator/(
   return RealTimeDifference(realtime_passed);
 }
 
+float TimeDifference::get_seconds() const
+{
+  return static_cast<float>(nano_seconds_) / 1000000000;
+}
+
 const AbsoluteTime AbsoluteTime::operator+(const TimeDifference &difference) const
 {
   return AbsoluteTime(nano_seconds_ + difference.nano_seconds_);

@@ -21,6 +21,8 @@ public:
   World(Model* const);
   void add_world_object(WorldObject*, const Coordinates&, const UnitVector&);
   void add_event_object(EventObject*);
+  void remove_world_object(WorldObject*);
+  void remove_event_object(EventObject*);
   void update(const AbsoluteTime&);
   const AbsoluteTime get_next_event_time() const;
   const std::vector<std::shared_ptr<WorldObjectView>> get_objects() const;

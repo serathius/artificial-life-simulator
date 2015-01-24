@@ -22,6 +22,21 @@ void World::add_world_object(WorldObject* object,
   world_objects_.insert(std::pair<WorldObject*, Position>(object, {coordinates, direction}));
 }
 
+void World::add_event_object(EventObject* object)
+{
+  event_objects_.insert(object);
+}
+
+void World::remove_world_object(WorldObject *object)
+{
+  world_objects_.erase(object);
+}
+
+void World::remove_event_object(EventObject *object)
+{
+  event_objects_.erase(object);
+}
+
 bool World::has_free_space(WorldObject* object,
   Coordinates const &coordinates, UnitVector const &direction)
 {
@@ -41,11 +56,6 @@ bool World::has_free_space(WorldObject* object,
   return true;
 }
 
-void World::add_event_object(EventObject* object)
-{
-  event_objects_.insert(object);
-}
-
 void World::update(const AbsoluteTime &time)
 {
   for (auto event_object: event_objects_)
@@ -56,15 +66,25 @@ void World::update(const AbsoluteTime &time)
 
 const AbsoluteTime World::get_next_event_time() const
 {
-  AbsoluteTime earliest_event_time =
-    (*event_objects_.begin())->get_next_event_time();
-  for (auto event_object: event_objects_)
+  if (event_objects_.begin() == event_objects_.end())
   {
-    auto event_time = event_object->get_next_event_time();
-    if (earliest_event_time > event_time)
-      earliest_event_time = event_time;
+    LOG("dsadasdasdasda");
+    throw InfiniteRealTime();
   }
-  return earliest_event_time;
+  else
+  {
+    AbsoluteTime earliest_event_time =
+      (*event_objects_.begin())->get_next_event_time();
+    for (auto event_object: event_objects_) {
+      LOG(event_object);
+      auto event_time = event_object->get_next_event_time();
+      if (earliest_event_time > event_time)
+      {
+        earliest_event_time = event_time;
+      }
+    }
+    return earliest_event_time;
+  }
 }
 
 const WorldObjectViewCollection World::get_objects() const

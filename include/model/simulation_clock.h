@@ -22,6 +22,7 @@ public:
   bool operator>(const TimeDifference&) const;
   const AbsoluteTime operator+(const AbsoluteTime&) const;
   const RealTimeDifference operator/(const TimePassageSpeed&) const;
+  float get_seconds() const;
 
 private:
   long long nano_seconds_;
