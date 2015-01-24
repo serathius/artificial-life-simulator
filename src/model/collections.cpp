@@ -50,12 +50,33 @@ const WorldObjectViewCollection WorldObjectsCollection::get_view() const
   return result;
 }
 
-WorldObjectsCollection::iterator WorldObjectsCollection::begin() const
+WorldObjectsCollectionIterator WorldObjectsCollection::begin() const
 {
-  return iterator(objects_.begin());
+  return WorldObjectsCollectionIterator(objects_.begin());
 }
 
-WorldObjectsCollection::iterator WorldObjectsCollection::end() const
+WorldObjectsCollectionIterator WorldObjectsCollection::end() const
 {
-  return iterator(objects_.end());
+  return WorldObjectsCollectionIterator(objects_.end());
+}
+
+WorldObjectsCollectionIterator& WorldObjectsCollectionIterator::operator++()
+{
+  ++iterator_;
+  return *this;
+}
+
+bool WorldObjectsCollectionIterator::operator==(const WorldObjectsCollectionIterator& it)
+{
+  return iterator_== it.iterator_;
+}
+
+bool WorldObjectsCollectionIterator::operator!=(const WorldObjectsCollectionIterator& it)
+{
+  return iterator_!= it.iterator_;
+}
+
+std::shared_ptr<WorldObject> WorldObjectsCollectionIterator::operator*()
+{
+  return iterator_->first;
 }
