@@ -16,6 +16,9 @@ private:
 
 public:
   World(Model* const);
+  void add_world_object(
+    std::shared_ptr<WorldObject>, const Coordinates&, const UnitVector&);
+  void add_event_object(std::shared_ptr<EventObject>);
   void update(const AbsoluteTime&);
   const AbsoluteTime get_next_event_time() const;
   const std::vector<std::shared_ptr<WorldObjectView>> get_objects() const;
