@@ -8,7 +8,7 @@
 #include "objects.h"
 #include "primitives.h"
 
-typedef std::set<std::shared_ptr<EventObject>> EventObjectCollection;
+typedef std::set<EventObject*> EventObjectCollection;
 
 
 struct Position
@@ -18,6 +18,6 @@ struct Position
 };
 
 
-typedef std::map<std::shared_ptr<WorldObject>, Position> WorldObjectsCollection;
+typedef std::map<WorldObject*, Position> WorldObjectsCollection;
 
 #endif /* COLLECTIONS_H_ */

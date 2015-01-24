@@ -6,14 +6,16 @@
 
 World::World(Model* const model) : world_objects_(WorldObjectsCollection())
 {
-  std::shared_ptr<Organism> organism = std::shared_ptr<Organism>(new Organism(this, AbsoluteTime(0)));
-  std::shared_ptr<WorldPlane> plane = std::shared_ptr<WorldPlane>(new WorldPlane(this, Distance(1)));
+  Organism* organism = new Organism(this, AbsoluteTime(0));
+  WorldPlane* plane = new WorldPlane(this, Distance(1));
   add_world_object(organism, Coordinates(0, 0), UnitVector::from_degrees(0));
   add_world_object(plane, Coordinates(0, 0), UnitVector::from_degrees(0));
   add_event_object(organism);
+  allocated_objects_.push_back(std::shared_ptr<WorldObject>(organism));
+  allocated_objects_.push_back(std::shared_ptr<WorldObject>(plane));
 }
 
-void World::add_world_object(std::shared_ptr<WorldObject> object,
+void World::add_world_object(WorldObject* object,
   Coordinates const &coordinates, UnitVector const &direction)
 {
   std::shared_ptr<Shape> first_shape = object->get_shape(coordinates, direction);
@@ -24,10 +26,10 @@ void World::add_world_object(std::shared_ptr<WorldObject> object,
       pair.second.direction);
     assert(!are_intersecting(*first_shape, *second_shape));
   }
-  world_objects_.insert(std::pair<std::shared_ptr<WorldObject>, Position>(object, {coordinates, direction}));
+  world_objects_.insert(std::pair<WorldObject*, Position>(object, {coordinates, direction}));
 }
 
-void World::add_event_object(std::shared_ptr<EventObject> object)
+void World::add_event_object(EventObject* object)
 {
   event_objects_.insert(object);
 }
