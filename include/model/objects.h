@@ -25,7 +25,7 @@ private:
 public:
   WorldObject(World* const);
   virtual ~WorldObject();
-  virtual WorldObjectView* get_view(const Coordinates&, const UnitVector&) = 0;
+  virtual std::shared_ptr<WorldObjectView> get_view(const Coordinates&, const UnitVector&) = 0;
   virtual std::shared_ptr<Shape> get_shape(const Coordinates&, const UnitVector&) = 0;
 };
 
@@ -37,7 +37,7 @@ private:
 
 public:
   WorldPlane(World* const, const Distance&);
-  virtual WorldObjectView* get_view(const Coordinates&, const UnitVector&);
+  virtual std::shared_ptr<WorldObjectView> get_view(const Coordinates&, const UnitVector&);
   virtual std::shared_ptr<Shape> get_shape(const Coordinates&, const UnitVector&);
 };
 

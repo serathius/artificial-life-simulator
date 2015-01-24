@@ -17,10 +17,11 @@ WorldPlane::WorldPlane(World *const world, const Distance &distance)
 
 }
 
-WorldObjectView* WorldPlane::get_view(const Coordinates &coordinates,
-const UnitVector &direction)
+std::shared_ptr<WorldObjectView> WorldPlane::get_view(
+  const Coordinates &coordinates, const UnitVector &direction)
 {
-  return new CircleWorldObjectView(coordinates, distance_);
+  return std::shared_ptr<WorldObjectView>(
+    new CircleWorldObjectView(coordinates, distance_));
 }
 
 std::shared_ptr<Shape> WorldPlane::get_shape(

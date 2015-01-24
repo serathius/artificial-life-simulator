@@ -22,10 +22,11 @@ void Organism::update(const AbsoluteTime &time)
   }
 }
 
-WorldObjectView* Organism::get_view(const Coordinates &coordinates,
+std::shared_ptr<WorldObjectView> Organism::get_view(const Coordinates &coordinates,
   const UnitVector &direction)
 {
-  return new TriangleWorldObjectView(coordinates, direction);
+  return std::shared_ptr<WorldObjectView>(
+    new TriangleWorldObjectView(coordinates, direction));
 }
 
 std::shared_ptr<Shape> Organism::get_shape(const Coordinates &coordinates,

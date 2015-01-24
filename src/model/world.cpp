@@ -58,9 +58,9 @@ const WorldObjectViewCollection World::get_objects() const
   WorldObjectViewCollection result;
   for (auto pair: world_objects_)
   {
-    WorldObjectView* view_object = pair.first->get_view(
+    std::shared_ptr<WorldObjectView> view_object = pair.first->get_view(
       pair.second.coordinates, pair.second.direction);
-    result.push_back(std::shared_ptr<WorldObjectView>(view_object));
+    result.push_back(view_object);
   }
   return result;
 }
