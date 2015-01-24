@@ -20,6 +20,12 @@ Coordinates::Coordinates(float x, float y)
     
 }
 
+std::ostream& operator<<(std::ostream &os, const Coordinates &coordinates)
+{
+  os << "Coordinates(" << coordinates.x_ << ", " << coordinates.y_ << ")";
+  return os;
+}
+
 bool Coordinates::operator==(const Coordinates& other) const
 {
     return almost_equal(x_, other.x_) and almost_equal(y_, other.y_);
@@ -33,6 +39,13 @@ const Vector Coordinates::operator-(const Coordinates &other) const
 const Coordinates Coordinates::operator+(const Vector& vector) const
 {
     return Coordinates(x_ + vector.x_, y_ + vector.y_);
+}
+
+Coordinates& Coordinates::operator+=(const Vector& vector)
+{
+  x_ += vector.x_;
+  y_ += vector.y_;
+  return *this;
 }
 
 const Coordinates Coordinates::operator-(const Vector& vector) const

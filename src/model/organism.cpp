@@ -17,7 +17,7 @@ void Organism::update(const AbsoluteTime &time)
 {
   if(time >= last_decision_time_ + TimeDifference::seconds(1))
   {
-    logic_.make_decision();
+    world_->move_object_forward(this, Distance(0.01));
     last_decision_time_ = time;
   }
 }

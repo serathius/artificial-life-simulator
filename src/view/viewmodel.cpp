@@ -29,13 +29,13 @@ void TriangleWorldObjectView::draw()
   float r = 0.2f;
   glColor3f(1.0f, 0.f, 0.f);
   glTranslatef(x, y, 0.f);
-  glRotatef(direction_.get_angle(), 0, 0, -1);
+  glRotatef(direction_.get_angle() - 30, 0, 0, -1);
   glBegin(GL_TRIANGLES);
   glVertex2f(- r / 2, - r * (float) sqrt(3) / 6);
   glVertex2f(0.f, r * (float) sqrt(3) / 3);
   glVertex2f(r / 2, - r * (float) sqrt(3) / 6);
   glEnd();
-  glRotatef(-direction_.get_angle(), 0, 0, -1);
+  glRotatef(-(direction_.get_angle() - 30), 0, 0, -1);
   glTranslatef(-x, -y, 0.f);
 }
 

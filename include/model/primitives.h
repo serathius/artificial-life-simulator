@@ -13,9 +13,11 @@ class Coordinates
 
 public:
   Coordinates(float, float);
+  friend std::ostream& operator<<(std::ostream&, const Coordinates&);
   const Vector operator*(const UnitVector&) const;
   const Vector operator-(const Coordinates&) const;
   const Coordinates operator+(const Vector&) const;
+  Coordinates& operator+=(const Vector&);
   const Coordinates operator-(const Vector&) const;
   bool operator==(const Coordinates&) const;
   const Distance distance(const Coordinates&) const;
@@ -23,8 +25,8 @@ public:
   float get_y() const;
 
 private:
-  const float x_;
-  const float y_;
+  float x_;
+  float y_;
 };
 
 

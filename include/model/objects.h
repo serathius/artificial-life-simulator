@@ -19,7 +19,7 @@ public:
 
 class WorldObject
 {
-private:
+protected:
   World* const world_;
 
 public:

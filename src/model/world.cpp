@@ -18,15 +18,27 @@ World::World(Model* const model) : world_objects_(WorldObjectsCollection())
 void World::add_world_object(WorldObject* object,
   Coordinates const &coordinates, UnitVector const &direction)
 {
+  assert(has_free_space(object, coordinates, direction));
+  world_objects_.insert(std::pair<WorldObject*, Position>(object, {coordinates, direction}));
+}
+
+bool World::has_free_space(WorldObject* object,
+  Coordinates const &coordinates, UnitVector const &direction)
+{
   std::shared_ptr<Shape> first_shape = object->get_shape(coordinates, direction);
   std::shared_ptr<Shape> second_shape;
   for (auto pair: world_objects_)
   {
-    second_shape = pair.first->get_shape(pair.second.coordinates,
-      pair.second.direction);
-    assert(!are_intersecting(*first_shape, *second_shape));
+    if (object != pair.first)
+    {
+      second_shape = pair.first->get_shape(pair.second.coordinates,
+        pair.second.direction);
+      if (are_intersecting(*first_shape, *second_shape)) {
+        return false;
+      }
+    }
   }
-  world_objects_.insert(std::pair<WorldObject*, Position>(object, {coordinates, direction}));
+  return true;
 }
 
 void World::add_event_object(EventObject* object)
@@ -65,4 +77,29 @@ const WorldObjectViewCollection World::get_objects() const
     result.push_back(view_object);
   }
   return result;
+}
+
+void World::move_object_forward(WorldObject* object, const Distance &distance)
+{
+  WorldObjectsCollection::iterator it = world_objects_.find(object);
+  assert(it != world_objects_.end());
+  auto new_coordinates = it->second.coordinates + it->second.direction * distance;
+  LOG(has_free_space(object, it->second.coordinates, it->second.direction));
+  if(has_free_space(object, new_coordinates, it->second.direction))
+  {
+    it->second.coordinates = new_coordinates;
+    LOG(it->second.coordinates);
+  }
+  LOG(world_objects_.find(object)->second.coordinates);
+}
+
+void World::rotate_object(WorldObject* object, UnitVector const & angle)
+{
+  WorldObjectsCollection::iterator it = world_objects_.find(object);
+  assert(it != world_objects_.end());
+  UnitVector new_direction = it->second.direction + angle;
+  if(has_free_space(object, it->second.coordinates, new_direction))
+  {
+    it->second.direction = new_direction;
+  }
 }
