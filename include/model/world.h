@@ -47,7 +47,7 @@ public:
   std::vector<FoodRelativePosition> get_relative_foods_position(
     WorldObject*) const;
 
-  std::default_random_engine random_generator_engine_;
+  std::random_device random_generator_engine_;
 };
 
 class NoSpace : public std::exception
