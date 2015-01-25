@@ -10,6 +10,14 @@ class World;
 #include "collections.h"
 #include "food.h"
 
+struct FoodRelativePosition
+{
+  Food* food;
+  UnitVector direction;
+  Distance distance;
+};
+
+
 class World
 {
 private:
@@ -32,7 +40,7 @@ public:
   const std::vector<std::shared_ptr<WorldObjectView>> get_objects() const;
   void move_object_forward(WorldObject*, const Distance&);
   void rotate_object(WorldObject*, const UnitVector&);
-  std::vector<std::pair<Food*, const Vector>> get_relative_foods_position(
+  std::vector<FoodRelativePosition> get_relative_foods_position(
     WorldObject*) const;
 
   std::default_random_engine random_generator_engine_;

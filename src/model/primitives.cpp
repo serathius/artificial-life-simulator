@@ -69,6 +69,13 @@ std::ostream& operator<<(std::ostream &os, const Vector &vector)
   return os;
 }
 
+Vector& Vector::operator=(const Vector &other)
+{
+  x_ = other.x_;
+  y_ = other.y_;
+  return *this;
+}
+
 const Coordinates Vector::operator+(
     const Coordinates &coordinates) const
 {
@@ -102,6 +109,13 @@ const UnitVector UnitVector::from_degrees(float angle)
     return UnitVector(angle / 180 * M_PI);
 }
 
+std::ostream& operator<<(std::ostream &os, const UnitVector &direction)
+{
+  auto angle = direction.get_angle();
+  os << "UnitVector(" << angle - int(angle / 360) << ")";
+  return os;
+}
+
 UnitVector::UnitVector(double radians) : radians_(radians)
 {
     
@@ -127,6 +141,11 @@ bool UnitVector::operator==(const UnitVector &other) const
 const UnitVector UnitVector::operator+(const UnitVector &other) const
 {
     return UnitVector(radians_ + other.radians_);
+}
+
+const UnitVector UnitVector::operator-(const UnitVector &other) const
+{
+  return UnitVector(radians_ - other.radians_);
 }
 
 const Vector UnitVector::operator*(const Distance &distance) const

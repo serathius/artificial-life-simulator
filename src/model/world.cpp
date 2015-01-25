@@ -125,10 +125,10 @@ void World::rotate_object(WorldObject* object, UnitVector const & angle)
   }
 }
 
-std::vector<std::pair<Food*, const Vector>> World::get_relative_foods_position(
+std::vector<FoodRelativePosition> World::get_relative_foods_position(
   WorldObject *object) const
 {
-  std::vector<std::pair<Food*, const Vector>> relative_food_position;
+  std::vector<FoodRelativePosition> relative_food_position;
   Position object_position= world_objects_.at(object);
   std::shared_ptr<Shape> object_shape= object->get_shape(
     object_position.coordinates, object_position.direction);
@@ -138,8 +138,10 @@ std::vector<std::pair<Food*, const Vector>> World::get_relative_foods_position(
     Position food_position = world_objects_.at(dynamic_cast<WorldObject*>(food));
     std::shared_ptr<Shape> food_shape = food->get_shape(
       food_position.coordinates, food_position.direction);
+    Vector vector = distance(*object_shape, *food_shape);
+
     relative_food_position.push_back(
-      std::pair<Food*, const Vector>(food, distance(*object_shape, *food_shape)));
+      {food, UnitVector(vector) - object_position.direction, vector.length()});
   }
   return relative_food_position;
 }

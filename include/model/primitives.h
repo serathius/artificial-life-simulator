@@ -55,6 +55,7 @@ class Vector
 public:
   Vector(float, float);
   friend std::ostream& operator<<(std::ostream&, const Vector&);
+  Vector& operator=(const Vector&);
   bool operator==(const Vector&) const;
   const Coordinates operator+(const Coordinates&) const;
   const Vector operator+(const Vector&) const;
@@ -62,8 +63,8 @@ public:
   const Distance length() const;
 
 private:
-  const float x_;
-  const float y_;
+  float x_;
+  float y_;
 };
 
 
@@ -73,10 +74,12 @@ class UnitVector
 
 public:
   static const UnitVector from_degrees(float);
+  friend std::ostream& operator<<(std::ostream&, const UnitVector&);
   explicit UnitVector(const Vector&);
   UnitVector& operator=(const UnitVector&);
   bool operator==(const UnitVector&) const;
   const UnitVector operator+(const UnitVector&) const;
+  const UnitVector operator-(const UnitVector&) const;
   const Vector operator*(const Distance&) const;
   float get_angle() const;
 

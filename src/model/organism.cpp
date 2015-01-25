@@ -1,3 +1,5 @@
+#include <algorithm>
+
 #include "model/organism.h"
 
 OrganismCondition::OrganismCondition(
@@ -28,6 +30,12 @@ Organism::~Organism()
 
 }
 
+bool nearest_food_comparator(const FoodRelativePosition &first,
+  const FoodRelativePosition &second)
+{
+  return first.distance < second.distance;
+}
+
 void Organism::update(const AbsoluteTime &time)
 {
   if(!condition_.has_energy_left(time))
@@ -38,8 +46,23 @@ void Organism::update(const AbsoluteTime &time)
   }
   else
   {
-    if (time >= last_decision_time_ + TimeDifference::seconds(1)) {
-      world_->move_object_forward(this, Distance(0.01));
+    if (time >= last_decision_time_ + TimeDifference::seconds(0.25))
+    {
+      auto foods = world_->get_relative_foods_position(this);
+      if (foods.begin() != foods.end())
+      {
+        sort(foods.begin(), foods.end(), nearest_food_comparator);
+        FoodRelativePosition nearest_food_pair = foods[0];
+        LOG(nearest_food_pair.direction);
+        if (nearest_food_pair.direction == UnitVector::from_degrees(0))
+        {
+          world_->move_object_forward(this, Distance(0.01));
+        }
+        else
+        {
+          world_->rotate_object(this, nearest_food_pair.direction);
+        }
+      }
       last_decision_time_ = time;
     }
   }
@@ -60,7 +83,7 @@ std::shared_ptr<Shape> Organism::get_shape(const Coordinates &coordinates,
 
 const AbsoluteTime Organism::get_next_event_time()
 {
-  auto decision_time = last_decision_time_ + TimeDifference::seconds(1);
+  auto decision_time = last_decision_time_ + TimeDifference::seconds(0.25);
   auto energy_runout_time = condition_.get_energy_runout_time();
   if (decision_time > energy_runout_time)
   {

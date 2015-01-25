@@ -1,9 +1,9 @@
-#include "view/viewmodel.h"
+#include <algorithm>
+#include <cmath>
 
 #include <GLFW/glfw3.h>
-#include <cmath>
-#include <algorithm>
-#include <bits/shared_ptr_base.h>
+
+#include "view/viewmodel.h"
 
 bool cmp_obj_z(std::shared_ptr<WorldObjectView> first,
         std::shared_ptr<WorldObjectView> second)
@@ -37,15 +37,15 @@ void TriangleWorldObjectView::draw()
   float x = coordinates_.get_x();
   float y = coordinates_.get_y();
   float r = 0.2f;
-  glColor3f(color_.R, color_.G, color_.B);
   glTranslatef(x, y, z_);
-  glRotatef(direction_.get_angle() - 30, 0, 0, -1);
+  glRotatef(direction_.get_angle() - 90, 0, 0, 1);
+  glColor3f(color_.R, color_.G, color_.B);
   glBegin(GL_TRIANGLES);
-  glVertex2f(- r / 2, - r * (float) sqrt(3) / 6);
-  glVertex2f(0.f, r * (float) sqrt(3) / 3);
-  glVertex2f(r / 2, - r * (float) sqrt(3) / 6);
+    glVertex2f(- r / 2, - r * (float) sqrt(3) / 6);
+    glVertex2f(0.f, r * (float) sqrt(3) / 3);
+    glVertex2f(r / 2, - r * (float) sqrt(3) / 6);
   glEnd();
-  glRotatef(-(direction_.get_angle() - 30), 0, 0, -1);
+  glRotatef(direction_.get_angle() - 90, 0, 0, -1);
   glTranslatef(-x, -y, -z_);
 }
 
