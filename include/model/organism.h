@@ -40,9 +40,10 @@ public:
   void add_energy(const Energy&);
 
 private:
+  static constexpr Power ENERGY_LOSS_PER_SECOND = 35;
+
   AbsoluteTime time_;
   Energy energy_;
-  static constexpr Power ENERGY_LOSS_PER_SECOND = 35;
 };
 
 class OrganismUnderstoodWorldInformation
