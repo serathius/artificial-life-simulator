@@ -35,11 +35,13 @@ Organism::~Organism()
 
 }
 
-bool nearest_food_comparator(const FoodRelativePosition &first,
-  const FoodRelativePosition &second)
+float Organism::movement_cost(const FoodRelativePosition& position)
 {
-  return first.distance < second.distance;
+  return (position.direction.absolute().get_angle()
+    / MAXIMUM_ROTATION_ANGLE + position.distance.get_distance()
+    / MAXIMIM_DISTANCE_PER_UPDATE);
 }
+
 
 void Organism::update(const AbsoluteTime &time)
 {
@@ -65,7 +67,11 @@ void Organism::move_forward_food()
   auto foods = world_->get_relative_foods_position(this);
   if (foods.begin() != foods.end())
   {
-    sort(foods.begin(), foods.end(), nearest_food_comparator);
+    sort(foods.begin(), foods.end(), []
+      (const FoodRelativePosition &first, const FoodRelativePosition &second) -> bool
+      {
+        return movement_cost(first) < movement_cost(second);
+      });
     FoodRelativePosition nearest_food_position = foods[0];
     if (nearest_food_position.distance < Distance(MAXIMIM_DISTANCE_PER_UPDATE))
     {
@@ -123,7 +129,7 @@ std::shared_ptr<Shape> Organism::get_shape(const Coordinates &coordinates,
   const UnitVector &direction)
 {
   return std::shared_ptr<Shape>(
-    new Circle(coordinates, Distance(ORGANISM_SIZE)));
+    new Circle(coordinates, Distance(ORGANISM_SIZE * sqrtf(2) / 2)));
 }
 
 const AbsoluteTime Organism::get_next_event_time()

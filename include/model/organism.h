@@ -19,7 +19,7 @@ class OrganismCondition
 private:
   AbsoluteTime time_;
   Energy energy_;
-  static constexpr Power ENERGY_LOSS_PER_SECOND = 50;
+  static constexpr Power ENERGY_LOSS_PER_SECOND = 35;
 
 public:
   OrganismCondition(const AbsoluteTime&, const Energy&);
@@ -39,7 +39,7 @@ public:
   virtual ~Organism();
   static constexpr float ORGANISM_SIZE = 0.075;
   static constexpr float DECISION_COOLDOWN_SECODSN = 0.1;
-  static constexpr float MAXIMUM_ROTATION_ANGLE = 20;
+  static constexpr float MAXIMUM_ROTATION_ANGLE = 30;
   static constexpr float MAXIMIM_DISTANCE_PER_UPDATE = 0.01;
   const AbsoluteTime get_next_event_time();
   void update(const AbsoluteTime&);
@@ -49,6 +49,7 @@ public:
 private:
   void move_forward_food();
   void move_to_relative_position(const FoodRelativePosition&);
+  static float movement_cost(const FoodRelativePosition&);
 
   OrganismCondition condition_;
   AbsoluteTime last_decision_time_;

@@ -176,7 +176,8 @@ float Coordinates::get_y() const
 
 float UnitVector::get_angle() const
 {
-    return static_cast<float>(radians_ * 180 / M_PI);
+    float angle = float(radians_ * 180 / M_PI);
+    return angle - float(int(angle / 180) * 180);
 }
 
 float Dimension::get_x() const
