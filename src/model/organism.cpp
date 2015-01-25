@@ -22,9 +22,11 @@ void OrganismCondition::add_energy(const Energy &energy)
   energy_ += energy;
 }
 
-Organism::Organism(World * const world, const AbsoluteTime &time)
+Organism::Organism(World * const world, OrganismRegister *organism_register,
+  const AbsoluteTime &time)
   : WorldObject(world), condition_(OrganismCondition(time)),
-    last_decision_time_(time), genotype_(Genotype())
+    last_decision_time_(time), genotype_(Genotype()),
+    register_(organism_register)
 {
 
 }
@@ -149,13 +151,13 @@ const AbsoluteTime Organism::get_next_event_time()
 
 OrganismRegister::OrganismRegister(World *world) : world_(world)
 {
-  register_organism(new Organism(world_, AbsoluteTime(0)),
+  register_organism(new Organism(world_, this, AbsoluteTime(0)),
     Coordinates(-0.5f, 0), UnitVector::from_degrees(0));
-  register_organism(new Organism(world_, AbsoluteTime(0)),
+  register_organism(new Organism(world_, this, AbsoluteTime(0)),
     Coordinates(0.5f, 0), UnitVector::from_degrees(180));
-  register_organism(new Organism(world_, AbsoluteTime(0)),
+  register_organism(new Organism(world_, this, AbsoluteTime(0)),
     Coordinates(0, 0.5f), UnitVector::from_degrees(-90));
-  register_organism(new Organism(world_, AbsoluteTime(0)),
+  register_organism(new Organism(world_, this, AbsoluteTime(0)),
     Coordinates(0, -0.5f), UnitVector::from_degrees(90));
 }
 

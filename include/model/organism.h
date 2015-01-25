@@ -53,7 +53,7 @@ class OrganismUnderstoodWorldInformation
 class Organism : public WorldObject, public EventObject
 {
 public:
-  Organism(World* const, const AbsoluteTime&);
+  Organism(World* const, OrganismRegister*, const AbsoluteTime&);
   virtual ~Organism();
   static constexpr float ORGANISM_SIZE = 0.075;
   static constexpr float DECISION_COOLDOWN_SECODSN = 0.1;
@@ -74,6 +74,7 @@ private:
   OrganismCondition condition_;
   AbsoluteTime last_decision_time_;
   const Genotype genotype_;
+  OrganismRegister* register_;
 };
 
 #endif /* ORGANISM_H */
