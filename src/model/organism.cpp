@@ -24,7 +24,7 @@ void OrganismCondition::add_energy(const Energy &energy)
 
 Organism::Organism(World * const world, const AbsoluteTime &time)
   : WorldObject(world), condition_(OrganismCondition(time)),
-    last_decision_time_(time), genotype_(Genotype()), logic_(OrganismLogic())
+    last_decision_time_(time), genotype_(Genotype())
 {
 
 }

@@ -27,7 +27,6 @@ private:
 #include "world.h"
 #include "genotype.h"
 #include "decision.h"
-#include "logic.h"
 #include "intersection.h"
 
 
@@ -75,7 +74,6 @@ private:
   OrganismCondition condition_;
   AbsoluteTime last_decision_time_;
   const Genotype genotype_;
-  const OrganismLogic logic_;
 };
 
 #endif /* ORGANISM_H */
