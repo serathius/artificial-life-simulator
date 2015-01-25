@@ -51,6 +51,7 @@ FoodController::FoodController(World *world, WorldPlane *plane,
   const AbsoluteTime &time)
   : world_(world), plane_(plane), last_food_spawn_time_(time)
 {
+  spawn_food();
 }
 
 const AbsoluteTime FoodController::get_next_event_time()
@@ -71,21 +72,24 @@ void FoodController::update(AbsoluteTime const &time)
     && food_piles_.size() < MAX_FOOD_PILES_COUNT)
   {
     last_food_spawn_time_ = time;
-    FoodPile * food = new FoodPile(world_, this);
-    while(true)
-    {
-      Coordinates coordinates = plane_->get_random_position();
-      LOG(coordinates);
-      try
-      {
-        world_->register_world_object(food, coordinates, UnitVector::from_degrees(0));
-        food_piles_.insert(food);
-        return;
-      }
-      catch (NoSpace)
-      {
+    spawn_food();
+  }
+}
 
-      }
+void FoodController::spawn_food()
+{
+  FoodPile * food = new FoodPile(world_, this);
+  while(true)
+  {
+    Coordinates coordinates = plane_->get_random_position();
+    LOG(coordinates);
+    try {
+      world_->register_world_object(food, coordinates, UnitVector::from_degrees(0));
+      food_piles_.insert(food);
+      return;
+    }
+    catch (NoSpace) {
+
     }
   }
 }

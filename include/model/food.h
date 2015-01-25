@@ -39,6 +39,8 @@ public:
   void remove_pile(FoodPile*);
 
 private:
+  void spawn_food();
+
   static constexpr float SPAWN_COOLDOWN_SECONDS = 5.f;
   static constexpr int MAX_FOOD_PILES_COUNT = 3;
   FoodCollection food_piles_;
