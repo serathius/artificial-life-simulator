@@ -77,10 +77,13 @@ public:
   friend std::ostream& operator<<(std::ostream&, const UnitVector&);
   explicit UnitVector(const Vector&);
   UnitVector& operator=(const UnitVector&);
+  bool operator<(const UnitVector&) const;
+  bool operator<=(const UnitVector&) const;
   bool operator==(const UnitVector&) const;
   const UnitVector operator+(const UnitVector&) const;
   const UnitVector operator-(const UnitVector&) const;
   const Vector operator*(const Distance&) const;
+  const UnitVector absolute() const;
   float get_angle() const;
 
 private:

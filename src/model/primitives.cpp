@@ -133,6 +133,11 @@ UnitVector& UnitVector::operator=(const UnitVector &other)
     return *this;
 }
 
+bool UnitVector::operator<(const UnitVector &other) const
+{
+  return radians_ < other.radians_;
+}
+
 bool UnitVector::operator==(const UnitVector &other) const
 {
     return almost_equal(radians_, other.radians_);
@@ -152,6 +157,11 @@ const Vector UnitVector::operator*(const Distance &distance) const
 {
     return Vector(static_cast<float>(cos(radians_) * distance.get_distance()),
                   static_cast<float>(sin(radians_) * distance.get_distance()));
+}
+
+const UnitVector UnitVector::absolute() const
+{
+  return UnitVector(fabs(radians_));
 }
 
 float Coordinates::get_x() const

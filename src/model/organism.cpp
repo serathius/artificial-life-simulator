@@ -53,14 +53,31 @@ void Organism::update(const AbsoluteTime &time)
       {
         sort(foods.begin(), foods.end(), nearest_food_comparator);
         FoodRelativePosition nearest_food_pair = foods[0];
-        LOG(nearest_food_pair.direction);
         if (nearest_food_pair.direction == UnitVector::from_degrees(0))
         {
-          world_->move_object_forward(this, Distance(0.01));
+          world_->move_object_forward(this, Distance(
+            MAXIMIM_DISTANCE_PER_UPDATE));
         }
         else
         {
-          world_->rotate_object(this, nearest_food_pair.direction);
+          if(nearest_food_pair.direction.absolute()
+            < UnitVector::from_degrees(MAXIMUM_ROTATION_ANGLE))
+          {
+            world_->rotate_object(this, nearest_food_pair.direction);
+          }
+          else
+          {
+            if(nearest_food_pair.direction < UnitVector::from_degrees(0))
+            {
+              world_->rotate_object(this, UnitVector::from_degrees(
+                -MAXIMUM_ROTATION_ANGLE));
+            }
+            else
+            {
+              world_->rotate_object(this, UnitVector::from_degrees(
+                MAXIMUM_ROTATION_ANGLE));
+            }
+          }
         }
       }
       last_decision_time_ = time;

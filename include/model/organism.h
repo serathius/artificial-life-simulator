@@ -35,6 +35,8 @@ class Organism : public WorldObject, public EventObject
 public:
   Organism(World* const, const AbsoluteTime&);
   virtual ~Organism();
+  static constexpr float MAXIMUM_ROTATION_ANGLE = 20;
+  static constexpr float MAXIMIM_DISTANCE_PER_UPDATE = 0.025;
   const AbsoluteTime get_next_event_time();
   void update(const AbsoluteTime&);
   virtual std::shared_ptr<WorldObjectView> get_view(
