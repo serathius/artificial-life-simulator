@@ -20,7 +20,7 @@ void Controller::start()
 
 void Controller::handle_events()
 {
-  while(run)
+  while(run_)
   {
     view_.update(model_.get_viewmodel());
     schedule_model_update();
@@ -56,5 +56,5 @@ void Controller::visit(UpdateModelEvent *event)
 
 void Controller::visit(ExitEvent * exit_event)
 {
-  run=false;
+  run_=false;
 }
