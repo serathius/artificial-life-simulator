@@ -34,7 +34,7 @@ Organism::~Organism()
 
 }
 
-float Organism::movement_cost(const FoodRelativePosition& position)
+float Organism::movement_cost(const RelativePosition& position)
 {
   return (position.direction.absolute().get_angle()
     / MAXIMUM_ROTATION_ANGLE + position.distance.get_distance()
@@ -69,12 +69,13 @@ void Organism::move_forward_food()
     sort(foods.begin(), foods.end(), []
       (const FoodRelativePosition &first, const FoodRelativePosition &second) -> bool
       {
-        return movement_cost(first) < movement_cost(second);
+        return movement_cost(first.second) < movement_cost(second.second);
       });
-    FoodRelativePosition nearest_food_position = foods[0];
+    FoodPile* nearest_food = foods[0].first;
+    RelativePosition nearest_food_position = foods[0].second;
     if (nearest_food_position.distance < Distance(MAXIMIM_DISTANCE_PER_UPDATE))
     {
-      condition_.add_energy(nearest_food_position.food->eat(
+      condition_.add_energy(nearest_food->eat(
         TimeDifference::seconds(DECISION_COOLDOWN_SECODSN)));
     }
     else
@@ -85,7 +86,7 @@ void Organism::move_forward_food()
 }
 
 void Organism::move_to_relative_position(
-  const FoodRelativePosition& food_position)
+  const RelativePosition& food_position)
 {
   if (food_position.direction == UnitVector::from_degrees(0))
   {

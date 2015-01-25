@@ -68,8 +68,8 @@ public:
 
 private:
   void move_forward_food();
-  void move_to_relative_position(const FoodRelativePosition&);
-  static float movement_cost(const FoodRelativePosition&);
+  void move_to_relative_position(const RelativePosition&);
+  static float movement_cost(const RelativePosition&);
 
   OrganismCondition condition_;
   AbsoluteTime last_decision_time_;

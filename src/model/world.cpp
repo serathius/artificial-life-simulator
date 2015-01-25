@@ -138,7 +138,7 @@ std::vector<FoodRelativePosition> World::get_relative_foods_position(
     Vector vector = distance(*object_shape, *food_shape);
 
     relative_food_position.push_back(
-      {food, UnitVector(vector) - object_position.direction, vector.length()});
+      FoodRelativePosition(food, {UnitVector(vector) - object_position.direction, vector.length()}));
   }
   return relative_food_position;
 }

@@ -9,12 +9,13 @@ class FoodPile;
 
 #include "primitives.h"
 
-struct FoodRelativePosition
+struct RelativePosition
 {
-  FoodPile *food;
   UnitVector direction;
   Distance distance;
 };
+
+typedef std::pair<FoodPile*, RelativePosition> FoodRelativePosition;
 
 #include "model.h"
 #include "collections.h"
