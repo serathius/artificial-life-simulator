@@ -22,6 +22,7 @@ typedef std::pair<FoodPile*, RelativePosition> FoodRelativePosition;
 #include "food.h"
 #include "organism.h"
 
+typedef std::pair<Organism*, RelativePosition> MobRelativePosition;
 
 class World
 {
@@ -48,6 +49,8 @@ public:
   void move_object_forward(WorldObject*, const Distance&);
   void rotate_object(WorldObject*, const UnitVector&);
   std::vector<FoodRelativePosition> get_relative_foods_position(
+    WorldObject*) const;
+  std::vector<MobRelativePosition> get_relative_mobs_position(
     WorldObject*) const;
 
   std::random_device random_generator_engine_;

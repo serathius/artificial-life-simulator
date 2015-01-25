@@ -18,6 +18,7 @@ public:
 
 private:
   void register_organism(Organism*, const Coordinates&, const UnitVector&);
+  std::set<Organism*> get_other_organisms(Organism*);
 
   World* world_;
   std::set<Organism*> organisms_;

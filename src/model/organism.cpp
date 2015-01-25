@@ -168,3 +168,8 @@ void Vegetarian::move_forward_food()
     }
   }
 }
+
+std::set<Organism*> get_other_organisms(Organism*)
+{
+    //TODO
+}

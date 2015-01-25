@@ -142,3 +142,15 @@ std::vector<FoodRelativePosition> World::get_relative_foods_position(
   }
   return relative_food_position;
 }
+
+std::vector<MobRelativePosition> World::get_relative_mobs_position(
+  WorldObject *object) const
+{
+    std::vector<MobRelativePosition> relative_mobs_position;
+    Position object_position = world_objects_.at(object);
+    std::shared_ptr<Shape> object_shape= object->get_shape(
+      object_position.coordinates, object_position.direction);
+
+    //get other mobs
+
+}
