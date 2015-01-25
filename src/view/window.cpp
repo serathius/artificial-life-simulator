@@ -11,7 +11,7 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 
 void Window::handle_key_event(int key)
 {
-    if(key==GLFW_KEY_ESCAPE)
+    if(key == GLFW_KEY_ESCAPE)
     {
         event_queue_->push(new ExitEvent(RealTime::now()));
     }
