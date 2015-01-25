@@ -79,7 +79,6 @@ const AbsoluteTime World::get_next_event_time() const
 {
   if (event_objects_.begin() == event_objects_.end())
   {
-    LOG("dsadasdasdasda");
     throw InfiniteRealTime();
   }
   else
