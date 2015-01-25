@@ -101,7 +101,7 @@ std::shared_ptr<WorldObjectView> Organism::get_view(const Coordinates &coordinat
 {
   return std::shared_ptr<WorldObjectView>(
     new TriangleWorldObjectView(
-      coordinates, direction, 1, {1, 0, 0}, Distance(ORGANISM_SIZE)));
+      coordinates, direction, 1, {1, 0, 0}, Distance(ORGANISM_SIZE * 2)));
 }
 
 std::shared_ptr<Shape> Organism::get_shape(const Coordinates &coordinates,

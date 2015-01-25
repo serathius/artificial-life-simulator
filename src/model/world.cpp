@@ -5,12 +5,17 @@
 
 World::World(Model* const model) : world_objects_(WorldObjectsCollection())
 {
-  Organism *organism = new Organism(this, AbsoluteTime(0));
+  Organism *first_organism = new Organism(this, AbsoluteTime(0));
+  Organism *second_organism = new Organism(this, AbsoluteTime(0));
   WorldPlane *plane = new WorldPlane(this, Distance(1));
   food_controller_ = new FoodController(this, plane, AbsoluteTime(0));
-  register_world_object(organism, Coordinates(0, 0), UnitVector::from_degrees(0));
+  register_world_object(
+    first_organism, Coordinates(-0.5f, 0), UnitVector::from_degrees(0));
+  register_world_object(
+    second_organism, Coordinates(0.5f, 0), UnitVector::from_degrees(180));
   register_world_object(plane, Coordinates(0, 0), UnitVector::from_degrees(0));
-  register_event_object(organism);
+  register_event_object(first_organism);
+  register_event_object(second_organism);
   register_event_object(food_controller_);
 }
 
