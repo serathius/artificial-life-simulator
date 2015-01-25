@@ -1,7 +1,17 @@
 #include "model/objects.h"
 
+Object::~Object()
+{
+
+}
+
 WorldObject::WorldObject(World *const world)
 : world_(world)
+{
+
+}
+
+EventObject::~EventObject()
 {
 
 }

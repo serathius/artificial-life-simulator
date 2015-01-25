@@ -32,8 +32,8 @@ void Organism::update(const AbsoluteTime &time)
 {
   if(!condition_.has_energy_left(time))
   {
-    world_->remove_world_object(this);
-    world_->remove_event_object(this);
+    world_->deregister_world_object(this);
+    world_->deregister_event_object(this);
     LOG("Organism died");
   }
   else

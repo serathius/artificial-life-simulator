@@ -9,15 +9,22 @@ class World;
 #include "simulation_clock.h"
 #include "view/viewmodel.h"
 
-class EventObject
+class Object
 {
 public:
+  virtual ~Object();
+};
+
+class EventObject : public virtual Object
+{
+public:
+  virtual ~EventObject();
   virtual const AbsoluteTime get_next_event_time() = 0;
   virtual void update(const AbsoluteTime&) = 0;
 };
 
 
-class WorldObject
+class WorldObject : public virtual Object
 {
 protected:
   World* const world_;

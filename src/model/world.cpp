@@ -6,36 +6,44 @@
 
 World::World(Model* const model) : world_objects_(WorldObjectsCollection())
 {
-  Organism* organism = new Organism(this, AbsoluteTime(0));
-  WorldPlane* plane = new WorldPlane(this, Distance(1));
-  Food* food = new Food(this, 0.1);
-  add_world_object(organism, Coordinates(0, 0), UnitVector::from_degrees(0));
-  add_world_object(plane, Coordinates(0, 0), UnitVector::from_degrees(0));
-  add_world_object(food, Coordinates(0, 0.5), UnitVector::from_degrees(0));
-  add_event_object(organism);
-  allocated_objects_.push_back(std::shared_ptr<WorldObject>(organism));
-  allocated_objects_.push_back(std::shared_ptr<WorldObject>(plane));
-  allocated_objects_.push_back(std::shared_ptr<WorldObject>(food));
+  Organism *organism = new Organism(this, AbsoluteTime(0));
+  WorldPlane *plane = new WorldPlane(this, Distance(1));
+  Food *food = new Food(this, 0.1);
+  register_world_object(organism, Coordinates(0, 0), UnitVector::from_degrees(0));
+  register_world_object(plane, Coordinates(0, 0), UnitVector::from_degrees(0));
+  register_world_object(food, Coordinates(0, 0.5), UnitVector::from_degrees(0));
+  register_event_object(organism);
 }
 
-void World::add_world_object(WorldObject* object,
+
+World::~World()
+{
+  for (auto object: allocated_objects_)
+  {
+    delete object;
+  }
+}
+
+void World::register_world_object(WorldObject *object,
   Coordinates const &coordinates, UnitVector const &direction)
 {
   assert(has_free_space(object, coordinates, direction));
+  allocated_objects_.insert(object);
   world_objects_.insert(std::pair<WorldObject*, Position>(object, {coordinates, direction}));
 }
 
-void World::add_event_object(EventObject* object)
+void World::register_event_object(EventObject *object)
 {
   event_objects_.insert(object);
+  allocated_objects_.insert(object);
 }
 
-void World::remove_world_object(WorldObject *object)
+void World::deregister_world_object(WorldObject *object)
 {
   world_objects_.erase(object);
 }
 
-void World::remove_event_object(EventObject *object)
+void World::deregister_event_object(EventObject *object)
 {
   event_objects_.erase(object);
 }
