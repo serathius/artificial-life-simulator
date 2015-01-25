@@ -2,17 +2,20 @@
 
 #include "model/world.h"
 #include "model/organism.h"
-
+#include "model/food.h"
 
 World::World(Model* const model) : world_objects_(WorldObjectsCollection())
 {
   Organism* organism = new Organism(this, AbsoluteTime(0));
   WorldPlane* plane = new WorldPlane(this, Distance(1));
+  Food* food = new Food(this, 0.1);
   add_world_object(organism, Coordinates(0, 0), UnitVector::from_degrees(0));
   add_world_object(plane, Coordinates(0, 0), UnitVector::from_degrees(0));
+  add_world_object(food, Coordinates(0, 0.5), UnitVector::from_degrees(0));
   add_event_object(organism);
   allocated_objects_.push_back(std::shared_ptr<WorldObject>(organism));
   allocated_objects_.push_back(std::shared_ptr<WorldObject>(plane));
+  allocated_objects_.push_back(std::shared_ptr<WorldObject>(food));
 }
 
 void World::add_world_object(WorldObject* object,
