@@ -69,3 +69,8 @@ void FoodController::update(AbsoluteTime const &time)
     }
   }
 }
+
+const FoodCollection& FoodController::get_foods() const
+{
+  return foods_;
+}

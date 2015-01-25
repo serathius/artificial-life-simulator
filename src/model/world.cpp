@@ -2,16 +2,16 @@
 
 #include "model/world.h"
 #include "model/organism.h"
-#include "model/food.h"
 
 World::World(Model* const model) : world_objects_(WorldObjectsCollection())
 {
   Organism *organism = new Organism(this, AbsoluteTime(0));
   WorldPlane *plane = new WorldPlane(this, Distance(1));
+  food_controller_ = new FoodController(this, plane, AbsoluteTime(0));
   register_world_object(organism, Coordinates(0, 0), UnitVector::from_degrees(0));
   register_world_object(plane, Coordinates(0, 0), UnitVector::from_degrees(0));
   register_event_object(organism);
-  register_event_object(new FoodController(this, plane, AbsoluteTime(0)));
+  register_event_object(food_controller_);
 }
 
 
@@ -123,4 +123,23 @@ void World::rotate_object(WorldObject* object, UnitVector const & angle)
   {
     it->second.direction = new_direction;
   }
+}
+
+std::vector<std::pair<Food*, const Vector>> World::get_relative_foods_position(
+  WorldObject *object) const
+{
+  std::vector<std::pair<Food*, const Vector>> relative_food_position;
+  Position object_position= world_objects_.at(object);
+  std::shared_ptr<Shape> object_shape= object->get_shape(
+    object_position.coordinates, object_position.direction);
+
+  for (auto food: food_controller_->get_foods())
+  {
+    Position food_position = world_objects_.at(dynamic_cast<WorldObject*>(food));
+    std::shared_ptr<Shape> food_shape = food->get_shape(
+      food_position.coordinates, food_position.direction);
+    relative_food_position.push_back(
+      std::pair<Food*, const Vector>(food, distance(*object_shape, *food_shape)));
+  }
+  return relative_food_position;
 }

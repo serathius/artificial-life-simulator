@@ -8,6 +8,7 @@ class World;
 
 #include "model.h"
 #include "collections.h"
+#include "food.h"
 
 class World
 {
@@ -15,6 +16,7 @@ private:
   WorldObjectsCollection world_objects_;
   EventObjectCollection event_objects_;
   std::set<Object*> allocated_objects_;
+  FoodController* food_controller_;
 
   bool has_free_space(WorldObject*, const Coordinates&, const UnitVector&);
 
@@ -30,6 +32,8 @@ public:
   const std::vector<std::shared_ptr<WorldObjectView>> get_objects() const;
   void move_object_forward(WorldObject*, const Distance&);
   void rotate_object(WorldObject*, const UnitVector&);
+  std::vector<std::pair<Food*, const Vector>> get_relative_foods_position(
+    WorldObject*) const;
 
   std::default_random_engine random_generator_engine_;
 };

@@ -18,6 +18,7 @@ private:
   FoodAmount amount_;
 };
 
+typedef std::vector<Food*> FoodCollection;
 
 class FoodController : public EventObject
 {
@@ -25,11 +26,12 @@ public:
   FoodController(World*, WorldPlane*, const AbsoluteTime&);
   const AbsoluteTime get_next_event_time();
   void update(const AbsoluteTime&);
+  const FoodCollection& get_foods() const;
 
 private:
   static constexpr float SPAWN_COOLDOWN_SECONDS = 5.f;
   static constexpr int MAX_FOOD_PILES_COUNT = 3;
-  std::vector<Food*> foods_;
+  FoodCollection foods_;
   World* world_;
   WorldPlane* plane_;
   AbsoluteTime last_food_spawn_time_;
