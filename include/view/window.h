@@ -23,6 +23,7 @@ public:
   void show();
   void close();
   void handle_key_event(int key);
+  void handle_window_close();
 };
 
 

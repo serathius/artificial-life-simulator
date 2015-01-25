@@ -2,11 +2,17 @@
 
 #include "view/window.h"
 #include "view/view.h"
-#include "../../include/controller/events.h"
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
-    reinterpret_cast<Window*>(glfwGetWindowUserPointer(window))->handle_key_event(key);
+    reinterpret_cast<Window*>(
+      glfwGetWindowUserPointer(window))->handle_key_event(key);
+}
+
+void window_close_callback(GLFWwindow* window)
+{
+    reinterpret_cast<Window*>(
+      glfwGetWindowUserPointer(window))->handle_window_close();
 }
 
 void Window::handle_key_event(int key)
@@ -17,12 +23,18 @@ void Window::handle_key_event(int key)
     }
 }
 
+void Window::handle_window_close()
+{
+    event_queue_->push(new ExitEvent(RealTime::now()));
+}
+
 Window::Window(const char* name, int width, int height, EventQueue* event_queue)
 {
     this->event_queue_ = event_queue;
     window_handle_ = glfwCreateWindow(width, height, name, nullptr, nullptr);
     glfwSetWindowUserPointer(window_handle_, this);
     glfwSetKeyCallback(window_handle_, key_callback);
+    glfwSetWindowCloseCallback(window_handle_, window_close_callback);
 
     if (!window_handle_)
     {
