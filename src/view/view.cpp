@@ -10,14 +10,15 @@ View::View(EventQueue * const event_queue) : event_queue(event_queue)
 void View::start()
 {
     this->main_window = std::unique_ptr<MainWindow>(
-        new MainWindow("Artificial Life Simulator", 500, 500));
+        new MainWindow("Artificial Life Simulator", 500, 500, this->event_queue));
     this->main_window_thread = std::unique_ptr<std::thread>(
         new std::thread(&MainWindow::show, this->main_window.get()));
 }
 
 void View::finish()
 {
-    this->main_window_thread->join();
+    main_window->close();
+    main_window_thread->join();
 }
 
 

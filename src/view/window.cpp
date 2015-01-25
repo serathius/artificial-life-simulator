@@ -1,11 +1,29 @@
 #include <GLFW/glfw3.h>
 
 #include "view/window.h"
+#include "view/view.h"
+#include "../../include/controller/events.h"
 
-
-Window::Window(const char* name, int width, int height)
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
+    reinterpret_cast<Window*>(glfwGetWindowUserPointer(window))->handle_key_event(key);
+}
+
+void Window::handle_key_event(int key)
+{
+    if(key==GLFW_KEY_ESCAPE)
+    {
+        event_queue_->push(new ExitEvent(RealTime::now()));
+    }
+}
+
+Window::Window(const char* name, int width, int height, EventQueue* event_queue)
+{
+    this->event_queue_ = event_queue;
     window_handle_ = glfwCreateWindow(width, height, name, nullptr, nullptr);
+    glfwSetWindowUserPointer(window_handle_, this);
+    glfwSetKeyCallback(window_handle_, key_callback);
+
     if (!window_handle_)
     {
         glfwTerminate();
@@ -40,8 +58,13 @@ void Window::show()
   }
 }
 
-MainWindow::MainWindow(const char* name, int width, int height)
-    : Window(name, width, height)
+void Window::close()
+{
+    glfwSetWindowShouldClose(window_handle_, GL_TRUE);
+}
+
+MainWindow::MainWindow(const char* name, int width, int height, EventQueue* event_queue)
+    : Window(name, width, height, event_queue)
 {
 }
 

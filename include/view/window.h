@@ -7,18 +7,22 @@
 #include <GLFW/glfw3.h>
 
 #include "view/viewmodel.h"
+#include "controller/event_queue.hpp"
 
 
 class Window
 {
 private:
   GLFWwindow* window_handle_;
+  EventQueue* event_queue_;
   virtual void draw(int, int) = 0;
 
 public:
-  Window(const char*, int, int);
+  Window(const char*, int, int, EventQueue*);
   virtual ~Window();
   void show();
+  void close();
+  void handle_key_event(int key);
 };
 
 
@@ -31,7 +35,7 @@ private:
 
 public:
   void set_viewmodel(const ViewModel&);
-  MainWindow(const char *, int, int);
+  MainWindow(const char *, int, int, EventQueue*);
 
 };
 
