@@ -15,10 +15,10 @@ public:
   Coordinates(float, float);
   bool operator==(const Coordinates&) const;
   friend std::ostream& operator<<(std::ostream&, const Coordinates&);
+  Coordinates& operator+=(const Vector&);
   const Vector operator*(const UnitVector&) const;
   const Vector operator-(const Coordinates&) const;
   const Coordinates operator+(const Vector&) const;
-  Coordinates& operator+=(const Vector&);
   const Coordinates operator-(const Vector&) const;
   const Distance distance(const Coordinates&) const;
   float get_x() const;
@@ -74,11 +74,11 @@ class UnitVector
 
 public:
   explicit UnitVector(const Vector&);
+  friend std::ostream& operator<<(std::ostream&, const UnitVector&);
   bool operator==(const UnitVector&) const;
   bool operator<(const UnitVector&) const;
   bool operator<=(const UnitVector&) const;
   UnitVector& operator=(const UnitVector&);
-  friend std::ostream& operator<<(std::ostream&, const UnitVector&);
   const UnitVector operator+(const UnitVector&) const;
   const UnitVector operator-(const UnitVector&) const;
   const Vector operator*(const Distance&) const;
@@ -97,10 +97,10 @@ class Distance
 {
 public:
   Distance(float);
+  friend std::ostream& operator<<(std::ostream& os, const Distance& distance);
   bool operator==(const Distance&) const;
   bool operator<(const Distance&) const;
   bool operator<=(const Distance&) const;
-  friend std::ostream& operator<<(std::ostream& os, const Distance& distance);
   const Distance operator+(const Distance&) const;
   const Distance operator-(const Distance&) const;
   float get_distance() const;

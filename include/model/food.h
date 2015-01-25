@@ -12,8 +12,10 @@ class FoodPile : public WorldObject
 {
 public:
   FoodPile(World* const, FoodController*);
-  virtual WorldObjectViewCollection get_view(const Coordinates&, const UnitVector&);
-  virtual std::shared_ptr<Shape> get_shape(const Coordinates&, const UnitVector&);
+  virtual WorldObjectViewCollection get_view(const Coordinates&, 
+    const UnitVector&);
+  virtual std::shared_ptr<Shape> get_shape(const Coordinates&, 
+    const UnitVector&);
   const Energy eat(const TimeDifference&);
 
 private:
@@ -34,8 +36,8 @@ class FoodController : public EventObject
 public:
   FoodController(World*, WorldPlane*, const AbsoluteTime&);
   const AbsoluteTime get_next_event_time();
-  void update(const AbsoluteTime&);
   const FoodCollection& get_foods() const;
+  void update(const AbsoluteTime&);
   void remove_pile(FoodPile*);
 
 private:

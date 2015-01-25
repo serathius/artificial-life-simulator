@@ -43,8 +43,10 @@ public:
   static constexpr float MAXIMIM_DISTANCE_PER_UPDATE = 0.01;
   const AbsoluteTime get_next_event_time();
   void update(const AbsoluteTime&);
-  virtual WorldObjectViewCollection get_view(const Coordinates&, const UnitVector&);
-  virtual std::shared_ptr<Shape> get_shape(const Coordinates&, const UnitVector&);
+  virtual WorldObjectViewCollection get_view(const Coordinates&,
+    const UnitVector&);
+  virtual std::shared_ptr<Shape> get_shape(const Coordinates&,
+    const UnitVector&);
 
 private:
   void move_forward_food();

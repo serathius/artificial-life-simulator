@@ -11,10 +11,10 @@ class Event
 {
 public:
   Event(const RealTime &time) : time_(time) {;}
+  virtual ~Event();
   const RealTime get_time() const {return time_;}
   virtual void accept(Controller *controller) = 0;
-  virtual ~Event();
-
+  
 private:
   const RealTime time_;
 };

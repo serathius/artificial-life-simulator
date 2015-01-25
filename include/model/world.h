@@ -34,7 +34,8 @@ private:
 public:
   World(Model* const);
   ~World();
-  void register_world_object(WorldObject*, const Coordinates &, const UnitVector &);
+  void register_world_object(WorldObject*, const Coordinates &,
+    const UnitVector &);
   void register_event_object(EventObject*);
   void deregister_world_object(WorldObject*);
   void deregister_event_object(EventObject*);

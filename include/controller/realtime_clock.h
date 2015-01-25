@@ -14,16 +14,15 @@ class RealTimeDifference
 public:
   typedef std::chrono::steady_clock::duration Duration;
   explicit RealTimeDifference(const Duration&);
+  friend std::ostream& operator<<(std::ostream &os,
+    const RealTimeDifference &realtime);
   bool operator==(const RealTimeDifference&) const;
   bool operator!=(const RealTimeDifference&) const;
   bool operator>(const RealTimeDifference&) const;
-  friend std::ostream& operator<<(std::ostream &os,
-  const RealTimeDifference &realtime);
-  const Duration get_duration() const;
   const TimeDifference operator*(const TimePassageSpeed&) const;
   const RealTime operator+(const RealTime&) const;
-
-
+  const Duration get_duration() const;
+  
 private:
     Duration duration_;
 };
@@ -36,20 +35,18 @@ public:
   typedef std::chrono::time_point<std::chrono::steady_clock> TimePoint;
   RealTime(const TimePoint&);
   static const RealTime now();
+  friend std::ostream& operator<<(std::ostream&, const RealTime&);
   bool operator==(const RealTime&) const;
   bool operator!=(const RealTime&) const;
+  const RealTimeDifference operator-(const RealTime&) const;
   bool operator>(const RealTime&) const;
   bool operator>=(const RealTime&) const;
-  friend std::ostream& operator<<(std::ostream&, const RealTime&);
-  const RealTimeDifference operator-(const RealTime&) const;
   void schedule() const;
 
 private:
   TimePoint time_point_;
-
 };
 
 #include "model/simulation_clock.h"
 
 #endif /* REALTIME_CLOCK_H */
-

@@ -20,7 +20,6 @@ class DistanceVisitorBase
 public:
   virtual const Vector visit(Circle&) = 0;
   virtual const Vector visit(ReverseCircle&) = 0;
-
 };
 
 class DistanceVisitor : public DistanceVisitorBase
