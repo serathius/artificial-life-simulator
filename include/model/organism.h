@@ -9,20 +9,24 @@ typedef float Power;
 class World;
 class Organism;
 
+#include "primitives.h"
+
 class OrganismRegister
 {
 public:
   OrganismRegister(World*);
 
 private:
+  void register_organism(Organism*, const Coordinates&, const UnitVector&);
+
   World* world_;
   std::set<Organism*> organisms_;
+
 };
 
 #include "world.h"
 #include "genotype.h"
 #include "decision.h"
-#include "primitives.h"
 #include "logic.h"
 #include "intersection.h"
 

@@ -149,20 +149,20 @@ const AbsoluteTime Organism::get_next_event_time()
 
 OrganismRegister::OrganismRegister(World *world) : world_(world)
 {
-  Organism *first_organism = new Organism(world_, AbsoluteTime(0));
-  Organism *second_organism = new Organism(world_, AbsoluteTime(0));
-  Organism *third_organism = new Organism(world_, AbsoluteTime(0));
-  Organism *forth_organism = new Organism(world_, AbsoluteTime(0));
-  world_->register_world_object(
-    first_organism, Coordinates(-0.5f, 0), UnitVector::from_degrees(0));
-  world_->register_world_object(
-    second_organism, Coordinates(0.5f, 0), UnitVector::from_degrees(180));
-  world_->register_world_object(
-    third_organism, Coordinates(0, 0.5f), UnitVector::from_degrees(-90));
-  world_->register_world_object(
-    forth_organism, Coordinates(0, -0.5f), UnitVector::from_degrees(90));
-  world_->register_event_object(first_organism);
-  world_->register_event_object(second_organism);
-  world_->register_event_object(third_organism);
-  world_->register_event_object(forth_organism);
+  register_organism(new Organism(world_, AbsoluteTime(0)),
+    Coordinates(-0.5f, 0), UnitVector::from_degrees(0));
+  register_organism(new Organism(world_, AbsoluteTime(0)),
+    Coordinates(0.5f, 0), UnitVector::from_degrees(180));
+  register_organism(new Organism(world_, AbsoluteTime(0)),
+    Coordinates(0, 0.5f), UnitVector::from_degrees(-90));
+  register_organism(new Organism(world_, AbsoluteTime(0)),
+    Coordinates(0, -0.5f), UnitVector::from_degrees(90));
+}
+
+void OrganismRegister::register_organism(
+  Organism *organism, Coordinates const &coordinates, UnitVector const &direction)
+{
+  world_->register_world_object(organism, coordinates, direction);
+  world_->register_event_object(organism);
+  organisms_.insert(organism);
 }
