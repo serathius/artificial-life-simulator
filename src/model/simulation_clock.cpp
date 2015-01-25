@@ -2,13 +2,17 @@
 
 #include "model/simulation_clock.h"
 
-
 SimulationClock::SimulationClock(const AbsoluteTime &simulation_time)
   : simulation_time_(simulation_time),
     realtime_(RealTime::TimePoint(std::chrono::seconds(0))),
     time_passage_speed_(TimePassageSpeed(1.0)), turned_on_(false)
 {
 
+}
+
+const AbsoluteTime AbsoluteTime::get_max()
+{
+  return AbsoluteTime(std::numeric_limits<unsigned long long>::max());
 }
 
 void SimulationClock::start(const RealTime &realtime)
@@ -52,7 +56,7 @@ const AbsoluteTime SimulationClock::to_simulation_time(const RealTime &realtime)
 const RealTime SimulationClock::to_realtime(const AbsoluteTime &actual_time)
 {
   assert(actual_time >= simulation_time_);
-  if(turned_on_)
+  if(turned_on_ && actual_time != AbsoluteTime::get_max())
   {
     auto time_difference = actual_time - simulation_time_;
     return time_difference / time_passage_speed_ + realtime_;

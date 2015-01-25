@@ -17,7 +17,6 @@ void ViewModel::draw()
   for (auto object: objects_)
   {
     object->draw();
-    LOG(object->get_z());
   }
 }
 

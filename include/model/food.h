@@ -18,4 +18,20 @@ private:
   FoodAmount amount_;
 };
 
+
+class FoodController : public EventObject
+{
+public:
+  FoodController(World*, WorldPlane*, const AbsoluteTime&);
+  const AbsoluteTime get_next_event_time();
+  void update(const AbsoluteTime&);
+
+private:
+  static constexpr float SPAWN_COOLDOWN_SECONDS = 5.f;
+  static constexpr int MAX_FOOD_PILES_COUNT = 3;
+  std::vector<Food*> foods_;
+  World* world_;
+  WorldPlane* plane_;
+  AbsoluteTime last_food_spawn_time_;
+};
 #endif /* FOOD_H_ */

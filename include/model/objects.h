@@ -46,6 +46,7 @@ public:
   WorldPlane(World* const, const Distance&);
   virtual std::shared_ptr<WorldObjectView> get_view(const Coordinates&, const UnitVector&);
   virtual std::shared_ptr<Shape> get_shape(const Coordinates&, const UnitVector&);
+  const Coordinates get_random_position() const;
 };
 
 #endif /* OBJECTS_H_ */

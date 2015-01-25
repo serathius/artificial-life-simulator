@@ -24,7 +24,6 @@ void Model::update(const RealTime &realtime)
 const RealTime Model::get_next_event_time() const
 {
   auto earliest_event_time = world_->get_next_event_time();
-  LOG(earliest_event_time);
   return clock_->to_realtime(earliest_event_time);
 }
 

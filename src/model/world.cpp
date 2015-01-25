@@ -8,11 +8,10 @@ World::World(Model* const model) : world_objects_(WorldObjectsCollection())
 {
   Organism *organism = new Organism(this, AbsoluteTime(0));
   WorldPlane *plane = new WorldPlane(this, Distance(1));
-  Food *food = new Food(this, 0.1);
   register_world_object(organism, Coordinates(0, 0), UnitVector::from_degrees(0));
   register_world_object(plane, Coordinates(0, 0), UnitVector::from_degrees(0));
-  register_world_object(food, Coordinates(0, 0.5), UnitVector::from_degrees(0));
   register_event_object(organism);
+  register_event_object(new FoodController(this, plane, AbsoluteTime(0)));
 }
 
 
@@ -27,8 +26,11 @@ World::~World()
 void World::register_world_object(WorldObject *object,
   Coordinates const &coordinates, UnitVector const &direction)
 {
-  assert(has_free_space(object, coordinates, direction));
   allocated_objects_.insert(object);
+  if(!has_free_space(object, coordinates, direction))
+  {
+    throw NoSpace();
+  }
   world_objects_.insert(std::pair<WorldObject*, Position>(object, {coordinates, direction}));
 }
 
@@ -77,24 +79,16 @@ void World::update(const AbsoluteTime &time)
 
 const AbsoluteTime World::get_next_event_time() const
 {
-  if (event_objects_.begin() == event_objects_.end())
-  {
-    throw InfiniteRealTime();
-  }
-  else
-  {
-    AbsoluteTime earliest_event_time =
-      (*event_objects_.begin())->get_next_event_time();
-    for (auto event_object: event_objects_) {
-      LOG(event_object);
-      auto event_time = event_object->get_next_event_time();
-      if (earliest_event_time > event_time)
-      {
-        earliest_event_time = event_time;
-      }
+  AbsoluteTime earliest_event_time = AbsoluteTime::get_max();
+  for (auto event_object: event_objects_) {
+    LOG(event_object);
+    auto event_time = event_object->get_next_event_time();
+    if (earliest_event_time > event_time)
+    {
+      earliest_event_time = event_time;
     }
-    return earliest_event_time;
   }
+  return earliest_event_time;
 }
 
 const WorldObjectViewCollection World::get_objects() const
@@ -114,13 +108,10 @@ void World::move_object_forward(WorldObject* object, const Distance &distance)
   WorldObjectsCollection::iterator it = world_objects_.find(object);
   assert(it != world_objects_.end());
   auto new_coordinates = it->second.coordinates + it->second.direction * distance;
-  LOG(has_free_space(object, it->second.coordinates, it->second.direction));
   if(has_free_space(object, new_coordinates, it->second.direction))
   {
     it->second.coordinates = new_coordinates;
-    LOG(it->second.coordinates);
   }
-  LOG(world_objects_.find(object)->second.coordinates);
 }
 
 void World::rotate_object(WorldObject* object, UnitVector const & angle)

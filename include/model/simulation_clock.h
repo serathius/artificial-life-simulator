@@ -38,6 +38,7 @@ class AbsoluteTime
     friend class TimeDifference;
 public:
   AbsoluteTime(unsigned long long nanoseconds);
+  static const AbsoluteTime get_max();
   friend std::ostream& operator<<(std::ostream&, const AbsoluteTime&);
   const TimeDifference operator-(const AbsoluteTime&) const;
   const AbsoluteTime operator+(const TimeDifference&) const;

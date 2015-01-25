@@ -2,6 +2,7 @@
 #define WORLD_H
 
 #include <memory>
+#include <random>
 
 class World;
 
@@ -29,6 +30,13 @@ public:
   const std::vector<std::shared_ptr<WorldObjectView>> get_objects() const;
   void move_object_forward(WorldObject*, const Distance&);
   void rotate_object(WorldObject*, const UnitVector&);
+
+  std::default_random_engine random_generator_engine_;
+};
+
+class NoSpace : public std::exception
+{
+
 };
 
 #endif
