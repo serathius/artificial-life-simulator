@@ -2,12 +2,22 @@
 
 #include <GLFW/glfw3.h>
 #include <cmath>
+#include <algorithm>
+#include <bits/shared_ptr_base.h>
+
+bool cmp_obj_z(std::shared_ptr<WorldObjectView> first,
+        std::shared_ptr<WorldObjectView> second)
+{
+    return first->get_z() < second->get_z();
+}
 
 void ViewModel::draw()
 {
+  sort(objects_.begin(), objects_.end(), cmp_obj_z);
   for (auto object: objects_)
   {
     object->draw();
+    LOG(object->get_z());
   }
 }
 

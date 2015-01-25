@@ -22,6 +22,7 @@ class WorldObjectView
 public:
   virtual ~WorldObjectView(){;}
   virtual void draw() = 0;
+  virtual float get_z(){return 0;};
 };
 
 class ViewModel
@@ -48,6 +49,7 @@ public:
     const UnitVector& direction, float z, const Color&);
   virtual ~TriangleWorldObjectView(){;}
   virtual void draw();
+  float get_z(){return z_;};
 };
 
 class SquareWorldObjectView : public WorldObjectView
@@ -65,6 +67,7 @@ public:
     const Color&);
   virtual ~SquareWorldObjectView(){;}
   virtual void draw();
+  float get_z(){return z_;};
 };
 
 class CircleWorldObjectView : public WorldObjectView
@@ -81,6 +84,7 @@ public:
     const Distance& distance, float z, const Color&);
   virtual ~CircleWorldObjectView(){;}
   virtual void draw();
+  float get_z(){return z_;};
 };
 
 #endif /* VIEWMODEL_H_ */
