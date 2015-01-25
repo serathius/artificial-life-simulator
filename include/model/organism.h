@@ -36,7 +36,7 @@ class OrganismCondition
 public:
   OrganismCondition(const AbsoluteTime&);
   const AbsoluteTime get_energy_runout_time() const;
-  bool has_energy_left(const AbsoluteTime&) const;
+  Energy energy_left(const AbsoluteTime&) const;
   void add_energy(const Energy&);
 
 private:

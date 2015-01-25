@@ -12,9 +12,9 @@ const AbsoluteTime OrganismCondition::get_energy_runout_time() const
   return time_ + TimeDifference::seconds(energy_ / ENERGY_LOSS_PER_SECOND);
 }
 
-bool OrganismCondition::has_energy_left(const AbsoluteTime &time) const
+Energy OrganismCondition::energy_left(const AbsoluteTime &time) const
 {
-  return energy_ - (time - time_).get_seconds() * ENERGY_LOSS_PER_SECOND > 0;
+  return energy_ - (time - time_).get_seconds() * ENERGY_LOSS_PER_SECOND;
 }
 
 void OrganismCondition::add_energy(const Energy &energy)
@@ -46,7 +46,7 @@ float Organism::movement_cost(const RelativePosition& position)
 
 void Organism::update(const AbsoluteTime &time)
 {
-  if(!condition_.has_energy_left(time))
+  if(condition_.energy_left(time) < 0)
   {
     register_->deregister(this);
     LOG("Organism died");
