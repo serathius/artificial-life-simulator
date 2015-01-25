@@ -21,8 +21,8 @@ public:
 private:
   void handle_events();
   void schedule_model_update();
-  bool run_ = true;
 
+  bool run_ = true;
   Model model_;
   View view_;
   EventQueue event_queue_;
