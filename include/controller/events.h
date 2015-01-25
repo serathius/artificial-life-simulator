@@ -27,4 +27,10 @@ public:
   virtual void accept(Controller *controller);
 };
 
+class ExitEvent: public Event
+{
+public:
+  ExitEvent(const RealTime &time): Event(time){;}
+  virtual void accept(Controller *controller);
+};
 #endif /* EVENTS_H */
