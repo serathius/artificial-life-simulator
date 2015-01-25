@@ -48,8 +48,7 @@ void Organism::update(const AbsoluteTime &time)
 {
   if(!condition_.has_energy_left(time))
   {
-    world_->deregister_world_object(this);
-    world_->deregister_event_object(this);
+    register_->deregister(this);
     LOG("Organism died");
   }
   else
@@ -167,4 +166,11 @@ void OrganismRegister::register_organism(
   world_->register_world_object(organism, coordinates, direction);
   world_->register_event_object(organism);
   organisms_.insert(organism);
+}
+
+void OrganismRegister::deregister(Organism *organism)
+{
+  world_->deregister_world_object(organism);
+  world_->deregister_event_object(organism);
+  organisms_.erase(organism);
 }

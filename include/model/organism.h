@@ -15,6 +15,7 @@ class OrganismRegister
 {
 public:
   OrganismRegister(World*);
+  void deregister(Organism*);
 
 private:
   void register_organism(Organism*, const Coordinates&, const UnitVector&);
