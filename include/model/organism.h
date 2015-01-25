@@ -2,9 +2,22 @@
 #define ORGANISM_H
 
 #include <memory>
+#include <set>
 
 typedef float Energy;
 typedef float Power;
+class World;
+class Organism;
+
+class OrganismRegister
+{
+public:
+  OrganismRegister(World*);
+
+private:
+  World* world_;
+  std::set<Organism*> organisms_;
+};
 
 #include "world.h"
 #include "genotype.h"

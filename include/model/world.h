@@ -19,6 +19,7 @@ struct FoodRelativePosition
 #include "model.h"
 #include "collections.h"
 #include "food.h"
+#include "organism.h"
 
 
 class World
@@ -28,6 +29,7 @@ private:
   EventObjectCollection event_objects_;
   std::set<Object*> allocated_objects_;
   FoodController* food_controller_;
+  OrganismRegister organism_register_;
 
   bool has_free_space(WorldObject*, const Coordinates&, const UnitVector&);
 

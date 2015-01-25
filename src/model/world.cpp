@@ -2,26 +2,11 @@
 
 #include "model/world.h"
 
-World::World(Model* const model) : world_objects_(WorldObjectsCollection())
+World::World(Model* const model) : world_objects_(WorldObjectsCollection()),
+                                   organism_register_(this)
 {
-  Organism *first_organism = new Organism(this, AbsoluteTime(0));
-  Organism *second_organism = new Organism(this, AbsoluteTime(0));
-  Organism *third_organism = new Organism(this, AbsoluteTime(0));
-  Organism *forth_organism = new Organism(this, AbsoluteTime(0));
   WorldPlane *plane = new WorldPlane(this, Distance(1));
-  register_world_object(
-    first_organism, Coordinates(-0.5f, 0), UnitVector::from_degrees(0));
-  register_world_object(
-    second_organism, Coordinates(0.5f, 0), UnitVector::from_degrees(180));
-  register_world_object(
-    third_organism, Coordinates(0, 0.5f), UnitVector::from_degrees(-90));
-  register_world_object(
-    forth_organism, Coordinates(0, -0.5f), UnitVector::from_degrees(90));
   register_world_object(plane, Coordinates(0, 0), UnitVector::from_degrees(0));
-  register_event_object(first_organism);
-  register_event_object(second_organism);
-  register_event_object(third_organism);
-  register_event_object(forth_organism);
   food_controller_ = new FoodController(this, plane, AbsoluteTime(0));
   register_event_object(food_controller_);
 }
