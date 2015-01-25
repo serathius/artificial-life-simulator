@@ -129,7 +129,7 @@ std::vector<FoodRelativePosition> World::get_relative_foods_position(
   WorldObject *object) const
 {
   std::vector<FoodRelativePosition> relative_food_position;
-  Position object_position= world_objects_.at(object);
+  Position object_position = world_objects_.at(object);
   std::shared_ptr<Shape> object_shape= object->get_shape(
     object_position.coordinates, object_position.direction);
 

@@ -44,6 +44,10 @@ public:
   virtual std::shared_ptr<Shape> get_shape(const Coordinates&, const UnitVector&);
 
 private:
+  void move_forward_food();
+  void move_to_relative_position(const FoodRelativePosition&);
+
+
   OrganismCondition condition_;
   AbsoluteTime last_decision_time_;
   const Genotype genotype_;
