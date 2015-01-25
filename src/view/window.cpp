@@ -50,11 +50,18 @@ void Window::show()
   {
     int width, height;
     glfwGetFramebufferSize(window_handle_, &width, &height);
-    glClear( GL_COLOR_BUFFER_BIT);
+    glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
+    glOrtho(-1, 1, -1, 1, -1, 1);
+
+    glMatrixMode(GL_MODELVIEW);
     this->draw(width, height);
-    glfwPollEvents();
+
     glfwSwapBuffers(window_handle_);
+    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+    glClearDepth(1.0f);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glfwPollEvents();
   }
 }
 

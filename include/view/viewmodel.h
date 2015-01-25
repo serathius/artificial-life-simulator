@@ -33,10 +33,11 @@ class TriangleWorldObjectView : public WorldObjectView
 private:
   const Coordinates coordinates_;
   const UnitVector direction_;
+  const float z_;
 
 public:
   TriangleWorldObjectView(const Coordinates& coordinates,
-    const UnitVector& direction);
+    const UnitVector& direction, float z);
   virtual ~TriangleWorldObjectView(){;}
   virtual void draw();
 };
@@ -47,10 +48,11 @@ private:
   const Coordinates coordinates_;
   const UnitVector direction_;
   const Dimension dimension_;
+  const float z_;
 
 public:
   SquareWorldObjectView(const Coordinates& coordinates,
-    const UnitVector& direction, const Dimension& dimension);
+    const UnitVector& direction, const Dimension& dimension, float z);
   virtual ~SquareWorldObjectView(){;}
   virtual void draw();
 };
@@ -60,11 +62,12 @@ class CircleWorldObjectView : public WorldObjectView
 private:
   const Coordinates coordinates_;
   const Distance distance_;
+  const float z_;
   static const int SEGMENTS_COUNT = 32;
 
 public:
   CircleWorldObjectView(const Coordinates& coordinates,
-    const Distance& distance);
+    const Distance& distance, float z);
   virtual ~CircleWorldObjectView(){;}
   virtual void draw();
 };

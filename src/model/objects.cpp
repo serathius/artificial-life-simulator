@@ -21,7 +21,7 @@ std::shared_ptr<WorldObjectView> WorldPlane::get_view(
   const Coordinates &coordinates, const UnitVector &direction)
 {
   return std::shared_ptr<WorldObjectView>(
-    new CircleWorldObjectView(coordinates, distance_));
+    new CircleWorldObjectView(coordinates, distance_, -1));
 }
 
 std::shared_ptr<Shape> WorldPlane::get_shape(

@@ -5,6 +5,10 @@ View::View(EventQueue * const event_queue) : event_queue(event_queue)
 {
     if(!glfwInit())
         std::exit(1);
+  glEnable(GL_DEPTH_TEST);
+  glDepthMask(GL_TRUE);
+  glDepthFunc(GL_LEQUAL);
+  glDepthRange(0.0f, 1.0f);
 }
 
 void View::start()

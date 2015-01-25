@@ -49,7 +49,7 @@ std::shared_ptr<WorldObjectView> Organism::get_view(const Coordinates &coordinat
   const UnitVector &direction)
 {
   return std::shared_ptr<WorldObjectView>(
-    new TriangleWorldObjectView(coordinates, direction));
+    new TriangleWorldObjectView(coordinates, direction, 1));
 }
 
 std::shared_ptr<Shape> Organism::get_shape(const Coordinates &coordinates,

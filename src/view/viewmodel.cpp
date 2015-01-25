@@ -17,7 +17,8 @@ ViewModel::ViewModel(const WorldObjectViewCollection &objects)
 }
 
 TriangleWorldObjectView::TriangleWorldObjectView(const Coordinates &coordinates,
-  const UnitVector &direction) : coordinates_(coordinates), direction_(direction)
+  const UnitVector &direction, float z)
+  : coordinates_(coordinates), direction_(direction), z_(z)
 {
 
 }
@@ -28,7 +29,7 @@ void TriangleWorldObjectView::draw()
   float y = coordinates_.get_y();
   float r = 0.2f;
   glColor3f(1.0f, 0.f, 0.f);
-  glTranslatef(x, y, 0.f);
+  glTranslatef(x, y, z_);
   glRotatef(direction_.get_angle() - 30, 0, 0, -1);
   glBegin(GL_TRIANGLES);
   glVertex2f(- r / 2, - r * (float) sqrt(3) / 6);
@@ -36,12 +37,12 @@ void TriangleWorldObjectView::draw()
   glVertex2f(r / 2, - r * (float) sqrt(3) / 6);
   glEnd();
   glRotatef(-(direction_.get_angle() - 30), 0, 0, -1);
-  glTranslatef(-x, -y, 0.f);
+  glTranslatef(-x, -y, -z_);
 }
 
 SquareWorldObjectView::SquareWorldObjectView(const Coordinates &coordinates,
-  const UnitVector &direction, const Dimension &dimension) : coordinates_(coordinates),
-                                 direction_(direction), dimension_(dimension)
+  const UnitVector &direction, const Dimension &dimension, float z)
+  : coordinates_(coordinates), direction_(direction), dimension_(dimension), z_(z)
 {
 
 }
@@ -50,15 +51,16 @@ void SquareWorldObjectView::draw()
 {
   glColor3f(0.f, 0.5f, 0.f);
   glBegin(GL_QUADS);
-  glVertex2f(0, 0);
-  glVertex2f(dimension_.get_x(), 0);
-  glVertex2f(dimension_.get_x(), dimension_.get_y());
-  glVertex2f(0, dimension_.get_y());
+  glVertex3f(0, 0, z_);
+  glVertex3f(dimension_.get_x(), 0, z_);
+  glVertex3f(dimension_.get_x(), dimension_.get_y(), z_);
+  glVertex3f(0, dimension_.get_y(), z_);
   glEnd();
 }
 
 CircleWorldObjectView::CircleWorldObjectView(const Coordinates &coordinates,
-  const Distance &distance) : coordinates_(coordinates), distance_(distance)
+  const Distance &distance, float z)
+  : coordinates_(coordinates), distance_(distance), z_(z)
 {
 
 }
@@ -74,7 +76,7 @@ void CircleWorldObjectView::draw()
   glBegin(GL_POLYGON);
   for (int i=0; i<SEGMENTS_COUNT; ++i)
   {
-    glVertex2f(coordinates_.get_x() + dx, coordinates_.get_y() + dy);
+    glVertex3f(coordinates_.get_x() + dx, coordinates_.get_y() + dy, z_);
     float tmp_x = (dx - dy * tangetial_factor) * radial_factor;
     dy = (dy + dx * tangetial_factor) * radial_factor;
     dx = tmp_x;
