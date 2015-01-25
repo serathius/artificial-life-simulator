@@ -33,16 +33,16 @@ private:
 
 class OrganismCondition
 {
-private:
-  AbsoluteTime time_;
-  Energy energy_;
-  static constexpr Power ENERGY_LOSS_PER_SECOND = 35;
-
 public:
   OrganismCondition(const AbsoluteTime&, const Energy&);
   const AbsoluteTime get_energy_runout_time() const;
   bool has_energy_left(const AbsoluteTime&) const;
   void add_energy(const Energy&);
+
+private:
+  AbsoluteTime time_;
+  Energy energy_;
+  static constexpr Power ENERGY_LOSS_PER_SECOND = 35;
 };
 
 class OrganismUnderstoodWorldInformation
