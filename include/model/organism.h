@@ -66,15 +66,27 @@ public:
   virtual std::shared_ptr<Shape> get_shape(const Coordinates&,
     const UnitVector&);
 
-private:
-  void move_forward_food();
-  void move_to_relative_position(const RelativePosition&);
+protected:
   static float movement_cost(const RelativePosition&);
+  void move_to_relative_position(const RelativePosition&);
 
   OrganismCondition condition_;
+
+private:
+  virtual void move_forward_food() = 0;
+
   AbsoluteTime last_decision_time_;
   const Genotype genotype_;
   OrganismRegister* register_;
+};
+
+class Vegetarian: public Organism
+{
+public:
+  Vegetarian(World* const, OrganismRegister*, const AbsoluteTime&);
+  virtual ~Vegetarian();
+private:
+  virtual void move_forward_food();
 };
 
 #endif /* ORGANISM_H */

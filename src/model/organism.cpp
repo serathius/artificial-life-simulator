@@ -63,30 +63,6 @@ void Organism::update(const AbsoluteTime &time)
   }
 }
 
-void Organism::move_forward_food()
-{
-  auto foods = world_->get_relative_foods_position(this);
-  if (foods.begin() != foods.end())
-  {
-    sort(foods.begin(), foods.end(), []
-      (const FoodRelativePosition &first, const FoodRelativePosition &second) -> bool
-      {
-        return movement_cost(first.second) < movement_cost(second.second);
-      });
-    FoodPile* nearest_food = foods[0].first;
-    RelativePosition nearest_food_position = foods[0].second;
-    if (nearest_food_position.distance < Distance(MAXIMIM_DISTANCE_PER_UPDATE))
-    {
-      condition_.add_energy(nearest_food->eat(
-        TimeDifference::seconds(DECISION_COOLDOWN_SECODSN)));
-    }
-    else
-    {
-      move_to_relative_position(nearest_food_position);
-    }
-  }
-}
-
 void Organism::move_to_relative_position(
   const RelativePosition& food_position)
 {
@@ -151,13 +127,13 @@ const AbsoluteTime Organism::get_next_event_time()
 
 OrganismRegister::OrganismRegister(World *world) : world_(world)
 {
-  register_organism(new Organism(world_, this, AbsoluteTime(0)),
+  register_organism(new Vegetarian(world_, this, AbsoluteTime(0)),
     Coordinates(-0.5f, 0), UnitVector::from_degrees(0));
-  register_organism(new Organism(world_, this, AbsoluteTime(0)),
+  register_organism(new Vegetarian(world_, this, AbsoluteTime(0)),
     Coordinates(0.5f, 0), UnitVector::from_degrees(180));
-  register_organism(new Organism(world_, this, AbsoluteTime(0)),
+  register_organism(new Vegetarian(world_, this, AbsoluteTime(0)),
     Coordinates(0, 0.5f), UnitVector::from_degrees(-90));
-  register_organism(new Organism(world_, this, AbsoluteTime(0)),
+  register_organism(new Vegetarian(world_, this, AbsoluteTime(0)),
     Coordinates(0, -0.5f), UnitVector::from_degrees(90));
 }
 
@@ -167,4 +143,28 @@ void OrganismRegister::register_organism(
   world_->register_world_object(organism, coordinates, direction);
   world_->register_event_object(organism);
   organisms_.insert(organism);
+}
+
+void Vegetarian::move_forward_food()
+{
+  auto foods = world_->get_relative_foods_position(this);
+  if (foods.begin() != foods.end())
+  {
+    sort(foods.begin(), foods.end(), []
+      (const FoodRelativePosition &first, const FoodRelativePosition &second) -> bool
+      {
+        return movement_cost(first.second) < movement_cost(second.second);
+      });
+    FoodPile* nearest_food = foods[0].first;
+    RelativePosition nearest_food_position = foods[0].second;
+    if (nearest_food_position.distance < Distance(MAXIMIM_DISTANCE_PER_UPDATE))
+    {
+      condition_.add_energy(nearest_food->eat(
+        TimeDifference::seconds(DECISION_COOLDOWN_SECODSN)));
+    }
+    else
+    {
+      move_to_relative_position(nearest_food_position);
+    }
+  }
 }
