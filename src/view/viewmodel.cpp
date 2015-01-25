@@ -17,8 +17,8 @@ ViewModel::ViewModel(const WorldObjectViewCollection &objects)
 }
 
 TriangleWorldObjectView::TriangleWorldObjectView(const Coordinates &coordinates,
-  const UnitVector &direction, float z)
-  : coordinates_(coordinates), direction_(direction), z_(z)
+  const UnitVector &direction, float z, const Color &color)
+  : coordinates_(coordinates), direction_(direction), z_(z), color_(color)
 {
 
 }
@@ -28,7 +28,7 @@ void TriangleWorldObjectView::draw()
   float x = coordinates_.get_x();
   float y = coordinates_.get_y();
   float r = 0.2f;
-  glColor3f(1.0f, 0.f, 0.f);
+  glColor3f(color_.R, color_.G, color_.B);
   glTranslatef(x, y, z_);
   glRotatef(direction_.get_angle() - 30, 0, 0, -1);
   glBegin(GL_TRIANGLES);
@@ -41,15 +41,17 @@ void TriangleWorldObjectView::draw()
 }
 
 SquareWorldObjectView::SquareWorldObjectView(const Coordinates &coordinates,
-  const UnitVector &direction, const Dimension &dimension, float z)
-  : coordinates_(coordinates), direction_(direction), dimension_(dimension), z_(z)
+  const UnitVector &direction, const Dimension &dimension, float z,
+  const Color &color)
+  : coordinates_(coordinates), direction_(direction), dimension_(dimension),
+    z_(z), color_(color)
 {
 
 }
 
 void SquareWorldObjectView::draw()
 {
-  glColor3f(0.f, 0.5f, 0.f);
+  glColor3f(color_.R, color_.G, color_.B);
   glBegin(GL_QUADS);
   glVertex3f(0, 0, z_);
   glVertex3f(dimension_.get_x(), 0, z_);
@@ -59,15 +61,15 @@ void SquareWorldObjectView::draw()
 }
 
 CircleWorldObjectView::CircleWorldObjectView(const Coordinates &coordinates,
-  const Distance &distance, float z)
-  : coordinates_(coordinates), distance_(distance), z_(z)
+  const Distance &distance, float z, const Color &color)
+  : coordinates_(coordinates), distance_(distance), z_(z), color_(color)
 {
 
 }
 
 void CircleWorldObjectView::draw()
 {
-  glColor3f(0.f, 0.5f, 0.f);
+  glColor3f(color_.R, color_.G, color_.B);
   float theta = static_cast<float>(2 * M_PI / SEGMENTS_COUNT);
   float tangetial_factor = tanf(theta);
   float radial_factor = cosf(theta);
