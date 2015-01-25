@@ -37,7 +37,7 @@ public:
   void deregister_event_object(EventObject*);
   void update(const AbsoluteTime&);
   const AbsoluteTime get_next_event_time() const;
-  const std::vector<std::shared_ptr<WorldObjectView>> get_objects() const;
+  const std::vector<std::shared_ptr<ViewElement>> get_objects() const;
   void move_object_forward(WorldObject*, const Distance&);
   void rotate_object(WorldObject*, const UnitVector&);
   std::vector<FoodRelativePosition> get_relative_foods_position(

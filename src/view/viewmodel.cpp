@@ -5,8 +5,8 @@
 
 #include "view/viewmodel.h"
 
-bool cmp_obj_z(std::shared_ptr<WorldObjectView> first,
-        std::shared_ptr<WorldObjectView> second)
+bool cmp_obj_z(std::shared_ptr<ViewElement> first,
+        std::shared_ptr<ViewElement> second)
 {
     return first->get_z() < second->get_z();
 }
@@ -20,12 +20,12 @@ void ViewModel::draw()
   }
 }
 
-ViewModel::ViewModel(const WorldObjectViewCollection &objects)
+ViewModel::ViewModel(const ViewElementCollection &objects)
 {
   objects_ = objects;
 }
 
-TriangleWorldObjectView::TriangleWorldObjectView(const Coordinates &coordinates,
+TriangleViewElement::TriangleViewElement(const Coordinates &coordinates,
   const UnitVector &direction, float z, const Color &color,
   const Distance &length)
   : coordinates_(coordinates), direction_(direction), z_(z), color_(color),
@@ -34,7 +34,7 @@ TriangleWorldObjectView::TriangleWorldObjectView(const Coordinates &coordinates,
 
 }
 
-void TriangleWorldObjectView::draw()
+void TriangleViewElement::draw()
 {
   float x = coordinates_.get_x();
   float y = coordinates_.get_y();
@@ -51,7 +51,7 @@ void TriangleWorldObjectView::draw()
   glTranslatef(-x, -y, -z_);
 }
 
-SquareWorldObjectView::SquareWorldObjectView(const Coordinates &coordinates,
+RectangleViewElement::RectangleViewElement(const Coordinates &coordinates,
   const UnitVector &direction, const Dimension &dimension, float z,
   const Color &color)
   : coordinates_(coordinates), direction_(direction), dimension_(dimension),
@@ -60,7 +60,7 @@ SquareWorldObjectView::SquareWorldObjectView(const Coordinates &coordinates,
 
 }
 
-void SquareWorldObjectView::draw()
+void RectangleViewElement::draw()
 {
   glColor3f(color_.R, color_.G, color_.B);
   glBegin(GL_QUADS);
@@ -71,14 +71,14 @@ void SquareWorldObjectView::draw()
   glEnd();
 }
 
-CircleWorldObjectView::CircleWorldObjectView(const Coordinates &coordinates,
+CircleViewElement::CircleViewElement(const Coordinates &coordinates,
   const Distance &distance, float z, const Color &color)
   : coordinates_(coordinates), distance_(distance), z_(z), color_(color)
 {
 
 }
 
-void CircleWorldObjectView::draw()
+void CircleViewElement::draw()
 {
   glColor3f(color_.R, color_.G, color_.B);
   float theta = static_cast<float>(2 * M_PI / SEGMENTS_COUNT);

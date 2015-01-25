@@ -41,7 +41,7 @@ public:
   static constexpr float MAXIMIM_DISTANCE_PER_UPDATE = 0.01;
   const AbsoluteTime get_next_event_time();
   void update(const AbsoluteTime&);
-  virtual std::shared_ptr<WorldObjectView> get_view(
+  virtual std::shared_ptr<ViewElement> get_view(
     const Coordinates&, const UnitVector&);
   virtual std::shared_ptr<Shape> get_shape(const Coordinates&, const UnitVector&);
 

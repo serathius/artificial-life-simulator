@@ -4,8 +4,8 @@
 #include <vector>
 #include <memory>
 
-class WorldObjectView;
-typedef std::vector<std::shared_ptr<WorldObjectView>> WorldObjectViewCollection;
+class ViewElement;
+typedef std::vector<std::shared_ptr<ViewElement>> ViewElementCollection;
 
 #include "model/primitives.h"
 #include "common.h"
@@ -17,26 +17,26 @@ struct Color
   float B;
 };
 
-class WorldObjectView
+class ViewElement
 {
 public:
-  virtual ~WorldObjectView(){;}
+  virtual ~ViewElement(){;}
   virtual void draw() = 0;
-  virtual float get_z(){return 0;};
+  virtual float get_z() = 0;
 };
 
 class ViewModel
 {
 private:
-  WorldObjectViewCollection objects_;
+  ViewElementCollection objects_;
 
 public:
   ViewModel(){};
-  ViewModel(const WorldObjectViewCollection& objects);
+  ViewModel(const ViewElementCollection& objects);
   void draw();
 };
 
-class TriangleWorldObjectView : public WorldObjectView
+class TriangleViewElement : public ViewElement
 {
 private:
   const Coordinates coordinates_;
@@ -46,15 +46,15 @@ private:
   const Distance length_of_side_;
 
 public:
-  TriangleWorldObjectView(const Coordinates& coordinates,
+  TriangleViewElement(const Coordinates& coordinates,
     const UnitVector& direction, float z, const Color&,
     const Distance&);
-  virtual ~TriangleWorldObjectView(){;}
+  virtual ~TriangleViewElement(){;}
   virtual void draw();
   float get_z(){return z_;};
 };
 
-class SquareWorldObjectView : public WorldObjectView
+class RectangleViewElement : public ViewElement
 {
 private:
   const Coordinates coordinates_;
@@ -64,15 +64,15 @@ private:
   const Color color_;
 
 public:
-  SquareWorldObjectView(const Coordinates& coordinates,
+  RectangleViewElement(const Coordinates& coordinates,
     const UnitVector& direction, const Dimension& dimension, float z,
     const Color&);
-  virtual ~SquareWorldObjectView(){;}
+  virtual ~RectangleViewElement(){;}
   virtual void draw();
   float get_z(){return z_;};
 };
 
-class CircleWorldObjectView : public WorldObjectView
+class CircleViewElement : public ViewElement
 {
 private:
   const Coordinates coordinates_;
@@ -82,9 +82,9 @@ private:
   static const int SEGMENTS_COUNT = 32;
 
 public:
-  CircleWorldObjectView(const Coordinates& coordinates,
+  CircleViewElement(const Coordinates& coordinates,
     const Distance& distance, float z, const Color&);
-  virtual ~CircleWorldObjectView(){;}
+  virtual ~CircleViewElement(){;}
   virtual void draw();
   float get_z(){return z_;};
 };
