@@ -10,12 +10,12 @@ class Genotype
 class GenotypeMixer
 {
 private:
-	const Genotype& a_;
-	const Genotype& b_;
+  const Genotype& a_;
+  const Genotype& b_;
 
 public:
-	GenotypeMixer(const Genotype&, const Genotype&);
-	const Genotype mix();
+  GenotypeMixer(const Genotype&, const Genotype&);
+  const Genotype mix();
 };
 
 #endif /* GENOTYPE_H_ */

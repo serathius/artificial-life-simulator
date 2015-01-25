@@ -26,10 +26,10 @@ class BlockingQueue
 public:
   void push(T const &item)
   {
-	  std::unique_lock<std::mutex> mlock(mutex_);
-      queue_.push(item);
-      mlock.unlock();
-      condition_.notify_one();
+    std::unique_lock<std::mutex> mlock(mutex_);
+    queue_.push(item);
+    mlock.unlock();
+    condition_.notify_one();
   }
 
   T pop()
@@ -37,7 +37,7 @@ public:
     std::unique_lock<std::mutex> mlock(mutex_);
     while (queue_.empty())
     {
-        condition_.wait(mlock);
+      condition_.wait(mlock);
     }
     auto item = queue_.front();
     queue_.pop();
@@ -48,7 +48,6 @@ private:
   std::queue<T> queue_;
   std::mutex mutex_;
   std::condition_variable condition_;
-
 };
 
 #endif /* EVENT_QUEUE_H */
