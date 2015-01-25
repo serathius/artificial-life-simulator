@@ -53,3 +53,8 @@ void Controller::visit(UpdateModelEvent *event)
 {
   LOG("Model Update");
 }
+
+void Controller::visit(ExitEvent * exit_event)
+{
+  run=false;
+}

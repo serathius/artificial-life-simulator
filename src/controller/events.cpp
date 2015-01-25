@@ -10,3 +10,8 @@ void UpdateModelEvent::accept(Controller *controller)
 {
   controller->visit(this);
 }
+
+void ExitEvent::accept(Controller *controller)
+{
+    controller->visit(this);
+}

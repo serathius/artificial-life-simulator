@@ -16,6 +16,7 @@ public:
   Controller();
   void start();
   void visit(UpdateModelEvent* event);
+  void visit(ExitEvent* exit_event);
 
 private:
   void handle_events();
