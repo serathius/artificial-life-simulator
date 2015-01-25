@@ -96,12 +96,14 @@ void Organism::move_to_relative_position(
   }
 }
 
-std::shared_ptr<ViewElement> Organism::get_view(const Coordinates &coordinates,
+WorldObjectViewCollection Organism::get_view(const Coordinates &coordinates,
   const UnitVector &direction)
 {
-  return std::shared_ptr<ViewElement>(
-    new TriangleViewElement(
-      coordinates, direction, 1, {1, 0, 0}, Distance(ORGANISM_SIZE * 2)));
+  WorldObjectViewCollection world_object_view;
+  world_object_view.push_back(std::shared_ptr<ViewElement>(
+  new TriangleViewElement(
+      coordinates, direction, 1, {1, 0, 0}, Distance(ORGANISM_SIZE * 2))));
+  return world_object_view;
 }
 
 std::shared_ptr<Shape> Organism::get_shape(const Coordinates &coordinates,

@@ -9,7 +9,7 @@ class Food : public WorldObject
 {
 public:
   Food(World* const, const FoodAmount&);
-  virtual std::shared_ptr<ViewElement> get_view(const Coordinates&, const UnitVector&);
+  virtual WorldObjectViewCollection get_view(const Coordinates&, const UnitVector&);
   virtual std::shared_ptr<Shape> get_shape(const Coordinates&, const UnitVector&);
 
 private:

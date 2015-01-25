@@ -32,7 +32,7 @@ protected:
 public:
   WorldObject(World* const);
   virtual ~WorldObject();
-  virtual std::shared_ptr<ViewElement> get_view(const Coordinates&, const UnitVector&) = 0;
+  virtual WorldObjectViewCollection get_view(const Coordinates&, const UnitVector&) = 0;
   virtual std::shared_ptr<Shape> get_shape(const Coordinates&, const UnitVector&) = 0;
 };
 
@@ -44,7 +44,7 @@ private:
 
 public:
   WorldPlane(World* const, const Distance&);
-  virtual std::shared_ptr<ViewElement> get_view(const Coordinates&, const UnitVector&);
+  virtual WorldObjectViewCollection get_view(const Coordinates&, const UnitVector&);
   virtual std::shared_ptr<Shape> get_shape(const Coordinates&, const UnitVector&);
   const Coordinates get_random_position() const;
 };

@@ -96,14 +96,14 @@ const AbsoluteTime World::get_next_event_time() const
   return earliest_event_time;
 }
 
-const ViewElementCollection World::get_objects() const
+const WorldObjectViewCollection World::get_objects() const
 {
-  ViewElementCollection result;
+  WorldObjectViewCollection result;
   for (auto pair: world_objects_)
   {
-    std::shared_ptr<ViewElement> view_object = pair.first->get_view(
+    WorldObjectViewCollection view_object = pair.first->get_view(
       pair.second.coordinates, pair.second.direction);
-    result.push_back(view_object);
+    result.insert(result.end(), view_object.begin(), view_object.end());
   }
   return result;
 }

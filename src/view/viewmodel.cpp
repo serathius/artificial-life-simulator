@@ -20,7 +20,12 @@ void ViewModel::draw()
   }
 }
 
-ViewModel::ViewModel(const ViewElementCollection &objects)
+ViewModel::ViewModel()
+{
+
+}
+
+ViewModel::ViewModel(const WorldObjectViewCollection &objects)
 {
   objects_ = objects;
 }

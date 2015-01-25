@@ -5,7 +5,7 @@
 #include <memory>
 
 class ViewElement;
-typedef std::vector<std::shared_ptr<ViewElement>> ViewElementCollection;
+typedef std::vector<std::shared_ptr<ViewElement>> WorldObjectViewCollection;
 
 #include "model/primitives.h"
 #include "common.h"
@@ -28,11 +28,11 @@ public:
 class ViewModel
 {
 private:
-  ViewElementCollection objects_;
+  WorldObjectViewCollection objects_;
 
 public:
-  ViewModel(){};
-  ViewModel(const ViewElementCollection& objects);
+  ViewModel();
+  ViewModel(const WorldObjectViewCollection& objects);
   void draw();
 };
 

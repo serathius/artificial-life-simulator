@@ -14,11 +14,13 @@ const Distance Food::get_radius()
   return Distance(amount_);
 }
 
-std::shared_ptr<ViewElement> Food::get_view(
+WorldObjectViewCollection Food::get_view(
   const Coordinates &coordinates, const UnitVector &direction)
 {
-  return std::shared_ptr<ViewElement>(
-    new CircleViewElement(coordinates, get_radius(), 0, {1, 1, 0}));
+  WorldObjectViewCollection world_object_view;
+  world_object_view.push_back(std::shared_ptr<ViewElement>(
+    new CircleViewElement(coordinates, get_radius(), 0, {1, 1, 0})));
+  return world_object_view;
 }
 
 std::shared_ptr<Shape> Food::get_shape(

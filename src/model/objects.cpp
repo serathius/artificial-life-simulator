@@ -30,11 +30,13 @@ WorldPlane::WorldPlane(World *const world, const Distance &distance)
 
 }
 
-std::shared_ptr<ViewElement> WorldPlane::get_view(
+WorldObjectViewCollection WorldPlane::get_view(
   const Coordinates &coordinates, const UnitVector &direction)
 {
-  return std::shared_ptr<ViewElement>(
-    new CircleViewElement(coordinates, distance_, -1, {0, 0.5, 0}));
+  WorldObjectViewCollection world_object_view;
+  world_object_view.push_back(std::shared_ptr<ViewElement>(
+    new CircleViewElement(coordinates, distance_, -1, {0, 0.5, 0})));
+  return world_object_view;
 }
 
 std::shared_ptr<Shape> WorldPlane::get_shape(
