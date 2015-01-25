@@ -10,12 +10,17 @@ OrganismCondition::OrganismCondition(
 
 const AbsoluteTime OrganismCondition::get_energy_runout_time() const
 {
-  return time_ + TimeDifference::seconds(energy_ / ENERGY_LOSS);
+  return time_ + TimeDifference::seconds(energy_ / ENERGY_LOSS_PER_SECOND);
 }
 
 bool OrganismCondition::has_energy_left(const AbsoluteTime &time) const
 {
-  return energy_ - (time - time_).get_seconds() * ENERGY_LOSS > 0;
+  return energy_ - (time - time_).get_seconds() * ENERGY_LOSS_PER_SECOND > 0;
+}
+
+void OrganismCondition::add_energy(const Energy &energy)
+{
+  energy_ += energy;
 }
 
 Organism::Organism(World * const world, const AbsoluteTime &time)
@@ -62,7 +67,15 @@ void Organism::move_forward_food()
   {
     sort(foods.begin(), foods.end(), nearest_food_comparator);
     FoodRelativePosition nearest_food_position = foods[0];
-    move_to_relative_position(nearest_food_position);
+    if (nearest_food_position.distance < Distance(MAXIMIM_DISTANCE_PER_UPDATE))
+    {
+      condition_.add_energy(nearest_food_position.food->eat(
+        TimeDifference::seconds(DECISION_COOLDOWN_SECODSN)));
+    }
+    else
+    {
+      move_to_relative_position(nearest_food_position);
+    }
   }
 }
 

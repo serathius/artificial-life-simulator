@@ -5,17 +5,20 @@
 #include <random>
 
 class World;
+class FoodPile;
+
+#include "primitives.h"
+
+struct FoodRelativePosition
+{
+  FoodPile *food;
+  UnitVector direction;
+  Distance distance;
+};
 
 #include "model.h"
 #include "collections.h"
 #include "food.h"
-
-struct FoodRelativePosition
-{
-  Food* food;
-  UnitVector direction;
-  Distance distance;
-};
 
 
 class World

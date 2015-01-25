@@ -1,20 +1,19 @@
 #include <random>
 
 #include "model/food.h"
-#include "model/world.h"
 
-Food::Food(World* const world, const FoodAmount &amount)
-  :WorldObject(world), amount_(amount)
+FoodPile::FoodPile(World* const world, FoodController *controller)
+  :WorldObject(world), amount_(FOOD_PER_PILE), controller_(controller)
 {
 
 }
 
-const Distance Food::get_radius()
+const Distance FoodPile::get_radius()
 {
-  return Distance(amount_);
+  return Distance(amount_ * RADIUS_PER_FOOD);
 }
 
-WorldObjectViewCollection Food::get_view(
+WorldObjectViewCollection FoodPile::get_view(
   const Coordinates &coordinates, const UnitVector &direction)
 {
   WorldObjectViewCollection world_object_view;
@@ -23,10 +22,29 @@ WorldObjectViewCollection Food::get_view(
   return world_object_view;
 }
 
-std::shared_ptr<Shape> Food::get_shape(
+std::shared_ptr<Shape> FoodPile::get_shape(
   const Coordinates &coordinates, const UnitVector&)
 {
   return std::shared_ptr<Shape>(new Circle(coordinates, get_radius()));
+}
+
+const Energy FoodPile::eat(const TimeDifference& time)
+{
+  FoodAmount food_eaten;
+  FoodAmount maximum_food_eaten = (
+    time.get_seconds() / TIME_TO_EAT_PILE_SECONDS * FOOD_PER_PILE);
+  if (amount_ > maximum_food_eaten)
+  {
+    food_eaten = maximum_food_eaten;
+  }
+  else
+  {
+    controller_->remove_pile(this);
+    world_->deregister_world_object(this);
+    food_eaten = amount_;
+  }
+  amount_ -= food_eaten;
+  return Energy(amount_ * ENERGY_PER_FOOD);
 }
 
 FoodController::FoodController(World *world, WorldPlane *plane,
@@ -37,7 +55,7 @@ FoodController::FoodController(World *world, WorldPlane *plane,
 
 const AbsoluteTime FoodController::get_next_event_time()
 {
-  if (foods_.size() < MAX_FOOD_PILES_COUNT) {
+  if (food_piles_.size() < MAX_FOOD_PILES_COUNT) {
     return last_food_spawn_time_ + TimeDifference::seconds(SPAWN_COOLDOWN_SECONDS);
   }
   else
@@ -50,10 +68,10 @@ void FoodController::update(AbsoluteTime const &time)
 {
 
   if(time>= last_food_spawn_time_ + TimeDifference::seconds(SPAWN_COOLDOWN_SECONDS)
-    && foods_.size() < MAX_FOOD_PILES_COUNT)
+    && food_piles_.size() < MAX_FOOD_PILES_COUNT)
   {
     last_food_spawn_time_ = time;
-    Food* food = new Food(world_, 0.1);
+    FoodPile * food = new FoodPile(world_, this);
     while(true)
     {
       Coordinates coordinates = plane_->get_random_position();
@@ -61,7 +79,7 @@ void FoodController::update(AbsoluteTime const &time)
       try
       {
         world_->register_world_object(food, coordinates, UnitVector::from_degrees(0));
-        foods_.push_back(food);
+        food_piles_.insert(food);
         return;
       }
       catch (NoSpace)
@@ -74,5 +92,10 @@ void FoodController::update(AbsoluteTime const &time)
 
 const FoodCollection& FoodController::get_foods() const
 {
-  return foods_;
+  return food_piles_;
+}
+
+void FoodController::remove_pile(FoodPile *food_pile)
+{
+  food_piles_.erase(food_pile);
 }
