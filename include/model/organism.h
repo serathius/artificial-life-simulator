@@ -34,13 +34,14 @@ private:
 class OrganismCondition
 {
 public:
-  OrganismCondition(const AbsoluteTime&, const Energy&);
+  OrganismCondition(const AbsoluteTime&);
   const AbsoluteTime get_energy_runout_time() const;
   bool has_energy_left(const AbsoluteTime&) const;
   void add_energy(const Energy&);
 
 private:
   static constexpr Power ENERGY_LOSS_PER_SECOND = 35;
+  static constexpr Energy STARTING_ENERGY = 1000;
 
   AbsoluteTime time_;
   Energy energy_;

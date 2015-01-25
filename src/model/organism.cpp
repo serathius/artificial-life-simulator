@@ -2,9 +2,8 @@
 
 #include "model/organism.h"
 
-OrganismCondition::OrganismCondition(
-  const AbsoluteTime &time, const Energy &energy)
-  : time_(time), energy_(energy)
+OrganismCondition::OrganismCondition(const AbsoluteTime &time)
+  : time_(time), energy_(STARTING_ENERGY)
 {
 }
 
@@ -24,7 +23,7 @@ void OrganismCondition::add_energy(const Energy &energy)
 }
 
 Organism::Organism(World * const world, const AbsoluteTime &time)
-  : WorldObject(world), condition_(OrganismCondition(time, 1000)),
+  : WorldObject(world), condition_(OrganismCondition(time)),
     last_decision_time_(time), genotype_(Genotype()), logic_(OrganismLogic())
 {
 
