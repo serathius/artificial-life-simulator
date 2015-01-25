@@ -15,7 +15,7 @@ bool almost_equal(double first, double second)
 }
 
 Coordinates::Coordinates(float x, float y)
-    : x_(x), y_(y)
+  : x_(x), y_(y)
 {
     
 }
@@ -28,17 +28,17 @@ std::ostream& operator<<(std::ostream &os, const Coordinates &coordinates)
 
 bool Coordinates::operator==(const Coordinates& other) const
 {
-    return almost_equal(x_, other.x_) and almost_equal(y_, other.y_);
+  return almost_equal(x_, other.x_) and almost_equal(y_, other.y_);
 }
 
 const Vector Coordinates::operator-(const Coordinates &other) const
 {
-    return Vector(x_ - other.x_, y_ - other.y_);
+  return Vector(x_ - other.x_, y_ - other.y_);
 }
 
 const Coordinates Coordinates::operator+(const Vector& vector) const
 {
-    return Coordinates(x_ + vector.x_, y_ + vector.y_);
+  return Coordinates(x_ + vector.x_, y_ + vector.y_);
 }
 
 Coordinates& Coordinates::operator+=(const Vector& vector)
@@ -50,12 +50,12 @@ Coordinates& Coordinates::operator+=(const Vector& vector)
 
 const Coordinates Coordinates::operator-(const Vector& vector) const
 {
-    return Coordinates(x_ - vector.x_, y_ - vector.y_);
+  return Coordinates(x_ - vector.x_, y_ - vector.y_);
 }
 
 const Distance Coordinates::distance(Coordinates const &other) const
 {
-    return (*this - other).length();
+  return (*this - other).length();
 }
 
 Vector::Vector(float x, float y) : x_(x), y_(y)
@@ -76,22 +76,19 @@ Vector& Vector::operator=(const Vector &other)
   return *this;
 }
 
-const Coordinates Vector::operator+(
-    const Coordinates &coordinates) const
+const Coordinates Vector::operator+(const Coordinates &coordinates) const
 {
-    return Coordinates(x_ + coordinates.x_, y_ + coordinates.y_);
+  return Coordinates(x_ + coordinates.x_, y_ + coordinates.y_);
 }
 
-const Vector Vector::operator+(
-    const Vector &other) const
+const Vector Vector::operator+(const Vector &other) const
 {
-    return Vector(x_ + other.x_, y_ + other.y_);
+  return Vector(x_ + other.x_, y_ + other.y_);
 }
 
-const Vector Vector::operator-(
-    const Vector &other) const
+const Vector Vector::operator-(const Vector &other) const
 {
-    return Vector(x_ - other.x_, y_ - other.y_);
+  return Vector(x_ - other.x_, y_ - other.y_);
 }
 
 const Distance Vector::length() const
@@ -129,8 +126,8 @@ UnitVector::UnitVector(Vector const &vector)
 
 UnitVector& UnitVector::operator=(const UnitVector &other)
 {
-    radians_ = other.radians_;
-    return *this;
+  radians_ = other.radians_;
+  return *this;
 }
 
 bool UnitVector::operator<(const UnitVector &other) const
@@ -140,12 +137,12 @@ bool UnitVector::operator<(const UnitVector &other) const
 
 bool UnitVector::operator==(const UnitVector &other) const
 {
-    return almost_equal(radians_, other.radians_);
+  return almost_equal(radians_, other.radians_);
 }
 
 const UnitVector UnitVector::operator+(const UnitVector &other) const
 {
-    return UnitVector(radians_ + other.radians_);
+  return UnitVector(radians_ + other.radians_);
 }
 
 const UnitVector UnitVector::operator-(const UnitVector &other) const
@@ -155,8 +152,8 @@ const UnitVector UnitVector::operator-(const UnitVector &other) const
 
 const Vector UnitVector::operator*(const Distance &distance) const
 {
-    return Vector(static_cast<float>(cos(radians_) * distance.get_distance()),
-                  static_cast<float>(sin(radians_) * distance.get_distance()));
+  return Vector(static_cast<float>(cos(radians_) * distance.get_distance()),
+                static_cast<float>(sin(radians_) * distance.get_distance()));
 }
 
 const UnitVector UnitVector::absolute() const
@@ -166,28 +163,28 @@ const UnitVector UnitVector::absolute() const
 
 float Coordinates::get_x() const
 {
-    return x_;
+  return x_;
 }
 
 float Coordinates::get_y() const
 {
-    return y_;
+  return y_;
 }
 
 float UnitVector::get_angle() const
 {
-    float angle = float(radians_ * 180 / M_PI);
-    return angle - float(int(angle / 180) * 180);
+  float angle = float(radians_ * 180 / M_PI);
+  return angle - float(int(angle / 180) * 180);
 }
 
 float Dimension::get_x() const
 {
-    return x_;
+  return x_;
 }
 
 float Dimension::get_y() const
 {
-    return y_;
+  return y_;
 }
 
 Dimension::Dimension(float x, float y) : x_(x), y_(y)
@@ -203,32 +200,32 @@ Distance::Distance(float distance) : distance_(distance)
 
 const Distance Distance::operator+(const Distance &other) const
 {
-    return Distance(distance_ + other.distance_);
+  return Distance(distance_ + other.distance_);
 }
 
 const Distance Distance::operator-(const Distance &other) const
 {
-    return Distance(distance_ - other.distance_);
+  return Distance(distance_ - other.distance_);
 }
 
 
 bool Distance::operator<(const Distance &other) const
 {
-    return distance_ < other.distance_;
+  return distance_ < other.distance_;
 }
 
 bool Distance::operator<=(const Distance &other) const
 {
-    return distance_ <= other.distance_;
+  return distance_ <= other.distance_;
 }
 
 float Distance::get_distance() const
 {
-    return distance_;
+  return distance_;
 }
 
 std::ostream& operator<<(std::ostream &os, const Distance &distance)
 {
-    os << "Distance(" << distance.distance_ << ")";
-    return os;
+  os << "Distance(" << distance.distance_ << ")";
+  return os;
 }

@@ -47,8 +47,7 @@ private:
 
 public:
   TriangleViewElement(const Coordinates& coordinates,
-    const UnitVector& direction, float z, const Color&,
-    const Distance&);
+    const UnitVector& direction, float z, const Color&, const Distance&);
   virtual ~TriangleViewElement(){;}
   virtual void draw();
   float get_z(){return z_;};
@@ -65,8 +64,7 @@ private:
 
 public:
   RectangleViewElement(const Coordinates& coordinates,
-    const UnitVector& direction, const Dimension& dimension, float z,
-    const Color&);
+    const UnitVector& direction, const Dimension& dimension, float z, const Color&);
   virtual ~RectangleViewElement(){;}
   virtual void draw();
   float get_z(){return z_;};

@@ -13,17 +13,16 @@ class View;
 class View
 {
 private:
-    EventQueue* const event_queue;
-    std::unique_ptr<MainWindow> main_window;
-    std::unique_ptr<std::thread> main_window_thread;
-
+  EventQueue* const event_queue;
+  std::unique_ptr<MainWindow> main_window;
+  std::unique_ptr<std::thread> main_window_thread;
 
 public:
-    View(EventQueue * const);
-    void update(const ViewModel& viewmodel_);
-    void start();
-    void finish();
-    ~View();
+  View(EventQueue * const);
+  void update(const ViewModel& viewmodel_);
+  void start();
+  void finish();
+  ~View();
 };
 
 #endif

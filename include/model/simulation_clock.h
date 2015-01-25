@@ -15,6 +15,7 @@ class TimeDifference
 {
   friend class AbsoluteTime;
   friend class RealTimeDifference;
+
 public:
   static const TimeDifference seconds(float seconds);
   bool operator==(const TimeDifference&) const;
@@ -34,8 +35,9 @@ private:
 
 class AbsoluteTime
 {
-    friend class SimulationClock;
-    friend class TimeDifference;
+  friend class SimulationClock;
+  friend class TimeDifference;
+
 public:
   AbsoluteTime(unsigned long long nanoseconds);
   static const AbsoluteTime get_max();
@@ -46,6 +48,7 @@ public:
   bool operator!=(const AbsoluteTime&) const;
   bool operator>(const AbsoluteTime&) const;
   bool operator>=(const AbsoluteTime&) const;
+
 private:
     unsigned long long nano_seconds_;
 };
@@ -53,7 +56,7 @@ private:
 
 class TimePassageSpeed
 {
-friend class RealTimeDifference;
+  friend class RealTimeDifference;
 
 private:
     unsigned int speed_thousandth_;

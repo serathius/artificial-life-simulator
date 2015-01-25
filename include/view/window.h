@@ -9,7 +9,6 @@
 #include "view/viewmodel.h"
 #include "controller/event_queue.hpp"
 
-
 class Window
 {
 private:
