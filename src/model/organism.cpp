@@ -46,7 +46,8 @@ void Organism::update(const AbsoluteTime &time)
   }
   else
   {
-    if (time >= last_decision_time_ + TimeDifference::seconds(0.25))
+    if (time >= last_decision_time_ + TimeDifference::seconds(
+      DECISION_COOLDOWN_SECODSN))
     {
       move_forward_food();
       last_decision_time_ = time;
@@ -99,18 +100,21 @@ std::shared_ptr<WorldObjectView> Organism::get_view(const Coordinates &coordinat
   const UnitVector &direction)
 {
   return std::shared_ptr<WorldObjectView>(
-    new TriangleWorldObjectView(coordinates, direction, 1, {1, 0, 0}));
+    new TriangleWorldObjectView(
+      coordinates, direction, 1, {1, 0, 0}, Distance(ORGANISM_SIZE)));
 }
 
 std::shared_ptr<Shape> Organism::get_shape(const Coordinates &coordinates,
   const UnitVector &direction)
 {
-  return std::shared_ptr<Shape>(new Circle(coordinates, Distance(0.1)));
+  return std::shared_ptr<Shape>(
+    new Circle(coordinates, Distance(ORGANISM_SIZE)));
 }
 
 const AbsoluteTime Organism::get_next_event_time()
 {
-  auto decision_time = last_decision_time_ + TimeDifference::seconds(0.25);
+  auto decision_time = last_decision_time_ + TimeDifference::seconds(
+    DECISION_COOLDOWN_SECODSN);
   auto energy_runout_time = condition_.get_energy_runout_time();
   if (decision_time > energy_runout_time)
   {

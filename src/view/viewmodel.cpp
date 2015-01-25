@@ -26,8 +26,10 @@ ViewModel::ViewModel(const WorldObjectViewCollection &objects)
 }
 
 TriangleWorldObjectView::TriangleWorldObjectView(const Coordinates &coordinates,
-  const UnitVector &direction, float z, const Color &color)
-  : coordinates_(coordinates), direction_(direction), z_(z), color_(color)
+  const UnitVector &direction, float z, const Color &color,
+  const Distance &length)
+  : coordinates_(coordinates), direction_(direction), z_(z), color_(color),
+    length_of_side_(length)
 {
 
 }
@@ -36,7 +38,7 @@ void TriangleWorldObjectView::draw()
 {
   float x = coordinates_.get_x();
   float y = coordinates_.get_y();
-  float r = 0.2f;
+  float r = length_of_side_.get_distance();
   glTranslatef(x, y, z_);
   glRotatef(direction_.get_angle() - 90, 0, 0, 1);
   glColor3f(color_.R, color_.G, color_.B);

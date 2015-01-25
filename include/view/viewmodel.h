@@ -43,10 +43,12 @@ private:
   const UnitVector direction_;
   const float z_;
   const Color color_;
+  const Distance length_of_side_;
 
 public:
   TriangleWorldObjectView(const Coordinates& coordinates,
-    const UnitVector& direction, float z, const Color&);
+    const UnitVector& direction, float z, const Color&,
+    const Distance&);
   virtual ~TriangleWorldObjectView(){;}
   virtual void draw();
   float get_z(){return z_;};
