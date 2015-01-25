@@ -20,6 +20,7 @@ public:
 private:
   void handle_events();
   void schedule_model_update();
+  bool run = true;
 
   Model model_;
   View view_;

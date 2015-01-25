@@ -20,7 +20,7 @@ void Controller::start()
 
 void Controller::handle_events()
 {
-  while(true)
+  while(run)
   {
     view_.update(model_.get_viewmodel());
     schedule_model_update();
